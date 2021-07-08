@@ -1,0 +1,5 @@
+script: "/render/main_renderer_script.render_script"
+materials {
+  name: ""
+  material: ""
+}

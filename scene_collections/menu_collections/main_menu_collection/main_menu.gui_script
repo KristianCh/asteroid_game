@@ -1,0 +1,24 @@
+function init(self)
+	msg.post(".", "acquire_input_focus")
+	--gui.set_enabled(gui.get_node("continue_game_button"), false)
+end
+
+function final(self)
+	
+end
+
+function update(self, dt)
+	
+end
+
+function on_message(self, message_id, message, sender)
+	
+end
+
+function on_input(self, action_id, action)
+	if action_id == hash("mouse_left") and action.released then
+		if gui.pick_node(gui.get_node("new_game_button"), action.x, action.y) then
+			msg.post("main:/manager", "new_game_from_main")
+		end
+	end
+end
