@@ -23,11 +23,11 @@ function on_message(self, message_id, message, sender)
 	if message_id == hash("exit_game") then
 		msg.post("@system:", "exit", {code = 0})
 	elseif message_id == hash("proxy_loaded") then
-		--print("loaded " .. sender)
+		print("loaded " .. sender)
 		msg.post(sender, "init")
-		--print("init " .. sender)
+		print("init " .. sender)
 		msg.post(sender, "enable")
-		--print("enabled " .. sender)
+		print("enabled " .. sender)
 	elseif message_id == hash("proxy_unloaded") then
 		print("Unloaded " .. sender)
 	elseif message_id == hash("new_game_from_main") then
@@ -77,6 +77,7 @@ function on_message(self, message_id, message, sender)
 		msg.post("#end_screen_proxy", "load")
 		current_active_proxy = "#end_screen_proxy"
 	elseif message_id == hash("main_from_end") then
+		print("main from end")
 		msg.post("#end_screen_proxy", "disable")
 		msg.post("#end_screen_proxy", "final")
 		msg.post("#end_screen_proxy", "unload")
@@ -84,6 +85,7 @@ function on_message(self, message_id, message, sender)
 		msg.post("#main_menu_proxy", "load")
 		current_active_proxy = "#main_menu_proxy"
 	elseif message_id == hash("new_from_end") then
+		print("new from end")
 		msg.post("#end_screen_proxy", "disable")
 		msg.post("#end_screen_proxy", "final")
 		msg.post("#end_screen_proxy", "unload")
