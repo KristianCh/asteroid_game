@@ -1,0 +1,130 @@
+go.property("size", 3)
+go.property("color", vmath.vector4(1, 1, 1, 1))
+go.property("health", 100)
+
+local angle = 0
+
+local function fill_stream(stream, verts)
+	for key, value in ipairs(verts) do
+		stream[key] = verts[key]
+	end
+end
+
+function init(self)
+	go.set("#mesh", "tint", vmath.vector4(1,0,0,1))
+	self.res = go.get("#mesh", "vertices")
+
+	self.buffer = resource.get_buffer(self.res)
+
+	local position = {
+		0, 0, 0,
+		0, 1, 0,
+		1, 0, 0,
+		1, 1, 0,
+		1, 1, 1,
+		0, 1, 0,
+		0, 1, 1,
+		0, 0, 1,
+		1, 1, 1,
+		1, 0, 1,
+		1, 0, 0,
+		0, 0, 1,
+		0, 0, 0,
+		0, 1, 0
+	}
+
+	local normal = {
+		0, 0, 0,
+		0, 1, 0,
+		1, 0, 0,
+		1, 1, 0,
+		1, 1, 1,
+		0, 1, 0,
+		0, 1, 1,
+		0, 0, 1,
+		1, 1, 1,
+		1, 0, 1,
+		1, 0, 0,
+		0, 0, 1,
+		0, 0, 0,
+		0, 1, 0
+	}
+
+
+	local texcoord0 = {
+		0, 0,
+		0, 1,
+		1, 0,
+		1, 1,
+		1, 1,
+		0, 1,
+		0, 1,
+		0, 0,
+		1, 1,
+		1, 0,
+		1, 0,
+		0, 0,
+		0, 0,
+		0, 1,
+	}
+
+	local color0 = {
+		1,1,1,1,
+		1,1,1,1,
+		1,1,1,1,
+		1,1,1,1,
+		1,1,1,1,
+		1,1,1,1,
+		1,1,1,1,
+		1,1,1,1,
+		1,1,1,1,
+		1,1,1,1,
+		1,1,1,1,
+		1,1,1,1,
+		1,1,1,1,
+		1,1,1,1,
+	}
+
+	local num_vertices = #position / 3
+
+	-- create a new buffer, since the one in the resource doesn't have enough size
+	self.new_buffer = buffer.create(num_vertices, {
+		{ name = hash("position"), type=buffer.VALUE_TYPE_FLOAT32, count = 3 },
+		{ name = hash("normal"), type=buffer.VALUE_TYPE_FLOAT32, count = 3 },
+		{ name = hash("texcoord0"), type=buffer.VALUE_TYPE_FLOAT32, count = 2 },
+		{ name = hash("color0"), type=buffer.VALUE_TYPE_FLOAT32, count = 4 }
+	})
+
+	-- get the position stream
+	local stream_position = buffer.get_stream(self.new_buffer, "position")
+	local stream_normal = buffer.get_stream(self.new_buffer, "normal")
+	local stream_texcoord0 = buffer.get_stream(self.new_buffer, "texcoord0")
+	local stream_color0 = buffer.get_stream(self.new_buffer, "color0")
+
+	fill_stream(stream_position, position)
+	fill_stream(stream_normal, normal)
+	fill_stream(stream_texcoord0, texcoord0)
+	fill_stream(stream_color0, color0)
+
+	resource.set_buffer(self.res, self.new_buffer)
+end
+
+function final(self)
+	-- Add finalization code here
+	-- Learn more: https://defold.com/manuals/script/
+	-- Remove this function if not needed
+end
+
+function update(self, dt)
+	-- Add update code here
+	-- Learn more: https://defold.com/manuals/script/
+	-- Remove this function if not needed
+	angle = angle + 1 * dt
+	go.set_rotation(vmath.quat_axis_angle(vmath.vector3(0, 1, 0), angle))
+end
+
+function on_message(self, message_id, message, sender)
+	-- Add message-handling code here
+	-- Learn more: https://defold.com/manuals/message-passing/
+	-- Remove this function if not needed
+end

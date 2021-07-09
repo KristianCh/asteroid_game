@@ -235,7 +235,7 @@ nodes {
   line_break: false
   parent: "main_menu_button"
   layer: ""
-  inherit_alpha: true
+  inherit_alpha: false
   alpha: 1.0
   outline_alpha: 1.0
   shadow_alpha: 1.0
