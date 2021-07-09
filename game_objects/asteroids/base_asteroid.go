@@ -13,16 +13,9 @@ components {
     w: 1.0
   }
 }
-embedded_components {
+components {
   id: "mesh"
-  type: "mesh"
-  data: "material: \"/builtins/materials/model.material\"\n"
-  "vertices: \"/game_objects/meshes/empty.buffer\"\n"
-  "textures: \"\"\n"
-  "primitive_type: PRIMITIVE_TRIANGLE_STRIP\n"
-  "position_stream: \"position\"\n"
-  "normal_stream: \"normal\"\n"
-  ""
+  component: "/game_objects/meshes/temp.mesh"
   position {
     x: 0.0
     y: 0.0

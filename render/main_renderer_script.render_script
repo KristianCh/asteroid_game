@@ -35,6 +35,7 @@ function init(self)
     self.gui_pred = render.predicate({"gui"})
     self.text_pred = render.predicate({"text"})
     self.particle_pred = render.predicate({"particle"})
+    self.model_pred = render.predicate({"model"})
 
     self.clear_color = vmath.vector4(0, 0, 0, 0)
     self.clear_color.x = sys.get_config("render.clear_color_red", 0)
@@ -74,6 +75,13 @@ function update(self)
     render.draw(self.tile_pred)
     render.draw(self.particle_pred)
     render.draw_debug3d()
+
+    -------------------------------------------------------
+    -- render custom meshes
+    render.set_projection(vmath.matrix4())
+    render.set_view(vmath.matrix4())
+    render.draw(self.model_pred)
+    -------------------------------------------------------
 
     -- render GUI
     --

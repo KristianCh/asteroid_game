@@ -1,0 +1,4 @@
+material: "/render/materials/asteroid_material/asteroid_material.material"
+vertices: "/game_objects/meshes/temp.buffer"
+primitive_type: PRIMITIVE_TRIANGLES
+position_stream: "position"

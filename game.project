@@ -4,6 +4,7 @@ dependencies = https://github.com/subsoap/defos/archive/master.zip
 
 [bootstrap]
 main_collection = /main/main.collectionc
+render = /render/main_renderer.renderc
 
 [input]
 game_binding = /input/game.input_bindingc

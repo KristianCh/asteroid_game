@@ -3,8 +3,8 @@ instances {
   id: "base_asteroid"
   prototype: "/game_objects/asteroids/base_asteroid.go"
   position {
-    x: 1219.0
-    y: 619.0
+    x: 0.0
+    y: 0.0
     z: 0.0
   }
   rotation {
