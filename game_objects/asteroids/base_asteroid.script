@@ -1,84 +1,94 @@
 go.property("size", 3)
+go.property("scale", 10)
 go.property("color", vmath.vector4(1, 1, 1, 1))
 go.property("health", 100)
+go.property("angle", 0)
+
+WIDTH = 1920
+HEIGHT = 1017
+RATIO = WIDTH/HEIGHT
 
 local animate = true
 
-local function fill_positions(self, v0, v1, v2, v3)
-	-- first triangle
-	self.positions[1] = v0.x
-	self.positions[2] = v0.y
-	self.positions[3] = v0.z
+local function generate_vertices(self, count, distance, rand_angle_range, rand_dist_range, spikyness) 
+	spikyness = spikyness or 0
+	if count < 3 then
+		count = 3
+	end
+	self.vertices = {vmath.vector4(0, 0, 0, 0)}
+	local angle = math.pi * 2 / count
+	for i = 2,count+1 do
+		local angle_offset = (math.random() -0.5) * rand_angle_range * angle
+		local distance_offset = 1 + (math.random() * 0.5) * rand_dist_range + 
+			math.random() * rand_dist_range * (i%2==0 and spikyness or -spikyness)
+			self.vertices[i] = vmath.vector4(
+		math.cos((angle + angle_offset) * (i-2)) / 500 * distance * distance_offset, 
+		math.sin((angle + angle_offset) * (i-2)) / 500 * distance * distance_offset, 
+		0, 
+		0)
+	end
+end
 
-	self.positions[4] = v1.x
-	self.positions[5] = v1.y
-	self.positions[6] = v1.z
+local function fill_positions(self, vertices)
+	for i = 0,#vertices-2 do
+		local v2 = i+2
+		local v3 = i+3
+		if v3 > #vertices then 
+			v3 = 2
+		end
+		self.positions[i*9+1] = vertices[1].x
+		self.positions[i*9+2] = vertices[1].y
+		self.positions[i*9+3] = vertices[1].z
 
-	self.positions[7] = v2.x
-	self.positions[8] = v2.y
-	self.positions[9] = v2.z
+		self.positions[i*9+4] = vertices[v2].x
+		self.positions[i*9+5] = vertices[v2].y
+		self.positions[i*9+6] = vertices[v2].z
 
-	-- second triangle
-	self.positions[10] = v0.x
-	self.positions[11] = v0.y
-	self.positions[12] = v0.z
-
-	self.positions[13] = v2.x
-	self.positions[14] = v2.y
-	self.positions[15] = v2.z
-
-	self.positions[16] = v3.x
-	self.positions[17] = v3.y
-	self.positions[18] = v3.z
+		self.positions[i*9+7] = vertices[v3].x
+		self.positions[i*9+8] = vertices[v3].y
+		self.positions[i*9+9] = vertices[v3].z
+	end
 end
 
 function init(self)
+	WIDTH, HEIGHT = window.get_size()
+	go.set("#mesh", "color", vmath.vector4(0.75, 0.75, 0.75, 1))
+	
+	self.vel = vmath.vector3(150, 150, 0)
 
-	self.res = go.get("#mesh", "vertices")
+	--[[self.res = go.get("#mesh", "vertices")
 	print(self.res)
 
 	self.buffer = resource.get_buffer(self.res)
 	print(self.buffer)
 
 	self.positions = buffer.get_stream(self.buffer, "position")
-	print(self.positions)
+	print(self.positions)]]--
 
-	-- if the buffer has some data you could change these values here
-	-- self.positions[1] = self.positions[1] + dt
+	self.vertices = {}
+	generate_vertices(self, 9, self.scale * self.size, 0.1, 1, 0.25)
 
-	-- create a new buffer, since the one in the resource doesn't have enough size
-	self.new_buffer = buffer.create(6, {
+	self.new_buffer = buffer.create((#self.vertices-1)*3, {
 		{ name = hash("position"),
 		type=buffer.VALUE_TYPE_FLOAT32,
 		count = 3 }
 	})
 
-	-- get the position stream
 	self.positions = buffer.get_stream(self.new_buffer, "position")
 
-	self.v0 = vmath.vector4(-2, -2, -1, 0)
-	self.v1 = vmath.vector4( 0, -2, -1, 0)
-	self.v2 = vmath.vector4( 0,  0, -1, 0)
-	self.v3 = vmath.vector4(-2,  0, -1, 0)
-
-	fill_positions(self, self.v0, self.v1, self.v2, self.v3)
-
-	resource.set_buffer(self.res, self.new_buffer)
-
-	self.animate_angle = 0
+	fill_positions(self, self.vertices)
+	resource.set_buffer(go.get("#mesh", "vertices"), self.new_buffer)
 end
 
 function update(self, dt)
-	go.set_position(vmath.vector3(0, 0, 0) + vmath.vector3(math.sin(self.animate_angle), math.cos(self.animate_angle), 0))
-	if animate then
-		self.animate_angle = self.animate_angle + dt
-		self.rot_mtx = vmath.matrix4_rotation_z(self.animate_angle)
-		local v0 = self.rot_mtx * self.v0
-		local v1 = self.rot_mtx * self.v1
-		local v2 = self.rot_mtx * self.v2
-		local v3 = self.rot_mtx * self.v3
+	local pos = go.get_position()
+	pos = pos + self.vel * dt
+	go.set_position(pos)
 
-		fill_positions(self, v0, v1, v2, v3)
-		resource.set_buffer(self.res, self.new_buffer)
+	go.set("#mesh", "parent_go_pos", vmath.vector4(-pos.x, -pos.y, 0, 0) + vmath.vector4(pos.x/WIDTH*2-1, pos.y/HEIGHT*2-1, 0, 0))
+	
+	if animate then
+		self.angle = self.angle + dt
+		go.set_rotation(vmath.quat_axis_angle(vmath.vector3(0, 0, 1), self.angle))
 	end
 end

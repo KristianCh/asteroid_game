@@ -13,9 +13,14 @@ components {
     w: 1.0
   }
 }
-components {
+embedded_components {
   id: "mesh"
-  component: "/game_objects/meshes/temp.mesh"
+  type: "mesh"
+  data: "material: \"/render/materials/asteroid_material/asteroid_material.material\"\n"
+  "vertices: \"/game_objects/asteroids/empty.buffer\"\n"
+  "primitive_type: PRIMITIVE_TRIANGLES\n"
+  "position_stream: \"position\"\n"
+  ""
   position {
     x: 0.0
     y: 0.0

@@ -3,8 +3,128 @@ instances {
   id: "base_asteroid"
   prototype: "/game_objects/asteroids/base_asteroid.go"
   position {
+    x: 916.0
+    y: 516.0
+    z: 0.0
+  }
+  rotation {
     x: 0.0
     y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale3 {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+}
+instances {
+  id: "base_asteroid1"
+  prototype: "/game_objects/asteroids/base_asteroid.go"
+  position {
+    x: 1236.0
+    y: 336.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale3 {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+}
+instances {
+  id: "base_asteroid2"
+  prototype: "/game_objects/asteroids/base_asteroid.go"
+  position {
+    x: 1308.0
+    y: 728.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale3 {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+}
+instances {
+  id: "base_asteroid3"
+  prototype: "/game_objects/asteroids/base_asteroid.go"
+  position {
+    x: 696.0
+    y: 264.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale3 {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+}
+instances {
+  id: "base_asteroid4"
+  prototype: "/game_objects/asteroids/base_asteroid.go"
+  position {
+    x: 672.0
+    y: 748.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale3 {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+}
+instances {
+  id: "base_asteroid5"
+  prototype: "/game_objects/asteroids/base_asteroid.go"
+  position {
+    x: 1020.0
+    y: 252.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale3 {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+}
+instances {
+  id: "base_asteroid6"
+  prototype: "/game_objects/asteroids/base_asteroid.go"
+  position {
+    x: 932.0
+    y: 764.0
     z: 0.0
   }
   rotation {
@@ -60,6 +180,24 @@ embedded_instances {
   data: "components {\n"
   "  id: \"manager\"\n"
   "  component: \"/scene_collections/menu_collections/main_menu_collection/manager.script\"\n"
+  "  position {\n"
+  "    x: 0.0\n"
+  "    y: 0.0\n"
+  "    z: 0.0\n"
+  "  }\n"
+  "  rotation {\n"
+  "    x: 0.0\n"
+  "    y: 0.0\n"
+  "    z: 0.0\n"
+  "    w: 1.0\n"
+  "  }\n"
+  "}\n"
+  "embedded_components {\n"
+  "  id: \"factory\"\n"
+  "  type: \"factory\"\n"
+  "  data: \"prototype: \\\"/game_objects/asteroids/base_asteroid.go\\\"\\n"
+  "load_dynamically: false\\n"
+  "\"\n"
   "  position {\n"
   "    x: 0.0\n"
   "    y: 0.0\n"
