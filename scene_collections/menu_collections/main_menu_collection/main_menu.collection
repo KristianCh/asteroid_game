@@ -3,8 +3,8 @@ instances {
   id: "base_asteroid"
   prototype: "/game_objects/asteroids/base_asteroid.go"
   position {
-    x: 916.0
-    y: 516.0
+    x: 456.0
+    y: 453.0
     z: 0.0
   }
   rotation {
@@ -23,8 +23,8 @@ instances {
   id: "base_asteroid1"
   prototype: "/game_objects/asteroids/base_asteroid.go"
   position {
-    x: 1236.0
-    y: 336.0
+    x: 1854.0
+    y: 62.0
     z: 0.0
   }
   rotation {
@@ -43,8 +43,8 @@ instances {
   id: "base_asteroid2"
   prototype: "/game_objects/asteroids/base_asteroid.go"
   position {
-    x: 1308.0
-    y: 728.0
+    x: 1856.0
+    y: 946.0
     z: 0.0
   }
   rotation {
@@ -63,8 +63,8 @@ instances {
   id: "base_asteroid3"
   prototype: "/game_objects/asteroids/base_asteroid.go"
   position {
-    x: 696.0
-    y: 264.0
+    x: 54.0
+    y: 952.0
     z: 0.0
   }
   rotation {
@@ -83,8 +83,8 @@ instances {
   id: "base_asteroid4"
   prototype: "/game_objects/asteroids/base_asteroid.go"
   position {
-    x: 672.0
-    y: 748.0
+    x: 1297.0
+    y: 190.0
     z: 0.0
   }
   rotation {
@@ -103,8 +103,8 @@ instances {
   id: "base_asteroid5"
   prototype: "/game_objects/asteroids/base_asteroid.go"
   position {
-    x: 1020.0
-    y: 252.0
+    x: 55.0
+    y: 62.0
     z: 0.0
   }
   rotation {

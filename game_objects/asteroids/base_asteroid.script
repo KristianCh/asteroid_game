@@ -112,12 +112,6 @@ local available_buffers = {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
 						   1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1
 }
 
-WIDTH = 1920
-HEIGHT = 1017
-RATIO = WIDTH/HEIGHT
-
-local animate = true
-
 local function generate_vertices(self, count, distance, rand_angle_range, rand_dist_range, spikyness) 
 	spikyness = spikyness or 0
 	if count < 3 then
@@ -130,8 +124,8 @@ local function generate_vertices(self, count, distance, rand_angle_range, rand_d
 		local distance_offset = 1 + (math.random() * 0.5) * rand_dist_range + 
 			math.random() * rand_dist_range * (i%2==0 and spikyness or -spikyness)
 			self.vertices[i] = vmath.vector4(
-		math.cos((angle + angle_offset) * (i-2)) / 500 * distance * distance_offset, 
-		math.sin((angle + angle_offset) * (i-2)) / 500 * distance * distance_offset, 
+		math.cos((angle + angle_offset) * (i-2)) * distance * distance_offset, 
+		math.sin((angle + angle_offset) * (i-2)) * distance * distance_offset, 
 		0, 
 		0)
 	end
@@ -156,6 +150,16 @@ local function fill_buffer_data(self, vertices)
 		self.positions[i*9+8] = vertices[v3].y
 		self.positions[i*9+9] = vertices[v3].z
 	end
+	resource.set_buffer(go.get("#mesh", "vertices"), self.vertex_buffer)
+end
+
+local function rotate(self) 
+	local rot_mtx = vmath.matrix4_rotation_z(self.angle)
+	local rot_vertices = {}
+	for i=1,#self.vertices do
+		rot_vertices[i] = rot_mtx * self.vertices[i]
+	end
+	fill_buffer_data(self, rot_vertices)
 end
 
 function init(self)
@@ -173,8 +177,7 @@ function init(self)
 		return
 	end
 	
-	WIDTH, HEIGHT = window.get_size()
-	go.set("#mesh", "color", vmath.vector4(0.75, 0.75, 0.75, 1))
+	go.set("#mesh", "color", vmath.vector4(math.random(), math.random(), math.random(), 1))
 	
 	self.vel = vmath.vector3(150, 150, 0)
 
@@ -191,10 +194,8 @@ function init(self)
 	})
 
 	self.positions = buffer.get_stream(self.vertex_buffer, "position")
-	self.normal = buffer.get_stream(self.vertex_buffer, "normal")
 
 	fill_buffer_data(self, self.vertices)
-	resource.set_buffer(go.get("#mesh", "vertices"), self.vertex_buffer)
 end
 
 function update(self, dt)
@@ -204,13 +205,9 @@ function update(self, dt)
 		go.delete()
 	end
 	go.set_position(pos)
-
-	go.set("#mesh", "parent_go_pos", vmath.vector4(-pos.x, -pos.y, 0, 0) + vmath.vector4(pos.x/WIDTH*2-1, pos.y/HEIGHT*2-1, 0, 0))
 	
-	if animate then
-		self.angle = self.angle + dt
-		go.set_rotation(vmath.quat_axis_angle(vmath.vector3(0, 0, 1), self.angle))
-	end
+	self.angle = self.angle + dt
+	rotate(self)
 end
 
 function final(self)

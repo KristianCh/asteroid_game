@@ -1,6 +1,6 @@
 [project]
 title = Asteroid_Game
-dependencies = https://github.com/subsoap/defos/archive/master.zip
+dependencies#0 = https://github.com/subsoap/defos/archive/master.zip
 
 [bootstrap]
 main_collection = /main/main.collectionc
@@ -14,6 +14,7 @@ use_accelerometer = 0
 width = 1920
 height = 1017
 fullscreen = 0
+vsync = 0
 
 [script]
 shared_state = 1
