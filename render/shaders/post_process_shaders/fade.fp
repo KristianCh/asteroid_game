@@ -1,7 +1,6 @@
 varying mediump vec4 position;
 varying mediump vec2 var_texcoord0;
 
-uniform lowp sampler2D mesh_original;
 uniform lowp sampler2D fade_original;
 
 void main()

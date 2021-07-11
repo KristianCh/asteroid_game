@@ -37,7 +37,8 @@ function init(self)
     self.particle_pred = render.predicate({"particle"})
     self.model_pred = render.predicate({"model"})
     self.fade_pred = render.predicate({"fade"})
-    self.final_image_pred = render.predicate({"final_image"})
+    self.merge_framebuffers_pred = render.predicate({"merge_framebuffer"})
+    self.pixelate_pred = render.predicate({"pixelate"})
 
     self.clear_color = vmath.vector4(0, 0, 0, 0)
     self.clear_color.x = sys.get_config("render.clear_color_red", 0)
@@ -57,6 +58,7 @@ function init(self)
     self.sprite_target = render.render_target("sprite_original", target_params)
     self.gui_target = render.render_target("gui_original", target_params)
     self.fade_target = render.render_target("fade_original", target_params)
+    self.pps_target = render.render_target("original", target_params)
 end
 
 function update(self)
@@ -119,21 +121,30 @@ function update(self)
     render.set_view(vmath.matrix4())
     render.set_projection(vmath.matrix4())
 
-    render.enable_texture(0, self.mesh_target, render.BUFFER_COLOR_BIT)
     render.enable_texture(3, self.fade_target, render.BUFFER_COLOR_BIT)
     
     render.enable_render_target(self.fade_target)
     render.draw(self.fade_pred)    
     render.disable_render_target(self.fade_target)
     
-    
+    render.enable_texture(0, self.mesh_target, render.BUFFER_COLOR_BIT)
     render.enable_texture(1, self.sprite_target, render.BUFFER_COLOR_BIT)
     render.enable_texture(2, self.gui_target, render.BUFFER_COLOR_BIT)
-    render.draw(self.final_image_pred)
+    
+    --render.enable_render_target(self.pps_target)
+    render.draw(self.merge_framebuffers_pred)
+    --render.disable_render_target(self.pps_target)
+    
     render.disable_texture(0, self.mesh_target)
     render.disable_texture(1, self.sprite_target)
     render.disable_texture(2, self.gui_target)
     render.disable_texture(3, self.fade_target)
+
+    --[[
+    render.enable_texture(0, self.pps_target, render.BUFFER_COLOR_BIT)
+    render.draw(self.pixelate_pred)
+    render.disable_texture(0, self.pps_target)
+    ]]--
 end
 
 function on_message(self, message_id, message)

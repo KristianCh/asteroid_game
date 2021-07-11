@@ -1,7 +1,7 @@
 name: "quad"
-tags: "final_image"
+tags: "merge_framebuffer"
 vertex_program: "/render/shaders/post_process_shaders/base.vp"
-fragment_program: "/render/shaders/post_process_shaders/final_image.fp"
+fragment_program: "/render/shaders/post_process_shaders/merge_framebuffers.fp"
 vertex_space: VERTEX_SPACE_LOCAL
 vertex_constants {
   name: "view_proj"
