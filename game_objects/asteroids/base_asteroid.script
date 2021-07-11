@@ -1,5 +1,5 @@
 go.property("size", 3)
-go.property("scale", 10)
+go.property("scale", 12)
 go.property("color", vmath.vector4(1, 1, 1, 1))
 go.property("health", 100)
 go.property("angle", 0)
@@ -200,6 +200,7 @@ end
 
 function update(self, dt)
 	local pos = go.get_position()
+	self.vel.y = math.sin(pos.x / 250) * 150
 	pos = pos + self.vel * dt
 	if pos.x > 2100 or pos.y > 1200 then
 		go.delete()

@@ -4,6 +4,7 @@ varying mediump vec2 var_texcoord0;
 uniform lowp sampler2D mesh_original;
 uniform lowp sampler2D sprite_original;
 uniform lowp sampler2D gui_original;
+uniform lowp sampler2D fade_original;
 
 void main()
 {
@@ -17,6 +18,7 @@ void main()
 
 	vec4 gui_color = texture(gui_original, var_texcoord0.xy);
 	vec4 sprite_color = texture(sprite_original, var_texcoord0.xy);
+	vec4 fade_color = texture(fade_original, var_texcoord0.xy);
 	vec4 mesh_color = vec4(0);
 	int index = 0;
 	for (int i = -2; i <= 2; i++) {
@@ -25,7 +27,8 @@ void main()
 			mesh_color += kernel[index++] * texture(mesh_original, var_texcoord0.xy + shift);
 		}
 	}
-	vec4 final_color = vec4(mesh_color.xyz, 1);
+	mesh_color = vec4(mesh_color.xyz, (mesh_color.x + mesh_color.y + mesh_color.z) / 3);
+	vec4 final_color = fade_color * 0.25 * (1 - mesh_color.w) + mesh_color;
 	final_color = final_color * (1 - sprite_color.w) + sprite_color;
 	final_color = final_color * (1 - gui_color.w) + gui_color;
 	
