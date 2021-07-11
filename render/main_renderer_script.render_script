@@ -31,12 +31,13 @@ local function get_projection(self)
 end
 
 function init(self)
+    self.constants = render.constant_buffer()
     self.tile_pred = render.predicate({"tile"})
     self.gui_pred = render.predicate({"gui"})
     self.text_pred = render.predicate({"text"})
     self.particle_pred = render.predicate({"particle"})
     self.model_pred = render.predicate({"model"})
-    self.fade_pred = render.predicate({"fade"})
+    self.fade_fb_pred = render.predicate({"fade"})
     self.merge_framebuffers_pred = render.predicate({"merge_framebuffer"})
     self.pixelate_pred = render.predicate({"pixelate"})
 
@@ -84,7 +85,6 @@ function update(self)
     -- render sprites and particles
     render.draw(self.tile_pred)
     render.draw(self.particle_pred)
-    render.draw_debug3d()
     render.disable_render_target(self.sprite_target)
     -------------------------------------------------------
     -- render custom meshes
@@ -93,12 +93,16 @@ function update(self)
     render.set_projection(get_projection(self))
     render.set_view(self.view)
     render.set_blend_func(render.BLEND_ONE, render.BLEND_ONE)
-    render.draw(self.model_pred)    
+    render.draw(self.model_pred)
+    render.draw_debug3d()    
     render.disable_render_target(self.mesh_target)
-
+    -------------------------------------------------------
+    -- render fading objects
     render.set_blend_func(render.BLEND_SRC_ALPHA, render.BLEND_ONE_MINUS_SRC_ALPHA)  
     render.enable_render_target(self.fade_target)
-    render.draw(self.model_pred)    
+    render.draw(self.model_pred)
+    render.draw(self.particle_pred)
+    render.draw_debug3d()    
     render.disable_render_target(self.fade_target)
     -------------------------------------------------------
     -- render GUI
@@ -124,7 +128,7 @@ function update(self)
     render.enable_texture(3, self.fade_target, render.BUFFER_COLOR_BIT)
     
     render.enable_render_target(self.fade_target)
-    render.draw(self.fade_pred)    
+    render.draw(self.fade_fb_pred)    
     render.disable_render_target(self.fade_target)
     
     render.enable_texture(0, self.mesh_target, render.BUFFER_COLOR_BIT)
@@ -132,7 +136,7 @@ function update(self)
     render.enable_texture(2, self.gui_target, render.BUFFER_COLOR_BIT)
     
     --render.enable_render_target(self.pps_target)
-    render.draw(self.merge_framebuffers_pred)
+    render.draw(self.merge_framebuffers_pred, self.constants)
     --render.disable_render_target(self.pps_target)
     
     render.disable_texture(0, self.mesh_target)
@@ -168,5 +172,7 @@ function on_message(self, message_id, message)
         self.near = message.near or -1
         self.far = message.far or 1
         self.projection_fn = fixed_fit_projection
+    elseif message_id == hash("set_time") then
+        self.constants.time = vmath.vector4(message[1],0,0,0)
     end
 end

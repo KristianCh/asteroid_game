@@ -13,6 +13,21 @@ components {
     w: 1.0
   }
 }
+components {
+  id: "asteroid_pfx"
+  component: "/game_objects/asteroids/asteroid_pfx.particlefx"
+  position {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+}
 embedded_components {
   id: "mesh"
   type: "mesh"
