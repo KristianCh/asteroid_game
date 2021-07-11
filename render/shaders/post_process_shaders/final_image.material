@@ -14,7 +14,7 @@ vertex_constants {
   }
 }
 samplers {
-  name: "mesh"
+  name: "mesh_original"
   wrap_u: WRAP_MODE_REPEAT
   wrap_v: WRAP_MODE_REPEAT
   filter_min: FILTER_MODE_MIN_NEAREST

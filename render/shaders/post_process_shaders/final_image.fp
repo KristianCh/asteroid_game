@@ -13,7 +13,7 @@ void main()
 		-0.125, -0.125, -0.125, -0.125, -0.125
 	);
 	
-	vec4 mesh_color = vec4(0.1);
+	vec4 mesh_color = vec4(0);
 	int index = 0;
 	for (int i = -2; i <= 2; i++) {
 		for (int j = -2; j <= 2; j++) {
@@ -23,3 +23,16 @@ void main()
 	}
 	gl_FragColor = vec4(mesh_color.xyz, 1);
 }
+
+/*varying mediump vec4 position;
+varying mediump vec2 var_texcoord0;
+
+uniform lowp sampler2D mesh_original;
+
+void main()
+{
+	vec4 color = texture2D(mesh_original, var_texcoord0.xy);
+	// Desaturate the color sampled from the original texture
+	float grey = color.r * 0.3 + color.g * 0.59 + color.b * 0.11;
+	gl_FragColor = vec4(grey, grey, grey, 1.0);
+}*/

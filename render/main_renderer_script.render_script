@@ -57,7 +57,7 @@ end
 
 function update(self)
 
-    --render.enable_render_target(self.mesh_target)
+    render.enable_render_target(self.mesh_target)
     render.set_depth_mask(true)
     render.set_stencil_mask(0xff)
     render.clear({[render.BUFFER_COLOR_BIT] = self.clear_color, [render.BUFFER_DEPTH_BIT] = 1, [render.BUFFER_STENCIL_BIT] = 0})
@@ -96,6 +96,18 @@ function update(self)
     render.draw(self.gui_pred)
     render.draw(self.text_pred)
     render.disable_state(render.STATE_STENCIL_TEST)
+
+    render.disable_render_target(self.mesh_target)
+
+    render.clear({[render.BUFFER_COLOR_BIT] = self.clear_color}) -- <1>
+
+    render.set_viewport(0, 0, render.get_window_width(), render.get_window_height()) -- <2>
+    render.set_view(vmath.matrix4()) -- <3>
+    render.set_projection(vmath.matrix4())
+
+    render.enable_texture(0, self.mesh_target, render.BUFFER_COLOR_BIT) -- <4>
+    render.draw(self.final_image_pred) -- <5>
+    render.disable_texture(0, self.mesh_target) -- <6>
 end
 
 function on_message(self, message_id, message)
