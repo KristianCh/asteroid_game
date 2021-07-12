@@ -31,11 +31,11 @@ void main()
 	if (d < 0.1) {
 		mult = 1.5-d*5;
 	}
-	
 	vec2 texture_dims = textureSize(mesh_original,0);
 	vec4 gui_color = texture(gui_original, var_texcoord0.xy);
 	vec4 sprite_color = texture(sprite_original, var_texcoord0.xy);
 	vec4 fade_color = texture(fade_original, var_texcoord0.xy);
+	if (fade_color.r < 0.05 && fade_color.g < 0.05 && fade_color.b < 0.05) fade_color = vec4(0, 0, 0, 1);
 	vec4 mesh_color = vec4(0);
 	int index = 0;
 	for (int i = -2; i <= 2; i++) {

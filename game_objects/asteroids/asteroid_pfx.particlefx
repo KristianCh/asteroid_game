@@ -1,7 +1,7 @@
 emitters {
   id: "emitter"
-  mode: PLAY_MODE_LOOP
-  duration: 1.0
+  mode: PLAY_MODE_ONCE
+  duration: 0.1
   space: EMISSION_SPACE_WORLD
   position {
     x: 0.0
@@ -14,9 +14,9 @@ emitters {
     z: 0.0
     w: 1.0
   }
-  tile_source: "/main/main.atlas"
-  animation: "logo"
-  material: "/render/shaders/object_shaders/sprite_modeltype.material"
+  tile_source: "/assets/images/pfx/pfx.atlas"
+  animation: "triangle"
+  material: "/render/shaders/object_shaders/pfx_modeltype.material"
   blend_mode: BLEND_MODE_ADD
   particle_orientation: PARTICLE_ORIENTATION_DEFAULT
   inherit_velocity: 1.1
@@ -27,7 +27,7 @@ emitters {
     key: EMITTER_KEY_SPAWN_RATE
     points {
       x: 0.0
-      y: 5.0
+      y: 50.0
       t_x: 1.0
       t_y: 0.0
     }
@@ -67,11 +67,11 @@ emitters {
     key: EMITTER_KEY_PARTICLE_LIFE_TIME
     points {
       x: 0.0
-      y: 2.5
+      y: 0.75
       t_x: 1.0
       t_y: 0.0
     }
-    spread: 0.0
+    spread: 0.25
   }
   properties {
     key: EMITTER_KEY_PARTICLE_SPEED
@@ -87,11 +87,11 @@ emitters {
     key: EMITTER_KEY_PARTICLE_SIZE
     points {
       x: 0.0
-      y: 50.0
+      y: 30.0
       t_x: 1.0
       t_y: 0.0
     }
-    spread: 0.0
+    spread: 5.0
   }
   properties {
     key: EMITTER_KEY_PARTICLE_RED
@@ -141,7 +141,7 @@ emitters {
       t_x: 1.0
       t_y: 0.0
     }
-    spread: 0.0
+    spread: 45.0
   }
   properties {
     key: EMITTER_KEY_PARTICLE_STRETCH_FACTOR_X
@@ -171,15 +171,21 @@ emitters {
       t_x: 1.0
       t_y: 0.0
     }
-    spread: 0.0
+    spread: 10.0
   }
   particle_properties {
     key: PARTICLE_KEY_SCALE
     points {
       x: 0.0
       y: 1.0
-      t_x: 1.0
-      t_y: 0.0
+      t_x: 0.9459013
+      t_y: -0.32445452
+    }
+    points {
+      x: 1.0
+      y: 0.0038026338
+      t_x: 0.35994446
+      t_y: -0.93297374
     }
   }
   particle_properties {
@@ -270,6 +276,41 @@ emitters {
       y: 1.0
       t_x: 1.0
       t_y: 0.0
+    }
+  }
+  modifiers {
+    type: MODIFIER_TYPE_RADIAL
+    use_direction: 0
+    position {
+      x: 0.0
+      y: 0.0
+      z: 0.0
+    }
+    rotation {
+      x: 0.0
+      y: 0.0
+      z: 0.0
+      w: 1.0
+    }
+    properties {
+      key: MODIFIER_KEY_MAGNITUDE
+      points {
+        x: 0.0
+        y: 100.0
+        t_x: 1.0
+        t_y: 0.0
+      }
+      spread: 0.0
+    }
+    properties {
+      key: MODIFIER_KEY_MAX_DISTANCE
+      points {
+        x: 0.0
+        y: 1000.0
+        t_x: 1.0
+        t_y: 0.0
+      }
+      spread: 0.0
     }
   }
   size_mode: SIZE_MODE_MANUAL

@@ -179,6 +179,10 @@ function init(self)
 	
 	go.set("#mesh", "color", vmath.vector4(math.random(), math.random(), math.random(), 1))
 	go.animate("#mesh", "color", go.PLAYBACK_LOOP_PINGPONG, vmath.vector4(math.random(), math.random(), math.random(), 1), go.EASING_INOUTSINE, 5)
+
+	particlefx.play("#asteroid_pfx")
+	particlefx.set_constant("#asteroid_pfx", "emitter", "tint", go.get("#mesh", "color"))
+	
 	self.vel = vmath.vector3(300, 150, 0)
 	self.size = math.random(1, 3)
 
