@@ -121,15 +121,16 @@ function update(self)
     -- render to screen quad
     render.clear({[render.BUFFER_COLOR_BIT] = self.clear_color})
 
-    render.set_viewport(0, 0, render.get_window_width(), render.get_window_height())
     render.set_view(vmath.matrix4())
     render.set_projection(vmath.matrix4())
 
     render.enable_texture(3, self.fade_target, render.BUFFER_COLOR_BIT)
     
     render.enable_render_target(self.fade_target)
+    render.set_viewport(0, 0, render.get_width(), render.get_height())
     render.draw(self.fade_fb_pred)    
     render.disable_render_target(self.fade_target)
+    render.set_viewport(0, 0, render.get_window_width(), render.get_window_height())
     
     render.enable_texture(0, self.mesh_target, render.BUFFER_COLOR_BIT)
     render.enable_texture(1, self.sprite_target, render.BUFFER_COLOR_BIT)

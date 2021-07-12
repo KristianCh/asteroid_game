@@ -1,5 +1,5 @@
 emitters {
-  id: "emitter"
+  id: "death_fx"
   mode: PLAY_MODE_ONCE
   duration: 0.1
   space: EMISSION_SPACE_WORLD

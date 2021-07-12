@@ -1,0 +1,47 @@
+go.property("target_pos", vmath.vector3(960, 500, 0))
+go.property("heading", vmath.vector3(0, 1, 0))
+go.property("speed", 150)
+
+function init(self)
+	
+end
+
+function final(self)
+	-- Add finalization code here
+	-- Learn more: https://defold.com/manuals/script/
+	-- Remove this function if not needed
+end
+
+function update(self, dt)
+	local pos = go.get_position()
+	local vec_to_target = vmath.normalize(self.target_pos - pos)
+	self.heading = vmath.normalize(vmath.slerp(1 * dt, self.heading, vec_to_target))
+	print(self.heading)
+	local angle = math.deg(math.acos(vmath.dot(vmath.vector3(0, 1, 0), self.heading) / (vmath.length(vmath.vector3(0, 1, 0), vmath.length(self.heading)))))
+	--print(angle, self.heading.y)
+	go.set(".", "euler.z", angle)
+	pos = pos + self.heading * self.speed * dt
+	go.set_position(pos)
+end
+
+function on_message(self, message_id, message, sender)
+	
+end
+
+function on_input(self, action_id, action)
+	-- Add input-handling code here. The game object this script is attached to
+	-- must have acquired input focus:
+	--
+	--    msg.post(".", "acquire_input_focus")
+	--
+	-- All mapped input bindings will be received. Mouse and touch input will
+	-- be received regardless of where on the screen it happened.
+	-- Learn more: https://defold.com/manuals/input/
+	-- Remove this function if not needed
+end
+
+function on_reload(self)
+	-- Add reload-handling code here
+	-- Learn more: https://defold.com/manuals/hot-reload/
+	-- Remove this function if not needed
+end

@@ -17,7 +17,7 @@ function init(self)
 	math.randomseed(os.clock()*100000000000)
 	window.set_listener(window_resized)
 	defos.set_maximized(true)
-	defos.disable_window_resize()
+	--defos.disable_window_resize()
 
 	msg.post("#main_menu_proxy", "load")
 	current_active_proxy = "#main_menu_proxy"

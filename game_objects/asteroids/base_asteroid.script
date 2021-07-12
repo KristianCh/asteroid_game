@@ -110,7 +110,7 @@ local available_buffers = {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
 						   1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
 						   1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
 						   1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1
-}
+					}
 
 local function generate_vertices(self, count, distance, rand_angle_range, rand_dist_range, spikyness) 
 	spikyness = spikyness or 0
@@ -162,6 +162,18 @@ local function rotate(self)
 	fill_buffer_data(self, rot_vertices)
 end
 
+local function emitter_state_change(self, id, emitter, state)
+	if emitter == hash("death_fx") and state == particlefx.EMITTER_STATE_POSTSPAWN then
+		final(self)
+	end
+end
+
+local function death(self) 
+	particlefx.play("#asteroid_pfx")
+	particlefx.set_constant("#asteroid_pfx", "emitter", "tint", go.get("#mesh", "color"))
+	
+end
+
 function init(self)
 	for i=1,100 do
 		if available_buffers[i] == 1 then
@@ -179,9 +191,6 @@ function init(self)
 	
 	go.set("#mesh", "color", vmath.vector4(math.random(), math.random(), math.random(), 1))
 	go.animate("#mesh", "color", go.PLAYBACK_LOOP_PINGPONG, vmath.vector4(math.random(), math.random(), math.random(), 1), go.EASING_INOUTSINE, 5)
-
-	particlefx.play("#asteroid_pfx")
-	particlefx.set_constant("#asteroid_pfx", "emitter", "tint", go.get("#mesh", "color"))
 	
 	self.vel = vmath.vector3(300, 150, 0)
 	self.size = math.random(1, 3)
@@ -208,7 +217,7 @@ function update(self, dt)
 	self.vel.y = math.sin(pos.x / 250) * 150
 	pos = pos + self.vel * dt
 	if pos.x > 2100 or pos.y > 1200 then
-		go.delete()
+		death(self)
 	end
 	go.set_position(pos)
 	
