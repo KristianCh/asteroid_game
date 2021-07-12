@@ -1,6 +1,7 @@
 go.property("size", 3)
 go.property("scale", 12)
 go.property("color", vmath.vector4(1, 1, 1, 1))
+go.property("velocity", vmath.vector3(300, 0, 0))
 go.property("health", 100)
 go.property("angle", 0)
 go.property("buffer_index", 1)
@@ -164,14 +165,25 @@ end
 
 local function emitter_state_change(self, id, emitter, state)
 	if emitter == hash("death_fx") and state == particlefx.EMITTER_STATE_POSTSPAWN then
-		final(self)
+		go.delete()
 	end
 end
 
 local function death(self) 
-	particlefx.play("#asteroid_pfx")
-	particlefx.set_constant("#asteroid_pfx", "emitter", "tint", go.get("#mesh", "color"))
-	
+	particlefx.play("#asteroid_pfx", emitter_state_change)	
+	particlefx.set_constant("#asteroid_pfx", "death_fx", "tint", go.get("#mesh", "color"))
+	if self.size > 1 then
+		local c = math.random(1,3)
+		for i=1,c do
+			local lower_x = -self.velocity.y/3 < 1+self.velocity.y/3 and -self.velocity.y/3 or 1+self.velocity.y/3
+			local higher_x = (not(-self.velocity.y/3 < 1+self.velocity.y/3)) and -self.velocity.y/3 or 1+self.velocity.y/3
+			local lower_y = -self.velocity.x/3 < 1+self.velocity.x/3 and -self.velocity.x/3 or 1+self.velocity.x/3
+			local higher_y = (not(-self.velocity.x/3 < 1+self.velocity.x/3)) and -self.velocity.x/3 or 1+self.velocity.x/3
+			local d_vel = vmath.vector3(10+math.random(lower_x, higher_x), 
+										10+math.random(lower_y, higher_y), 0)
+			local id = factory.create("/manager#asteroid_factory", go.get_position(), nil, {size = self.size-1, velocity = self.velocity + d_vel}, 1)
+		end
+	end
 end
 
 function init(self)
@@ -192,8 +204,8 @@ function init(self)
 	go.set("#mesh", "color", vmath.vector4(math.random(), math.random(), math.random(), 1))
 	go.animate("#mesh", "color", go.PLAYBACK_LOOP_PINGPONG, vmath.vector4(math.random(), math.random(), math.random(), 1), go.EASING_INOUTSINE, 5)
 	
-	self.vel = vmath.vector3(300, 150, 0)
-	self.size = math.random(1, 3)
+	self.dying = false
+	self.min_life = 1.5
 
 	self.vertices = {}
 	generate_vertices(self, 8 + self.size, self.scale * self.size, 0.1, 1, 0.25)
@@ -214,12 +226,13 @@ end
 
 function update(self, dt)
 	local pos = go.get_position()
-	self.vel.y = math.sin(pos.x / 250) * 150
-	pos = pos + self.vel * dt
-	if pos.x > 2100 or pos.y > 1200 then
+	pos = pos + self.velocity * dt
+	if (pos.x > 500 or pos.y > 1200) and not self.dying and self.min_life <= 0 then
+		self.dying = true
 		death(self)
 	end
 	go.set_position(pos)
+	self.min_life = self.min_life - dt
 	
 	self.angle = self.angle + dt
 	rotate(self)

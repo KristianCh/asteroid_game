@@ -11,8 +11,8 @@ background_color {
 }
 nodes {
   position {
-    x: 979.0
-    y: 957.0
+    x: 960.0
+    y: 967.0
     z: 0.0
     w: 1.0
   }
@@ -74,8 +74,8 @@ nodes {
 }
 nodes {
   position {
-    x: 592.0
-    y: 578.0
+    x: 100.0
+    y: 50.0
     z: 0.0
     w: 1.0
   }
@@ -136,8 +136,8 @@ nodes {
 }
 nodes {
   position {
-    x: 817.0
-    y: 568.0
+    x: 300.0
+    y: 50.0
     z: 0.0
     w: 1.0
   }
@@ -198,8 +198,8 @@ nodes {
 }
 nodes {
   position {
-    x: 1035.0
-    y: 568.0
+    x: 500.0
+    y: 50.0
     z: 0.0
     w: 1.0
   }
@@ -260,8 +260,8 @@ nodes {
 }
 nodes {
   position {
-    x: 1253.0
-    y: 576.0
+    x: 700.0
+    y: 50.0
     z: 0.0
     w: 1.0
   }
@@ -322,8 +322,8 @@ nodes {
 }
 nodes {
   position {
-    x: 1514.0
-    y: 555.0
+    x: 900.0
+    y: 50.0
     z: 0.0
     w: 1.0
   }

@@ -191,9 +191,9 @@ embedded_components {
   }
 }
 embedded_components {
-  id: "factory"
+  id: "child_asteroid_factory"
   type: "factory"
-  data: "prototype: \"/game_objects/asteroids/base_asteroid.go\"\n"
+  data: "prototype: \"/game_objects/ships/base_ship.go\"\n"
   "load_dynamically: false\n"
   ""
   position {
