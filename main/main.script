@@ -25,7 +25,6 @@ end
 
 function update(self, dt)
 	start_time = start_time + dt
-	--go.set("/merge_framebuffers_quad#model", "time.", vmath.vector4(start_time, 0, 0, 0))
 	msg.post("@render:", "set_time", {start_time})
 end
 

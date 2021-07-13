@@ -63,10 +63,6 @@ function update(self, dt)
 	go.set_position(pos)
 end
 
-function on_message(self, message_id, message, sender)
-	
-end
-
 function on_input(self, action_id, action)
 	-- Add input-handling code here. The game object this script is attached to
 	-- must have acquired input focus:

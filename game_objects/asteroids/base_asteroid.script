@@ -1,10 +1,9 @@
 go.property("size", 3)
 go.property("scale", 12)
 go.property("color", vmath.vector4(1, 1, 1, 1))
-go.property("velocity", vmath.vector3(300, 0, 0))
 go.property("health", 100)
-go.property("angle", 0)
 go.property("buffer_index", 1)
+go.property("collision_timeout", 0.5)
 go.property("found_buffer", false)
 go.property("buffer1", resource.buffer("/game_objects/asteroids/buffers/empty1.buffer")) 
 go.property("buffer2", resource.buffer("/game_objects/asteroids/buffers/empty2.buffer")) 
@@ -154,15 +153,6 @@ local function fill_buffer_data(self, vertices)
 	resource.set_buffer(go.get("#mesh", "vertices"), self.vertex_buffer)
 end
 
-local function rotate(self) 
-	local rot_mtx = vmath.matrix4_rotation_z(self.angle)
-	local rot_vertices = {}
-	for i=1,#self.vertices do
-		rot_vertices[i] = rot_mtx * self.vertices[i]
-	end
-	fill_buffer_data(self, rot_vertices)
-end
-
 local function emitter_state_change(self, id, emitter, state)
 	if emitter == hash("death_fx") and state == particlefx.EMITTER_STATE_POSTSPAWN then
 		go.delete()
@@ -175,13 +165,17 @@ local function death(self)
 	if self.size > 1 then
 		local c = math.random(1,3)
 		for i=1,c do
-			local lower_x = -self.velocity.y/3 < 1+self.velocity.y/3 and -self.velocity.y/3 or 1+self.velocity.y/3
-			local higher_x = (not(-self.velocity.y/3 < 1+self.velocity.y/3)) and -self.velocity.y/3 or 1+self.velocity.y/3
-			local lower_y = -self.velocity.x/3 < 1+self.velocity.x/3 and -self.velocity.x/3 or 1+self.velocity.x/3
-			local higher_y = (not(-self.velocity.x/3 < 1+self.velocity.x/3)) and -self.velocity.x/3 or 1+self.velocity.x/3
+			local velocity = go.get("#co" .. self.size, "linear_velocity")
+			local angular_velocity = go.get("#co" .. self.size, "angular_velocity")
+			local lower_x = -velocity.y/3 < 1+velocity.y/3 and -velocity.y/3 or 1+velocity.y/3
+			local higher_x = (not(-velocity.y/3 < 1+velocity.y/3)) and -velocity.y/3 or 1+velocity.y/3
+			local lower_y = -velocity.x/3 < 1+velocity.x/3 and -velocity.x/3 or 1+velocity.x/3
+			local higher_y = (not(-velocity.x/3 < 1+velocity.x/3)) and -velocity.x/3 or 1+velocity.x/3
 			local d_vel = vmath.vector3(10+math.random(lower_x, higher_x), 
 										10+math.random(lower_y, higher_y), 0)
-			local id = factory.create("/manager#asteroid_factory", go.get_position(), nil, {size = self.size-1, velocity = self.velocity + d_vel}, 1)
+			local id = factory.create("/manager#asteroid_factory", go.get_position(), nil, {size = self.size-1}, 1)
+			go.set(msg.url(nil, id, "co" .. self.size-1), "linear_velocity", velocity + d_vel)
+			go.set(msg.url(nil, id, "co" .. self.size-1), "angular_velocity", angular_velocity)
 		end
 	end
 end
@@ -220,22 +214,49 @@ function init(self)
 	})
 
 	self.positions = buffer.get_stream(self.vertex_buffer, "position")
-
 	fill_buffer_data(self, self.vertices)
+
+	msg.post("#co1", "disable")
+	msg.post("#co2", "disable")
+	msg.post("#co3", "disable")
+	msg.post("#co" .. self.size, "enable")	
 end
 
 function update(self, dt)
 	local pos = go.get_position()
-	pos = pos + self.velocity * dt
-	if (pos.x > 500 or pos.y > 1200) and not self.dying and self.min_life <= 0 then
+
+	if self.collision_timeout > 0 then
+		self.collision_timeout = self.collision_timeout - dt
+	end
+
+	if self.health < 0 and not self.dying then
+		local velocity = go.get("#co" .. self.size, "linear_velocity")
+		local angular_velocity = go.get("#co" .. self.size, "angular_velocity")
+		msg.post("#co" .. self.size, "disable")	
+		msg.post("#co_death", "enable")
+		go.set("#co_death", "linear_velocity", velocity)
+		go.set("#co_death", "angular_velocity", angular_velocity)
 		self.dying = true
 		death(self)
 	end
-	go.set_position(pos)
-	self.min_life = self.min_life - dt
-	
-	self.angle = self.angle + dt
-	rotate(self)
+
+	local width, height = window.get_size()
+	local force = (vmath.vector3(width/2, height/2, 0) - pos) / 2
+	if not (pos.x < width * (3/4) and pos.x > width / 4 and pos.y < height * (3/4) and pos.y > height / 4) then
+		msg.post("#co" .. self.size, "apply_force", {force = force, position = pos})
+	end
+end
+
+function on_message(self, message_id, message, sender)
+	if message_id == hash("contact_point_response") then
+		if message.other_group == hash("ship") and self.collision_timeout <= 0 then
+			self.collision_timeout = 0.5
+			pprint(message)
+			self.health = self.health - vmath.length(message.relative_velocity) / go.get("#co" .. self.size, "mass")
+			msg.post("#co" .. self.size, "apply_force", {force = message.normal * (10 + vmath.length(message.relative_velocity)), 
+				position = message.position})
+		end	
+	end
 end
 
 function final(self)

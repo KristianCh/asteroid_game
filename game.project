@@ -29,7 +29,7 @@ app_icon = /assets/app_icons/appicon.icns
 input_method = HiddenInputField
 
 [physics]
-gravity_y = -1000.0
+gravity_y = 0.0
 scale = 0.01
 
 [graphics]
