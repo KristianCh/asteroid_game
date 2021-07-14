@@ -6,8 +6,8 @@ HEIGHT = 1017
 local function window_resized(self, event, data)
 	if event == window.WINDOW_EVENT_RESIZED then
 		if data.width ~= 0 and data.height ~= 0 then
-			WIDTH = data.width
-			HEIGHT = data.height
+			--WIDTH = data.width
+			--HEIGHT = data.height
 			go.set("/fleet/border_bottom_left", "position", vmath.vector3(0, 0, 0))
 			go.set("/fleet/border_top_right", "position", vmath.vector3(WIDTH, HEIGHT, 0))
 		end

@@ -200,6 +200,7 @@ function init(self)
 	
 	self.dying = false
 	self.min_life = 1.5
+	self.screen_dimensions = vmath.vector3(1920, 1017, 0)
 
 	self.vertices = {}
 	generate_vertices(self, 8 + self.size, self.scale * self.size, 0.1, 1, 0.25)
@@ -240,9 +241,10 @@ function update(self, dt)
 		death(self)
 	end
 
-	local width, height = window.get_size()
-	local force = (vmath.vector3(width/2, height/2, 0) - pos) / 2
-	if not (pos.x < width * (3/4) and pos.x > width / 4 and pos.y < height * (3/4) and pos.y > height / 4) then
+	--msg.post("main:/manager", "get_updated_screen_dimensions")
+	print(self.screen_dimensions)
+	local force = (vmath.vector3(self.screen_dimensions.x/2, self.screen_dimensions.y/2, 0) - pos) / 2
+	if not (pos.x < self.screen_dimensions.x * (3/4) and pos.x > self.screen_dimensions.x / 4 and pos.y < self.screen_dimensions.y * (3/4) and pos.y > self.screen_dimensions.y / 4) then
 		msg.post("#co" .. self.size, "apply_force", {force = force, position = pos})
 	end
 end
@@ -251,11 +253,12 @@ function on_message(self, message_id, message, sender)
 	if message_id == hash("contact_point_response") then
 		if message.other_group == hash("ship") and self.collision_timeout <= 0 then
 			self.collision_timeout = 0.5
-			pprint(message)
 			self.health = self.health - vmath.length(message.relative_velocity) / go.get("#co" .. self.size, "mass")
 			msg.post("#co" .. self.size, "apply_force", {force = message.normal * (10 + vmath.length(message.relative_velocity)), 
 				position = message.position})
 		end	
+	elseif message_id == hash("update_screen_dimensions") then
+		self.screen_dimensions = message.screen_dimensions
 	end
 end
 

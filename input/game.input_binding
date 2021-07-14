@@ -35,7 +35,7 @@ key_trigger {
   action: "space"
 }
 key_trigger {
-  input: KEY_KP_SUBTRACT
+  input: KEY_BACKSPACE
   action: "debug"
 }
 mouse_trigger {

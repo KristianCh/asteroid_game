@@ -1,3 +1,5 @@
+go.property("screen_dimensions", vmath.vector3(1920, 1017, 0))
+
 local message_to_loaded_collection = {}
 local settings_disabled_proxy = ""
 local current_active_proxy = ""
@@ -6,6 +8,7 @@ local start_time = 0
 
 local function window_resized(self, event, data)
 	if event == window.WINDOW_EVENT_RESIZED then
+		self.screen_dimensions = vmath.vector3(data.width, data.height, 0)
 		print("Window resized: ", data.width, data.height)
 	end
 end
@@ -17,6 +20,7 @@ function init(self)
 	math.randomseed(os.clock()*100000000000)
 	window.set_listener(window_resized)
 	defos.set_maximized(true)
+	defos.set_fullscreen(false)
 	--defos.disable_window_resize()
 
 	msg.post("#main_menu_proxy", "load")
@@ -26,6 +30,10 @@ end
 function update(self, dt)
 	start_time = start_time + dt
 	msg.post("@render:", "set_time", {start_time})
+
+	local width, height = window.get_size()
+	msg.post("@render:", "draw_line", {start_point = vmath.vector3(0, 0, 0), end_point = vmath.vector3(width, height, 0), color = vmath.vector4(0, 0, 1, 1)})
+	msg.post("@render:", "draw_line", {start_point = vmath.vector3(0, 0, 0), end_point = vmath.vector3(1920, 1017, 0), color = vmath.vector4(1, 0, 0, 1)})
 end
 
 function on_message(self, message_id, message, sender)
@@ -117,6 +125,8 @@ function on_message(self, message_id, message, sender)
 
 		msg.post("#main_menu_proxy", "load")
 		current_active_proxy = "#main_menu_proxy"	
+	elseif message_id == hash("get_updated_screen_dimensions") then
+		msg.post(sender, "update_screen_dimensions", {screen_dimensions = self.screen_dimensions})
 	end
 end
 
