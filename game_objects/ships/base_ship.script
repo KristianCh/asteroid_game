@@ -15,7 +15,7 @@ function final(self)
 end
 
 function update(self, dt)
-	local max_x, max_y = 1920, 1017 --window.get_size()
+	local max_x, max_y = 1920, 1017
 	local pos = go.get_position()
 	
 	if pos.x > max_x then
@@ -36,8 +36,6 @@ function update(self, dt)
 	if dist_to_target == 0 then
 		vec_to_target = vmath.vector3(0, 1, 0)
 	end
-	--msg.post("@render:", "draw_line", {start_point = pos, end_point = self.target_pos, color = vmath.vector4(0, 0, 1, 1)})
-	--msg.post("@render:", "draw_line", {start_point = pos, end_point = pos + self.heading*self.speed, color = vmath.vector4(0, 0, 1, 1)})
 	self.heading = vmath.normalize(vmath.slerp(self.evasion * dt, self.heading, vec_to_target))
 	local angle = math.deg(math.atan2(self.heading.y, self.heading.x)) - 90
 	go.set(".", "euler.z", angle)

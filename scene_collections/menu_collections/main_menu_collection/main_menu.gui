@@ -44,8 +44,8 @@ nodes {
   blend_mode: BLEND_MODE_ALPHA
   texture: ""
   id: "new_game_button"
-  xanchor: XANCHOR_LEFT
-  yanchor: YANCHOR_TOP
+  xanchor: XANCHOR_NONE
+  yanchor: YANCHOR_NONE
   pivot: PIVOT_CENTER
   adjust_mode: ADJUST_MODE_FIT
   layer: ""
@@ -161,8 +161,8 @@ nodes {
   blend_mode: BLEND_MODE_ALPHA
   texture: ""
   id: "continue_game_button"
-  xanchor: XANCHOR_LEFT
-  yanchor: YANCHOR_TOP
+  xanchor: XANCHOR_NONE
+  yanchor: YANCHOR_NONE
   pivot: PIVOT_CENTER
   adjust_mode: ADJUST_MODE_FIT
   layer: ""
@@ -278,8 +278,8 @@ nodes {
   blend_mode: BLEND_MODE_ALPHA
   texture: ""
   id: "exit_button"
-  xanchor: XANCHOR_LEFT
-  yanchor: YANCHOR_TOP
+  xanchor: XANCHOR_NONE
+  yanchor: YANCHOR_NONE
   pivot: PIVOT_CENTER
   adjust_mode: ADJUST_MODE_FIT
   layer: ""
@@ -395,8 +395,8 @@ nodes {
   blend_mode: BLEND_MODE_ALPHA
   texture: ""
   id: "settings_button"
-  xanchor: XANCHOR_LEFT
-  yanchor: YANCHOR_TOP
+  xanchor: XANCHOR_NONE
+  yanchor: YANCHOR_NONE
   pivot: PIVOT_CENTER
   adjust_mode: ADJUST_MODE_FIT
   layer: ""

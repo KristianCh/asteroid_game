@@ -1,7 +1,13 @@
 go.property("enemies", {})
 
+local function url_to_hash(url)
+	local str =  hash_to_hex(url.socket or hash("")) .. hash_to_hex(url.path) .. hash_to_hex(url.fragment or hash(""))
+	return hash(str)
+end
+
 function init(self)
 	msg.post(".", "acquire_input_focus")
+	self.enemies = {}
 end
 
 function final(self)
@@ -14,9 +20,13 @@ function update(self, dt)
 end
 
 function on_message(self, message_id, message, sender)
-	-- Add message-handling code here
-	-- Learn more: https://defold.com/manuals/message-passing/
-	-- Remove this function if not needed
+	if message_id == hash("enemy_created") then
+		self.enemies[url_to_hash(sender)] = 1
+		pprint(self.enemies, "created", url_to_hash(sender))
+	elseif message_id == hash("enemy_destroyed") then
+		self.enemies[url_to_hash(sender)] = nil
+		pprint(self.enemies, "destroyed", url_to_hash(sender))
+	end
 end
 
 function on_input(self, action_id, action)
@@ -24,14 +34,14 @@ function on_input(self, action_id, action)
 		local width, height = 1920, 1017 -- window.get_size()
 		if math.random() > 0.5 then
 			local lr = math.random(0, 1)
-			local p = vmath.vector3(-50 + (width+100) * lr, math.random(-50, height+50), 0)
-			local id = factory.create("#asteroid_factory", p, nil)
+			local p = vmath.vector3(-100 + (width+200) * lr, math.random(-100, height+100), 0)
+			local id = factory.create("#asteroid_factory", p, nil, {initial_slowdown = 2})
 			local velocity = vmath.vector3(0, math.random(-height, height), 0)
 			local url = msg.url(nil, id, "co3")
 			msg.post(url, "apply_force", {force = velocity * 30, position = p + vmath.vector3(math.random(-20, 20), math.random(-20, 20), 0)})
 		else 
 			local ud = math.random(0, 1)
-			local p = vmath.vector3(math.random(-50, width+50), -50 + (height+100) * ud, 0)
+			local p = vmath.vector3(math.random(-100, width+100), -100 + (height+200) * ud, 0)
 			local id = factory.create("#asteroid_factory", p, nil)
 			local velocity = vmath.vector3(math.random(-width, width), 0, 0)
 			local url = msg.url(nil, id, "co3")

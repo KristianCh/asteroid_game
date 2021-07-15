@@ -24,7 +24,7 @@ function init(self)
 	--defos.disable_window_resize()
 
 	msg.post("#main_menu_proxy", "load")
-	current_active_proxy = "#main_menu_proxy"
+	current_active_proxy = "#main_menu_proxy"	
 end
 
 function update(self, dt)
@@ -32,8 +32,6 @@ function update(self, dt)
 	msg.post("@render:", "set_time", {start_time})
 
 	local width, height = window.get_size()
-	msg.post("@render:", "draw_line", {start_point = vmath.vector3(0, 0, 0), end_point = vmath.vector3(width, height, 0), color = vmath.vector4(0, 0, 1, 1)})
-	msg.post("@render:", "draw_line", {start_point = vmath.vector3(0, 0, 0), end_point = vmath.vector3(1920, 1017, 0), color = vmath.vector4(1, 0, 0, 1)})
 end
 
 function on_message(self, message_id, message, sender)

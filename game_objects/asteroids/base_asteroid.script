@@ -5,6 +5,7 @@ go.property("health", 100)
 go.property("buffer_index", 1)
 go.property("collision_timeout", 0.5)
 go.property("found_buffer", false)
+go.property("initial_slowdown", 0)
 go.property("buffer1", resource.buffer("/game_objects/asteroids/buffers/empty1.buffer")) 
 go.property("buffer2", resource.buffer("/game_objects/asteroids/buffers/empty2.buffer")) 
 go.property("buffer3", resource.buffer("/game_objects/asteroids/buffers/empty3.buffer")) 
@@ -221,6 +222,7 @@ function init(self)
 	msg.post("#co2", "disable")
 	msg.post("#co3", "disable")
 	msg.post("#co" .. self.size, "enable")	
+	msg.post("/manager", "enemy_created")
 end
 
 function update(self, dt)
@@ -240,12 +242,17 @@ function update(self, dt)
 		self.dying = true
 		death(self)
 	end
-
-	--msg.post("main:/manager", "get_updated_screen_dimensions")
-	print(self.screen_dimensions)
-	local force = (vmath.vector3(self.screen_dimensions.x/2, self.screen_dimensions.y/2, 0) - pos) / 2
+	
+	local div = 1
+	if self.initial_slowdown > 0 then
+		div = div + self.initial_slowdown
+		self.initial_slowdown = self.initial_slowdown - dt/3
+	end
+	local force = (vmath.vector3(self.screen_dimensions.x/2, self.screen_dimensions.y/2, 0) - pos) / 2 / div
 	if not (pos.x < self.screen_dimensions.x * (3/4) and pos.x > self.screen_dimensions.x / 4 and pos.y < self.screen_dimensions.y * (3/4) and pos.y > self.screen_dimensions.y / 4) then
 		msg.post("#co" .. self.size, "apply_force", {force = force, position = pos})
+	else 
+		msg.post("#co" .. self.size, "apply_force", {force = force * 0.1, position = pos})
 	end
 end
 
@@ -264,7 +271,8 @@ end
 
 function final(self)
 	if self.found_buffer then
-		available_buffers[self.buffer_index] = 1
+		available_buffers[self.buffer_index] = 1	
+		msg.post("/manager", "enemy_destroyed")
 	else
 		print("No buffer available")
 	end
