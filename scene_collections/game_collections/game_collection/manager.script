@@ -8,6 +8,7 @@ end
 function init(self)
 	msg.post(".", "acquire_input_focus")
 	self.enemies = {}
+	self.enemy_count = 0
 end
 
 function final(self)
@@ -21,11 +22,28 @@ end
 
 function on_message(self, message_id, message, sender)
 	if message_id == hash("enemy_created") then
-		self.enemies[url_to_hash(sender)] = 1
-		pprint(self.enemies, "created", url_to_hash(sender))
+		self.enemies[url_to_hash(sender)] = sender
+		self.enemy_count = self.enemy_count + 1
 	elseif message_id == hash("enemy_destroyed") then
 		self.enemies[url_to_hash(sender)] = nil
-		pprint(self.enemies, "destroyed", url_to_hash(sender))
+		self.enemy_count = self.enemy_count - 1
+	elseif message_id == hash("target_closest_enemy") then
+		if self.enemy_count > 0 then 
+			local shortest_distance = 100000000
+			local enemy_url = msg.url()
+			local found = false
+			for k, v in pairs(self.enemies) do
+				local distance = vmath.length(go.get_position(v) - message.pos)
+				if distance < shortest_distance and distance < message.range then
+					enemy_url = v
+					shortest_distance = vmath.length(go.get_position(v) - message.pos)
+					found = true
+				end
+			end
+			msg.post(sender, "target_enemy_response", {found = found, enemy = enemy_url, mult = message.mult})
+		else 
+			msg.post(sender, "target_enemy_response", {found = false})
+		end
 	end
 end
 

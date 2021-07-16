@@ -2,6 +2,7 @@ go.property("size", 3)
 go.property("scale", 12)
 go.property("color", vmath.vector4(1, 1, 1, 1))
 go.property("health", 100)
+go.property("max_health", 100)
 go.property("buffer_index", 1)
 go.property("collision_timeout", 0.5)
 go.property("found_buffer", false)
@@ -163,6 +164,7 @@ end
 local function death(self) 
 	particlefx.play("#asteroid_pfx", emitter_state_change)	
 	particlefx.set_constant("#asteroid_pfx", "death_fx", "tint", go.get("#mesh", "color"))
+	msg.post("#health_display", "set_health", {health = 0, max_health = self.max_health})
 	if self.size > 1 then
 		local c = math.random(1,3)
 		for i=1,c do
@@ -201,7 +203,10 @@ function init(self)
 	
 	self.dying = false
 	self.min_life = 1.5
+	self.health = 100 * self.size
+	self.max_health = 100 * self.size
 	self.screen_dimensions = vmath.vector3(1920, 1017, 0)
+	msg.post("#health_display", "set_scale", {scale = vmath.vector3(self.size / 2.5)})
 
 	self.vertices = {}
 	generate_vertices(self, 8 + self.size, self.scale * self.size, 0.1, 1, 0.25)
@@ -227,6 +232,7 @@ end
 
 function update(self, dt)
 	local pos = go.get_position()
+	msg.post("#health_display", "set_pos", {pos = pos})
 
 	if self.collision_timeout > 0 then
 		self.collision_timeout = self.collision_timeout - dt
@@ -263,9 +269,13 @@ function on_message(self, message_id, message, sender)
 			self.health = self.health - vmath.length(message.relative_velocity) / go.get("#co" .. self.size, "mass")
 			msg.post("#co" .. self.size, "apply_force", {force = message.normal * (10 + vmath.length(message.relative_velocity)), 
 				position = message.position})
+			msg.post("#health_display", "set_health", {health = self.health, max_health = self.max_health})
 		end	
 	elseif message_id == hash("update_screen_dimensions") then
 		self.screen_dimensions = message.screen_dimensions
+	elseif message_id == hash("damage_asteroid") then
+		self.health = self.health - message.damage
+		msg.post("#health_display", "set_health", {health = self.health, max_health = self.max_health})
 	end
 end
 

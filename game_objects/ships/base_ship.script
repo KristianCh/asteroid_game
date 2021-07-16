@@ -3,8 +3,20 @@ go.property("heading", vmath.vector3(0, 1, 0))
 go.property("speed", 250)
 go.property("visibility_range", 150)
 go.property("evasion", 2)
+go.property("targeting_range", 500)
+go.property("level", 1)
+go.property("type", 1)
 
 function init(self)
+	self.init_type = battleship_init
+	self.update_type = battleship_update
+	self.target_type = battleship_target
+	if self.type == 2 then
+		self.init_type = laser_cutter_init
+		self.update_type = laser_cutter_update
+		self.target_type = laser_cutter_target
+	end
+	self.init_type(self)	
 	
 end
 
@@ -59,22 +71,46 @@ function update(self, dt)
 	end
 	pos = pos + self.heading * res_speed * dt
 	go.set_position(pos)
+
+	self.update_type(self, dt)
 end
 
-function on_input(self, action_id, action)
-	-- Add input-handling code here. The game object this script is attached to
-	-- must have acquired input focus:
-	--
-	--    msg.post(".", "acquire_input_focus")
-	--
-	-- All mapped input bindings will be received. Mouse and touch input will
-	-- be received regardless of where on the screen it happened.
-	-- Learn more: https://defold.com/manuals/input/
-	-- Remove this function if not needed
+function on_message(self, message_id, message, sender)
+	if message_id == hash("target_enemy_response") then
+		if message.found then
+			self.target_type(self, message)
+			--msg.post("@render:", "draw_line", {start_point = go.get_position(), end_point = go.get_position(message.enemy), color = vmath.vector4(1, 0, 0, 1)})
+		end
+	end
 end
 
-function on_reload(self)
-	-- Add reload-handling code here
-	-- Learn more: https://defold.com/manuals/hot-reload/
-	-- Remove this function if not needed
+function laser_cutter_init(self) 
+	print("init")
 end
+
+function laser_cutter_update(self, dt)
+	msg.post("/manager", "target_closest_enemy", {pos = go.get_position(), range = self.targeting_range, mult = dt})
+end
+
+function laser_cutter_target(self, target) 
+	if target.found then
+		local range_falloff = math.sqrt(1 - (vmath.length(go.get_position(target.enemy) - go.get_position()) / self.targeting_range))
+		msg.post(target.enemy, "damage_asteroid", {damage = 30 * target.mult * self.level})
+		msg.post("@render:", "draw_line", {start_point = go.get_position(), end_point = go.get_position(target.enemy), color = vmath.vector4(1 * math.pow(range_falloff, 3), 0, 0, 1)})
+	end
+end
+
+function battleship_init(self) 
+
+end
+
+function battleship_update(self, dt)
+	
+end
+
+function battleship_target(self, target) 
+	
+end
+
+
+
