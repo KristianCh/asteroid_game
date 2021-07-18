@@ -86,17 +86,25 @@ end
 
 function laser_cutter_init(self) 
 	print("init")
+	self.target_offset = vmath.vector3(0, 0, 0)
 end
 
 function laser_cutter_update(self, dt)
-	msg.post("/manager", "target_closest_enemy", {pos = go.get_position(), range = self.targeting_range, mult = dt})
+	self.target_offset = vmath.lerp(dt, self.target_offset, vmath.vector3(0, 0, 0))
+	msg.post("/manager", "target_closest_enemy", {pos = go.get_position(), range = self.targeting_range, dt = dt})
 end
 
 function laser_cutter_target(self, target) 
+	local range_falloff = 1
 	if target.found then
-		local range_falloff = math.sqrt(1 - (vmath.length(go.get_position(target.enemy) - go.get_position()) / self.targeting_range))
-		msg.post(target.enemy, "damage_asteroid", {damage = 30 * target.mult * self.level})
-		msg.post("@render:", "draw_line", {start_point = go.get_position(), end_point = go.get_position(target.enemy), color = vmath.vector4(1 * math.pow(range_falloff, 3), 0, 0, 1)})
+		self.target_offset = vmath.lerp(target.dt * 30, self.target_offset, go.get_position(target.enemy) - go.get_position())
+		local target_pos = go.get_position() + self.target_offset
+		range_falloff = math.sqrt(1 - (vmath.length(go.get_position(target.enemy) - go.get_position()) / self.targeting_range))
+		msg.post(target.enemy, "damage_asteroid", {damage = 30 * target.dt * self.level})
+		msg.post("@render:", "draw_line", {start_point = go.get_position(), end_point = go.get_position() + self.target_offset, color = vmath.vector4(1 * math.pow(range_falloff, 3), 0, 0, 1)})
+	end
+	if vmath.length(self.target_offset) > 1 then
+		--msg.post("@render:", "draw_line", {start_point = go.get_position(), end_point = go.get_position() + self.target_offset, color = vmath.vector4(1 * math.pow(range_falloff, 3), 0, 0, 1)})
 	end
 end
 

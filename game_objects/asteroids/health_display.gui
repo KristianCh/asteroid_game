@@ -1,4 +1,4 @@
-script: "/game_objects/asteroids/buffers/health_display.gui_script"
+script: "/game_objects/asteroids/health_display.gui_script"
 background_color {
   x: 0.0
   y: 0.0
@@ -53,7 +53,7 @@ nodes {
   clipping_mode: CLIPPING_MODE_NONE
   clipping_visible: true
   clipping_inverted: false
-  alpha: 0.5
+  alpha: 0.1
   template_node_child: false
   size_mode: SIZE_MODE_MANUAL
 }
@@ -111,6 +111,6 @@ nodes {
   template_node_child: false
   size_mode: SIZE_MODE_AUTO
 }
-material: "/builtins/materials/gui.material"
+material: "/render/shaders/object_shaders/gui_modeltype.material"
 adjust_reference: ADJUST_REFERENCE_PARENT
 max_nodes: 512

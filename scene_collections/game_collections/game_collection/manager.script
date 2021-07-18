@@ -40,7 +40,7 @@ function on_message(self, message_id, message, sender)
 					found = true
 				end
 			end
-			msg.post(sender, "target_enemy_response", {found = found, enemy = enemy_url, mult = message.mult})
+			msg.post(sender, "target_enemy_response", {found = found, enemy = enemy_url, dt = message.dt})
 		else 
 			msg.post(sender, "target_enemy_response", {found = false})
 		end

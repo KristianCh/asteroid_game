@@ -1,3 +1,4 @@
+
 function update(self, dt)
 	local fill_angle = gui.get_fill_angle(gui.get_node("pie"))
 	local target_fill_angle = gui.get_scale(gui.get_node("target_fill_angle"))
@@ -14,5 +15,6 @@ function on_message(self, message_id, message, sender)
 		gui.set_scale(gui.get_node("target_fill_angle"), vmath.vector3(angle * 360, 1, 1))
 	elseif message_id == hash("set_scale") then
 		gui.set_scale(gui.get_node("pie"), message.scale)
+		gui.set_inner_radius(gui.get_node("pie"), 55 + (1.2 - message.scale.x) * 7)
 	end	
 end
