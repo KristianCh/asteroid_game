@@ -17,13 +17,11 @@ function init(self)
 		self.target_type = laser_cutter_target
 	end
 	self.init_type(self)	
-	
+	msg.post("/manager", "ship_created")
 end
 
 function final(self)
-	-- Add finalization code here
-	-- Learn more: https://defold.com/manuals/script/
-	-- Remove this function if not needed
+	msg.post("/manager", "ship_destroyed")
 end
 
 function update(self, dt)

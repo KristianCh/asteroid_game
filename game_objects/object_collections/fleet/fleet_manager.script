@@ -17,6 +17,7 @@ end
 function init(self)
 	msg.post(".", "acquire_input_focus")
 	self.vel = vmath.vector3()
+	self.mouse_pos = vmath.vector3(WIDTH/2, HEIGHT/2, 0)
 
 	window.set_listener(window_resized)
 end
@@ -42,7 +43,7 @@ function update(self, dt)
 		pos.y = HEIGHT/10
 	end
 	
-	pos = pos + self.vel * dt
+	pos = vmath.lerp(dt * 10, pos, self.mouse_pos)--pos + self.vel * dt
 	go.set("/fleet/target_position", "position", pos)
 
 	self.vel.x = 0
@@ -64,6 +65,8 @@ function on_input(self, action_id, action)
 		self.vel.x = -self.target_speed -- <8>
 	elseif action_id == hash("right") then
 		self.vel.x = self.target_speed
+	else
+		self.mouse_pos = vmath.vector3(action.x, action.y, 0)
 	end
 end
 

@@ -1,5 +1,3 @@
-go.property("enemies", {})
-
 local function url_to_hash(url)
 	local str =  hash_to_hex(url.socket or hash("")) .. hash_to_hex(url.path) .. hash_to_hex(url.fragment or hash(""))
 	return hash(str)
@@ -9,6 +7,8 @@ function init(self)
 	msg.post(".", "acquire_input_focus")
 	self.enemies = {}
 	self.enemy_count = 0
+	self.ships = {}
+	self.ship_count = 0
 end
 
 function final(self)
@@ -27,6 +27,12 @@ function on_message(self, message_id, message, sender)
 	elseif message_id == hash("enemy_destroyed") then
 		self.enemies[url_to_hash(sender)] = nil
 		self.enemy_count = self.enemy_count - 1
+	elseif message_id == hash("ship_created") then
+		self.ships[url_to_hash(sender)] = sender
+		self.ship_count = self.ship_count + 1
+	elseif message_id == hash("ship_destroyed") then
+		self.ships[url_to_hash(sender)] = nil
+		self.ship_count = self.ship_count - 1
 	elseif message_id == hash("target_closest_enemy") then
 		if self.enemy_count > 0 then 
 			local shortest_distance = 100000000
@@ -43,6 +49,23 @@ function on_message(self, message_id, message, sender)
 			msg.post(sender, "target_enemy_response", {found = found, enemy = enemy_url, dt = message.dt})
 		else 
 			msg.post(sender, "target_enemy_response", {found = false})
+		end
+	elseif message_id == hash("target_closest_ship") then
+		if self.ship_count > 0 then 
+			local shortest_distance = 100000000
+			local ship_url = msg.url()
+			local found = false
+			for k, v in pairs(self.ships) do
+				local distance = vmath.length(go.get_position(v) - message.pos)
+				if distance < shortest_distance and distance < message.range then
+					ship_url = v
+					shortest_distance = vmath.length(go.get_position(v) - message.pos)
+					found = true
+				end
+			end
+			msg.post(sender, "target_ship_response", {found = found, ship = ship_url, dt = message.dt})
+		else 
+			msg.post(sender, "target_ship_response", {found = false})
 		end
 	end
 end

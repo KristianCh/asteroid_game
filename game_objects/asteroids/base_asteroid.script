@@ -247,11 +247,6 @@ end
 
 function update(self, dt)
 	local pos = go.get_position()
-	x, y = window.get_size()
-	local normalized_pos = vmath.vector3(pos.x / x, pos.y / y, 0)
-	print(x, y, pos, vmath.vector3(normalized_pos.x * 1920, normalized_pos.y * 1080, 0))
-	--msg.post("#health_display", "set_pos", {pos = vmath.vector3(normalized_pos.x * 1920, normalized_pos.y * 1080, 0)})
-	--print(vmath.normalize(pos) * vmath.vector3(1920, 1080, 0))
 	msg.post("#health_display", "set_pos", {pos = pos})
 
 	if self.collision_timeout > 0 then
@@ -274,12 +269,14 @@ function update(self, dt)
 		div = div + self.initial_slowdown
 		self.initial_slowdown = self.initial_slowdown - dt/3
 	end
-	local force = (vmath.vector3(self.screen_dimensions.x/2, self.screen_dimensions.y/2, 0) - pos) / 2 / div
+	local force = (vmath.vector3(self.screen_dimensions.x/2, self.screen_dimensions.y/2, 0) - pos) / div * dt * 80
 	if not (pos.x < self.screen_dimensions.x * (3/4) and pos.x > self.screen_dimensions.x / 4 and pos.y < self.screen_dimensions.y * (3/4) and pos.y > self.screen_dimensions.y / 4) then
 		msg.post("#co" .. self.size, "apply_force", {force = force, position = pos})
 	else 
 		msg.post("#co" .. self.size, "apply_force", {force = force * 0.1, position = pos})
 	end
+
+	self.type_update(self, dt)
 end
 
 function on_message(self, message_id, message, sender)
@@ -297,6 +294,7 @@ function on_message(self, message_id, message, sender)
 		self.health = self.health - message.damage
 		msg.post("#health_display", "set_health", {health = self.health, max_health = self.max_health})
 	end
+	self.type_message_handling(self, message_id, message, sender)
 end
 
 function final(self)
@@ -318,11 +316,24 @@ function magnetic_init(self)
 end
 
 function magnetic_update(self, dt) 
-
+	msg.post("/manager", "target_closest_ship", {pos = go.get_position(), range = 1000, dt = dt})
 end
 
 function magnetic_message_handling(self, message_id, message, sender) 
-
+	if message_id == hash("target_ship_response") then
+		if message.found then
+			local vector_to_target = vmath.normalize(go.get_position(message.ship) - go.get_position())
+			local dist = vmath.length(go.get_position(message.ship) - go.get_position())
+			local force = vector_to_target * (math.pow(go.get("#co" .. self.size, "mass"), 2) / math.pow(dist, 1.75) * message.dt) * 1000000000
+			if vmath.length(force) > 500 then 
+				force = vmath.normalize(force) * 500
+			end
+			msg.post("#co" .. self.size, "apply_force", {
+				force = force, 
+				position = go.get_position()
+			})
+		end
+	end
 end
 
 
