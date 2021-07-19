@@ -1,4 +1,4 @@
-go.property("target_speed", 300)
+go.property("target_speed", 500)
 
 WIDTH = 1920
 HEIGHT = 1017
@@ -44,6 +44,7 @@ function update(self, dt)
 	end
 	
 	pos = vmath.lerp(dt * 10, pos, self.mouse_pos)--pos + self.vel * dt
+	--pos = pos + self.vel * dt
 	go.set("/fleet/target_position", "position", pos)
 
 	self.vel.x = 0
