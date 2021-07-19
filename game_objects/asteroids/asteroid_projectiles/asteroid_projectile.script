@@ -1,0 +1,38 @@
+go.property("velocity", vmath.vector3(150, 0, 0))
+
+function init(self)
+	-- Add initialization code here
+	-- Learn more: https://defold.com/manuals/script/
+	-- Remove this function if not needed
+end
+
+function final(self)
+	-- Add finalization code here
+	-- Learn more: https://defold.com/manuals/script/
+	-- Remove this function if not needed
+end
+
+function update(self, dt)
+	local max_x, max_y = 1920, 1017
+	local pos = go.get_position()
+
+	if pos.x > max_x + 50 then
+		go.delete()
+	elseif pos.x < -50 then
+		go.delete()
+	end
+
+	if pos.y > max_y + 50 then
+		go.delete()
+	elseif pos.y < -50 then
+		go.delete()
+	end
+	pos = pos + self.velocity * dt
+	go.set_position(pos)
+end
+
+function on_message(self, message_id, message, sender)
+	-- Add message-handling code here
+	-- Learn more: https://defold.com/manuals/message-passing/
+	-- Remove this function if not needed
+end

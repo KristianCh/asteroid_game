@@ -1,5 +1,5 @@
 name: "gui"
-tags: "model"
+tags: "model_gui"
 vertex_program: "/builtins/materials/gui.vp"
 fragment_program: "/builtins/materials/gui.fp"
 vertex_space: VERTEX_SPACE_WORLD

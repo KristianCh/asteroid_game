@@ -1,12 +1,3 @@
-go.property("size", 3)
-go.property("scale", 12)
-go.property("color", vmath.vector4(1, 1, 1, 1))
-go.property("health", 100)
-go.property("max_health", 100)
-go.property("buffer_index", 1)
-go.property("collision_timeout", 0.5)
-go.property("found_buffer", false)
-go.property("initial_slowdown", 0)
 go.property("buffer1", resource.buffer("/game_objects/asteroids/buffers/empty1.buffer")) 
 go.property("buffer2", resource.buffer("/game_objects/asteroids/buffers/empty2.buffer")) 
 go.property("buffer3", resource.buffer("/game_objects/asteroids/buffers/empty3.buffer")) 
@@ -107,6 +98,18 @@ go.property("buffer97", resource.buffer("/game_objects/asteroids/buffers/empty97
 go.property("buffer98", resource.buffer("/game_objects/asteroids/buffers/empty98.buffer")) 
 go.property("buffer99", resource.buffer("/game_objects/asteroids/buffers/empty99.buffer")) 
 go.property("buffer100", resource.buffer("/game_objects/asteroids/buffers/empty100.buffer")) 
+
+go.property("size", 3)
+go.property("scale", 12)
+go.property("color", vmath.vector4(1, 1, 1, 1))
+go.property("health", 100)
+go.property("max_health", 100)
+go.property("buffer_index", 1)
+go.property("collision_timeout", 0.5)
+go.property("found_buffer", false)
+go.property("initial_slowdown", 0)
+go.property("type", 0)
+
 local available_buffers = {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
 						   1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
 						   1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
@@ -198,9 +201,6 @@ function init(self)
 		return
 	end
 	
-	go.set("#mesh", "color", vmath.vector4(math.random(), math.random(), math.random(), 1))
-	go.animate("#mesh", "color", go.PLAYBACK_LOOP_PINGPONG, vmath.vector4(math.random(), math.random(), math.random(), 1), go.EASING_INOUTSINE, 5)
-	
 	self.dying = false
 	self.min_life = 1.5
 	self.health = 100 * self.size
@@ -226,12 +226,32 @@ function init(self)
 	msg.post("#co1", "disable")
 	msg.post("#co2", "disable")
 	msg.post("#co3", "disable")
+	msg.post("#co1_kinematic", "disable")
+	msg.post("#co2_kinematic", "disable")
+	msg.post("#co3_kinematic", "disable")
 	msg.post("#co" .. self.size, "enable")	
 	msg.post("/manager", "enemy_created")
+
+	go.set("#mesh", "color", vmath.vector4(0.75, 0.75, 0.75, 1))
+	self.type = math.random(0, 1)
+	self.type_init = base_init
+	self.type_update = base_update
+	self.type_message_handling = base_message_handling
+	if self.type == 1 then
+		self.type_init = magnetic_init
+		self.type_update = magnetic_update
+		self.type_message_handling = magnetic_message_handling
+	end
+	self.type_init(self)
 end
 
 function update(self, dt)
 	local pos = go.get_position()
+	x, y = window.get_size()
+	local normalized_pos = vmath.vector3(pos.x / x, pos.y / y, 0)
+	print(x, y, pos, vmath.vector3(normalized_pos.x * 1920, normalized_pos.y * 1080, 0))
+	--msg.post("#health_display", "set_pos", {pos = vmath.vector3(normalized_pos.x * 1920, normalized_pos.y * 1080, 0)})
+	--print(vmath.normalize(pos) * vmath.vector3(1920, 1080, 0))
 	msg.post("#health_display", "set_pos", {pos = pos})
 
 	if self.collision_timeout > 0 then
@@ -287,3 +307,22 @@ function final(self)
 		print("No buffer available")
 	end
 end
+
+function base_init(self) end
+function base_update(self, dt) end
+function base_message_handling(self, message_id, message, sender) end
+
+function magnetic_init(self) 
+	go.set("#mesh", "color", vmath.vector4(1, 0, 0, 1))
+	go.animate("#mesh", "color", go.PLAYBACK_LOOP_PINGPONG, vmath.vector4(0, 0, 1, 1), go.EASING_INOUTSINE, 5)
+end
+
+function magnetic_update(self, dt) 
+
+end
+
+function magnetic_message_handling(self, message_id, message, sender) 
+
+end
+
+

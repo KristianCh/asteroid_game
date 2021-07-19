@@ -3,6 +3,8 @@ function update(self, dt)
 	local fill_angle = gui.get_fill_angle(gui.get_node("pie"))
 	local target_fill_angle = gui.get_scale(gui.get_node("target_fill_angle"))
 	fill_angle = vmath.lerp(dt * 5, vmath.vector3(fill_angle), target_fill_angle).x
+	if fill_angle > 360 then fill_angle = 360 end
+	if fill_angle < 0 then fill_angle = 0 end
 	gui.set_fill_angle(gui.get_node("pie"), fill_angle)
 end
 

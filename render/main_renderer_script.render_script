@@ -37,6 +37,7 @@ function init(self)
     self.text_pred = render.predicate({"text"})
     self.particle_pred = render.predicate({"particle"})
     self.model_pred = render.predicate({"model"})
+    self.model_gui_pred = render.predicate({"model_gui"})
     self.fade_fb_pred = render.predicate({"fade"})
     self.merge_framebuffers_pred = render.predicate({"merge_framebuffer"})
     self.pixelate_pred = render.predicate({"pixelate"})
@@ -114,9 +115,16 @@ function update(self)
     render.enable_state(render.STATE_STENCIL_TEST)
     render.draw(self.gui_pred)
     render.draw(self.text_pred)
-    render.disable_state(render.STATE_STENCIL_TEST)
-    
+
+    render.set_blend_func(render.BLEND_ONE, render.BLEND_ONE)
     render.disable_render_target(self.gui_target)
+    render.enable_render_target(self.mesh_target)
+    
+    render.draw(self.model_gui_pred)
+    render.set_blend_func(render.BLEND_SRC_ALPHA, render.BLEND_ONE_MINUS_SRC_ALPHA)  
+
+    render.disable_render_target(self.mesh_target)
+    render.disable_state(render.STATE_STENCIL_TEST)
     -------------------------------------------------------
     -- render to screen quad
     render.clear({[render.BUFFER_COLOR_BIT] = self.clear_color})
