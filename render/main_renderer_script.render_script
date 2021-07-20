@@ -81,10 +81,10 @@ function update(self)
     render.set_blend_func(render.BLEND_SRC_ALPHA, render.BLEND_ONE_MINUS_SRC_ALPHA)
     render.disable_state(render.STATE_CULL_FACE)
 
-    render.set_projection(stretch_projection(-1, 1))
+    render.set_projection(get_projection(self))
     -------------------------------------------------------
     -- render sprites and particles
-    render.draw(self.tile_pred)
+    render.draw(self.tile_pred, self.constants)
     render.draw(self.particle_pred)
     render.disable_render_target(self.sprite_target)
     -------------------------------------------------------

@@ -253,8 +253,8 @@ function update(self, dt)
 		self.collision_timeout = self.collision_timeout - dt
 	end
 
+	local velocity = go.get("#co" .. self.size, "linear_velocity")
 	if self.health < 0 and not self.dying then
-		local velocity = go.get("#co" .. self.size, "linear_velocity")
 		local angular_velocity = go.get("#co" .. self.size, "angular_velocity")
 		msg.post("#co" .. self.size, "disable")	
 		msg.post("#co_death", "enable")
@@ -262,6 +262,9 @@ function update(self, dt)
 		go.set("#co_death", "angular_velocity", angular_velocity)
 		self.dying = true
 		death(self)
+	end
+	if vmath.length(velocity) > 600 and not self.dying then
+		msg.post("#co" .. self.size, "apply_force", {force = -velocity * dt * 1000, position = pos})
 	end
 	
 	local div = 1
@@ -316,7 +319,7 @@ function magnetic_init(self)
 end
 
 function magnetic_update(self, dt) 
-	msg.post("/manager", "target_closest_ship", {pos = go.get_position(), range = 1000, dt = dt})
+	msg.post("/manager", "target_closest_ship", {pos = go.get_position(), range = 10000, dt = dt})
 end
 
 function magnetic_message_handling(self, message_id, message, sender) 

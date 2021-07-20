@@ -47,10 +47,10 @@ void main()
 	
 	mesh_color = vec4(mesh_color.xyz, (mesh_color.x + mesh_color.y + mesh_color.z) / 3);
 	
-	vec4 final_color = fade_color * 0.25 * (1 - mesh_color.w) + mesh_color;
-	final_color = final_color * (1 - sprite_color.w) + sprite_color;
-	final_color = final_color * (1 - gui_color.w) + gui_color;
-	final_color = final_color * mult;
+	vec4 final_color = sprite_color * (1 + (mult-1)/2) * vec4(5*fade_color.x + 1, 5*fade_color.y + 1, 5*fade_color.z + 1, 1);
+	final_color = final_color * (1 - fade_color.w * 0.25) + vec4(fade_color.xyz, fade_color.w * 0.5) * 0.5;
+	final_color = final_color * (1 - mesh_color.w) + mesh_color;
+	final_color = final_color * (1 - gui_color.w) + gui_color * mult;
 	
 	gl_FragColor = final_color;
 }

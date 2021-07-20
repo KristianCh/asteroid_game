@@ -24,14 +24,13 @@ function init(self)
 	--defos.disable_window_resize()
 
 	msg.post("#main_menu_proxy", "load")
+	go.set("/go#sprite", "tint", vmath.vector4(1, 1, 1, 0.3))
 	current_active_proxy = "#main_menu_proxy"	
 end
 
 function update(self, dt)
 	start_time = start_time + dt
 	msg.post("@render:", "set_time", {start_time})
-
-	local width, height = window.get_size()
 end
 
 function on_message(self, message_id, message, sender)
