@@ -83,7 +83,6 @@ function on_message(self, message_id, message, sender)
 end
 
 function laser_cutter_init(self) 
-	print("init")
 	self.target_offset = vmath.vector3(0, 0, 0)
 end
 

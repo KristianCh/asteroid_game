@@ -200,7 +200,7 @@ function init(self)
 		go.delete()
 		return
 	end
-	
+	print("spawn")
 	self.dying = false
 	self.min_life = 1.5
 	self.health = 100 * self.size

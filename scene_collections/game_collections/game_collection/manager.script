@@ -1,3 +1,6 @@
+go.property("enemy_count", 0)
+go.property("ship_count", 0)
+
 local function url_to_hash(url)
 	local str =  hash_to_hex(url.socket or hash("")) .. hash_to_hex(url.path) .. hash_to_hex(url.fragment or hash(""))
 	return hash(str)
@@ -72,7 +75,7 @@ end
 
 function on_input(self, action_id, action)
 	if action_id == hash("space") and action.released then
-		local width, height = 1920, 1017 -- window.get_size()
+		local width, height = 1920, 1017
 		if math.random() > 0.5 then
 			local lr = math.random(0, 1)
 			local p = vmath.vector3(-100 + (width+200) * lr, math.random(-100, height+100), 0)

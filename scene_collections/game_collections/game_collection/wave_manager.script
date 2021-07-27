@@ -1,0 +1,57 @@
+function spawn(self)
+	local width, height = 1920, 1017
+	if math.random() > 0.5 then
+		local lr = math.random(0, 1)
+		local p = vmath.vector3(-100 + (width+200) * lr, math.random(-100, height+100), 0)
+		local id = factory.create("#asteroid_factory", p, nil, {initial_slowdown = 2})
+		local velocity = vmath.vector3(0, math.random(-height, height), 0)
+		local new_url = msg.url(nil, id, "co3")
+		msg.post(new_url, "apply_force", {force = velocity * 30, position = p + vmath.vector3(math.random(-20, 20), math.random(-20, 20), 0)})
+	else 
+		local ud = math.random(0, 1)
+		local p = vmath.vector3(math.random(-100, width+100), -100 + (height+200) * ud, 0)
+		local id = factory.create("#asteroid_factory", p, nil)
+		local velocity = vmath.vector3(math.random(-width, width), 0, 0)
+		local new_url = msg.url(nil, id, "co3")
+		msg.post(new_url, "apply_force", {force = velocity * 30, position = p + vmath.vector3(math.random(-20, 20), math.random(-20, 20), 0)})
+	end
+end
+
+function init(self)
+	self.level = 1
+	self.wave = 1
+	self.waves = 1 + math.floor(self.level / 5)
+	self.wave_size = 1 + math.floor(self.level / 5)
+	self.wave_count = self.wave_size
+	self.spawn_count_down = 5
+	self.cooldown = 10
+	self.finished = false
+end
+
+function update(self, dt)
+	print(self.wave .. "/" .. self.waves)
+	self.spawn_count_down = self.spawn_count_down - dt
+	self.cooldown = self.cooldown - dt
+	if self.wave_count > 0 and self.spawn_count_down <= 0 and self.wave <= self.waves then
+		spawn(self)
+		self.wave_count = self.wave_count - 1
+		self.spawn_count_down = 1
+	end
+	if go.get("/manager#manager", "enemy_count") == 0 then
+		if self.wave <= self.waves and self.cooldown <= 0 then
+			self.wave = self.wave + 1
+			self.wave_count = self.wave_size
+			self.spawn_count_down = 5
+			self.cooldown = 10
+		elseif self.wave > self.waves and not self.finished then
+			self.finished = true
+			msg.post("main:/manager", "transition")
+		end
+	end	
+end
+
+function on_message(self, message_id, message, sender)
+	-- Add message-handling code here
+	-- Learn more: https://defold.com/manuals/message-passing/
+	-- Remove this function if not needed
+end

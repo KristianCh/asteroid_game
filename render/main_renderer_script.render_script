@@ -182,6 +182,8 @@ function on_message(self, message_id, message)
         self.far = message.far or 1
         self.projection_fn = fixed_fit_projection
     elseif message_id == hash("set_time") then
-        self.constants.time = vmath.vector4(message[1],0,0,0)
+        self.constants.time = vmath.vector4(message[1], 0, 0, 0)
+    elseif message_id == hash("set_transition") then
+        self.constants.transition = message[1]
     end
 end
