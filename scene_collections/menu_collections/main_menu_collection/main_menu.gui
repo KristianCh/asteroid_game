@@ -3,6 +3,10 @@ fonts {
   name: "system_font"
   font: "/builtins/fonts/system_font.font"
 }
+fonts {
+  name: "ethnocentric"
+  font: "/assets/fonts/ethnocentric.font"
+}
 background_color {
   x: 0.0
   y: 0.0
@@ -11,7 +15,7 @@ background_color {
 }
 nodes {
   position {
-    x: 300.0
+    x: 0.0
     y: 650.0
     z: 0.0
     w: 1.0
@@ -29,7 +33,7 @@ nodes {
     w: 1.0
   }
   size {
-    x: 200.0
+    x: 400.0
     y: 100.0
     z: 0.0
     w: 1.0
@@ -46,7 +50,7 @@ nodes {
   id: "new_game_button"
   xanchor: XANCHOR_NONE
   yanchor: YANCHOR_NONE
-  pivot: PIVOT_CENTER
+  pivot: PIVOT_W
   adjust_mode: ADJUST_MODE_FIT
   layer: ""
   inherit_alpha: true
@@ -61,7 +65,7 @@ nodes {
   clipping_inverted: false
   alpha: 0.0
   template_node_child: false
-  size_mode: SIZE_MODE_AUTO
+  size_mode: SIZE_MODE_MANUAL
 }
 nodes {
   position {
@@ -97,11 +101,11 @@ nodes {
   type: TYPE_TEXT
   blend_mode: BLEND_MODE_ALPHA
   text: "New Game"
-  font: "system_font"
+  font: "ethnocentric"
   id: "new_game_text"
   xanchor: XANCHOR_NONE
   yanchor: YANCHOR_NONE
-  pivot: PIVOT_CENTER
+  pivot: PIVOT_W
   outline {
     x: 1.0
     y: 1.0
@@ -119,7 +123,7 @@ nodes {
   parent: "new_game_button"
   layer: ""
   inherit_alpha: false
-  alpha: 1.0
+  alpha: 0.8
   outline_alpha: 1.0
   shadow_alpha: 1.0
   template_node_child: false
@@ -128,7 +132,7 @@ nodes {
 }
 nodes {
   position {
-    x: 300.0
+    x: 0.0
     y: 750.0
     z: 0.0
     w: 1.0
@@ -146,7 +150,7 @@ nodes {
     w: 1.0
   }
   size {
-    x: 200.0
+    x: 600.0
     y: 100.0
     z: 0.0
     w: 1.0
@@ -163,7 +167,7 @@ nodes {
   id: "continue_game_button"
   xanchor: XANCHOR_NONE
   yanchor: YANCHOR_NONE
-  pivot: PIVOT_CENTER
+  pivot: PIVOT_W
   adjust_mode: ADJUST_MODE_FIT
   layer: ""
   inherit_alpha: true
@@ -178,7 +182,7 @@ nodes {
   clipping_inverted: false
   alpha: 0.0
   template_node_child: false
-  size_mode: SIZE_MODE_AUTO
+  size_mode: SIZE_MODE_MANUAL
 }
 nodes {
   position {
@@ -200,7 +204,7 @@ nodes {
     w: 1.0
   }
   size {
-    x: 200.0
+    x: 600.0
     y: 100.0
     z: 0.0
     w: 1.0
@@ -214,11 +218,11 @@ nodes {
   type: TYPE_TEXT
   blend_mode: BLEND_MODE_ALPHA
   text: "Continue Game"
-  font: "system_font"
+  font: "ethnocentric"
   id: "continue_game_text"
   xanchor: XANCHOR_NONE
   yanchor: YANCHOR_NONE
-  pivot: PIVOT_CENTER
+  pivot: PIVOT_W
   outline {
     x: 1.0
     y: 1.0
@@ -236,7 +240,7 @@ nodes {
   parent: "continue_game_button"
   layer: ""
   inherit_alpha: false
-  alpha: 1.0
+  alpha: 0.8
   outline_alpha: 1.0
   shadow_alpha: 1.0
   template_node_child: false
@@ -245,7 +249,7 @@ nodes {
 }
 nodes {
   position {
-    x: 300.0
+    x: 0.0
     y: 450.0
     z: 0.0
     w: 1.0
@@ -263,7 +267,7 @@ nodes {
     w: 1.0
   }
   size {
-    x: 200.0
+    x: 170.0
     y: 100.0
     z: 0.0
     w: 1.0
@@ -271,7 +275,7 @@ nodes {
   color {
     x: 1.0
     y: 1.0
-    z: 0.4
+    z: 1.0
     w: 1.0
   }
   type: TYPE_BOX
@@ -280,7 +284,7 @@ nodes {
   id: "exit_button"
   xanchor: XANCHOR_NONE
   yanchor: YANCHOR_NONE
-  pivot: PIVOT_CENTER
+  pivot: PIVOT_W
   adjust_mode: ADJUST_MODE_FIT
   layer: ""
   inherit_alpha: true
@@ -293,9 +297,9 @@ nodes {
   clipping_mode: CLIPPING_MODE_NONE
   clipping_visible: true
   clipping_inverted: false
-  alpha: 1.0
+  alpha: 0.0
   template_node_child: false
-  size_mode: SIZE_MODE_AUTO
+  size_mode: SIZE_MODE_MANUAL
 }
 nodes {
   position {
@@ -317,7 +321,7 @@ nodes {
     w: 1.0
   }
   size {
-    x: 200.0
+    x: 170.0
     y: 100.0
     z: 0.0
     w: 1.0
@@ -331,11 +335,11 @@ nodes {
   type: TYPE_TEXT
   blend_mode: BLEND_MODE_ALPHA
   text: "Exit"
-  font: "system_font"
+  font: "ethnocentric"
   id: "exit_text"
   xanchor: XANCHOR_NONE
   yanchor: YANCHOR_NONE
-  pivot: PIVOT_CENTER
+  pivot: PIVOT_W
   outline {
     x: 1.0
     y: 1.0
@@ -353,7 +357,7 @@ nodes {
   parent: "exit_button"
   layer: ""
   inherit_alpha: false
-  alpha: 1.0
+  alpha: 0.8
   outline_alpha: 1.0
   shadow_alpha: 1.0
   template_node_child: false
@@ -362,7 +366,7 @@ nodes {
 }
 nodes {
   position {
-    x: 300.0
+    x: 0.0
     y: 550.0
     z: 0.0
     w: 1.0
@@ -380,7 +384,7 @@ nodes {
     w: 1.0
   }
   size {
-    x: 200.0
+    x: 350.0
     y: 100.0
     z: 0.0
     w: 1.0
@@ -397,7 +401,7 @@ nodes {
   id: "settings_button"
   xanchor: XANCHOR_NONE
   yanchor: YANCHOR_NONE
-  pivot: PIVOT_CENTER
+  pivot: PIVOT_W
   adjust_mode: ADJUST_MODE_FIT
   layer: ""
   inherit_alpha: true
@@ -412,7 +416,7 @@ nodes {
   clipping_inverted: false
   alpha: 0.0
   template_node_child: false
-  size_mode: SIZE_MODE_AUTO
+  size_mode: SIZE_MODE_MANUAL
 }
 nodes {
   position {
@@ -448,11 +452,11 @@ nodes {
   type: TYPE_TEXT
   blend_mode: BLEND_MODE_ALPHA
   text: "Settings"
-  font: "system_font"
+  font: "ethnocentric"
   id: "settings_text"
   xanchor: XANCHOR_NONE
   yanchor: YANCHOR_NONE
-  pivot: PIVOT_CENTER
+  pivot: PIVOT_W
   outline {
     x: 1.0
     y: 1.0
@@ -470,7 +474,7 @@ nodes {
   parent: "settings_button"
   layer: ""
   inherit_alpha: false
-  alpha: 1.0
+  alpha: 0.8
   outline_alpha: 1.0
   shadow_alpha: 1.0
   template_node_child: false

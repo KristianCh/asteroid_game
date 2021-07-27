@@ -6,6 +6,7 @@ local settings_disabled_proxy = ""
 local current_active_proxy = ""
 local debug = false
 local start_time = 0
+local easing = vmath.vector({ 0, 0.4, 0.2, 0.2, 0.5, 1 })
 
 local function new_game_from_main(self) 
 	msg.post("#main_menu_proxy", "disable")
@@ -68,7 +69,6 @@ end
 local function window_resized(self, event, data)
 	if event == window.WINDOW_EVENT_RESIZED then
 		self.screen_dimensions = vmath.vector3(data.width, data.height, 0)
-		print("Window resized: ", data.width, data.height)
 	end
 end
 
@@ -104,8 +104,7 @@ local function close_settings(self)
 
 	current_active_proxy = settings_disabled_proxy
 	msg.post(current_active_proxy, "enable")	
-	self.transition = vmath.vector4(0, 1, 0, 0)
-	go.animate("#main", "transition", go.PLAYBACK_ONCE_BACKWARD, vmath.vector4(1, 1, 0, 0), go.EASING_LINEAR, 1)
+	go.animate("#main", "transition", go.PLAYBACK_ONCE_FORWARD, vmath.vector4(0, 1, 0, 0), easing, 1, 0, function(self) self.transition = vmath.vector4(0, 1, 0, 0) end)
 end
 
 local function return_to_main(self)
@@ -145,51 +144,50 @@ function on_message(self, message_id, message, sender)
 		msg.post(sender, "init")
 		msg.post(sender, "enable")
 
-		self.transition = vmath.vector4(0, 1, 0, 0)
 		if start_time > 0.1 then
-			go.animate("#main", "transition", go.PLAYBACK_ONCE_BACKWARD, vmath.vector4(1, 1, 0, 0), go.EASING_LINEAR, 1)
+			go.animate("#main", "transition", go.PLAYBACK_ONCE_FORWARD, vmath.vector4(0, 1, 0, 0), easing, 1, 0, function(self) self.transition = vmath.vector4(0, 1, 0, 0) end)
 		end
 	elseif message_id == hash("proxy_unloaded") then
 		print("Unloaded " .. sender)
 	elseif message_id == hash("new_game_from_main") then
 		self.transition = vmath.vector4(0, 1, 0, 0)
-		go.animate("#main", "transition", go.PLAYBACK_ONCE_FORWARD, vmath.vector4(1, 1, 0, 0), go.EASING_LINEAR, 1, 0, new_game_from_main)
+		go.animate("#main", "transition", go.PLAYBACK_ONCE_FORWARD, vmath.vector4(1, 1, 0, 0), easing, 1, 0, new_game_from_main)
 	elseif message_id == hash("continue_game_from_main") then
 		self.transition = vmath.vector4(0, 1, 0, 0)
-		go.animate("#main", "transition", go.PLAYBACK_ONCE_FORWARD, vmath.vector4(1, 1, 0, 0), go.EASING_LINEAR, 1, 0, continue_game_from_main)
+		go.animate("#main", "transition", go.PLAYBACK_ONCE_FORWARD, vmath.vector4(1, 1, 0, 0), easing, 1, 0, continue_game_from_main)
 	elseif message_id == hash("store_from_new") then
 		self.transition = vmath.vector4(0, 1, 0, 0)
-		go.animate("#main", "transition", go.PLAYBACK_ONCE_FORWARD, vmath.vector4(1, 1, 0, 0), go.EASING_LINEAR, 1, 0, store_from_new)
+		go.animate("#main", "transition", go.PLAYBACK_ONCE_FORWARD, vmath.vector4(1, 1, 0, 0), easing, 1, 0, store_from_new)
 	elseif message_id == hash("game_from_store") then
 		self.transition = vmath.vector4(0, 1, 0, 0)
-		go.animate("#main", "transition", go.PLAYBACK_ONCE_FORWARD, vmath.vector4(1, 1, 0, 0), go.EASING_LINEAR, 1, 0, game_from_store)
+		go.animate("#main", "transition", go.PLAYBACK_ONCE_FORWARD, vmath.vector4(1, 1, 0, 0), easing, 1, 0, game_from_store)
 	elseif message_id == hash("store_from_game") then
 		self.transition = vmath.vector4(0, 1, 0, 0)
-		go.animate("#main", "transition", go.PLAYBACK_ONCE_FORWARD, vmath.vector4(1, 1, 0, 0), go.EASING_LINEAR, 1, 0, store_from_game)
+		go.animate("#main", "transition", go.PLAYBACK_ONCE_FORWARD, vmath.vector4(1, 1, 0, 0), easing, 1, 0, store_from_game)
 	elseif message_id == hash("end_from_game") then
 		self.transition = vmath.vector4(0, 1, 0, 0)
-		go.animate("#main", "transition", go.PLAYBACK_ONCE_FORWARD, vmath.vector4(1, 1, 0, 0), go.EASING_LINEAR, 1, 0, end_from_game)
+		go.animate("#main", "transition", go.PLAYBACK_ONCE_FORWARD, vmath.vector4(1, 1, 0, 0), easing, 1, 0, end_from_game)
 	elseif message_id == hash("main_from_end") then
 		self.transition = vmath.vector4(0, 1, 0, 0)
-		go.animate("#main", "transition", go.PLAYBACK_ONCE_FORWARD, vmath.vector4(1, 1, 0, 0), go.EASING_LINEAR, 1, 0, main_from_end)
+		go.animate("#main", "transition", go.PLAYBACK_ONCE_FORWARD, vmath.vector4(1, 1, 0, 0), easing, 1, 0, main_from_end)
 	elseif message_id == hash("new_from_end") then
 		self.transition = vmath.vector4(0, 1, 0, 0)
-		go.animate("#main", "transition", go.PLAYBACK_ONCE_FORWARD, vmath.vector4(1, 1, 0, 0), go.EASING_LINEAR, 1, 0, new_from_end)
+		go.animate("#main", "transition", go.PLAYBACK_ONCE_FORWARD, vmath.vector4(1, 1, 0, 0), easing, 1, 0, new_from_end)
 	elseif message_id == hash("open_settings") then
 		self.transition = vmath.vector4(0, 1, 0, 0)
-		go.animate("#main", "transition", go.PLAYBACK_ONCE_FORWARD, vmath.vector4(1, 1, 0, 0), go.EASING_LINEAR, 1, 0, open_settings)
+		go.animate("#main", "transition", go.PLAYBACK_ONCE_FORWARD, vmath.vector4(1, 1, 0, 0), easing, 1, 0, open_settings)
 	elseif message_id == hash("close_settings") then
 		self.transition = vmath.vector4(0, 1, 0, 0)
-		go.animate("#main", "transition", go.PLAYBACK_ONCE_FORWARD, vmath.vector4(1, 1, 0, 0), go.EASING_LINEAR, 1, 0, close_settings)
+		go.animate("#main", "transition", go.PLAYBACK_ONCE_FORWARD, vmath.vector4(1, 1, 0, 0), easing, 1, 0, close_settings)
 	elseif message_id == hash("return_to_main") then
 		self.transition = vmath.vector4(0, 1, 0, 0)
-		go.animate("#main", "transition", go.PLAYBACK_ONCE_FORWARD, vmath.vector4(1, 1, 0, 0), go.EASING_LINEAR, 1, 0, return_to_main)
+		go.animate("#main", "transition", go.PLAYBACK_ONCE_FORWARD, vmath.vector4(1, 1, 0, 0), easing, 1, 0, return_to_main)
 	elseif message_id == hash("get_updated_screen_dimensions") then
 		msg.post(sender, "update_screen_dimensions", {screen_dimensions = self.screen_dimensions})
 	elseif message_id == hash("transition") then
 		print(go.get("#main", "transition"))
 		self.transition = vmath.vector4(0, 1, 0, 0)
-		go.animate("#main", "transition", go.PLAYBACK_ONCE_PINGPONG, vmath.vector4(1, 1, 0, 0), go.EASING_LINEAR, 1)
+		go.animate("#main", "transition", go.PLAYBACK_ONCE_PINGPONG, vmath.vector4(1, 1, 0, 0), easing, 1)
 	end
 end
 

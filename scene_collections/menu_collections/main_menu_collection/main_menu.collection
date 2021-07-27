@@ -1,4 +1,166 @@
 name: "main_menu"
+instances {
+  id: "base_asteroid0"
+  prototype: "/game_objects/asteroids/base_asteroid.go"
+  position {
+    x: -214.0
+    y: 242.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale3 {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+}
+instances {
+  id: "base_asteroid1"
+  prototype: "/game_objects/asteroids/base_asteroid.go"
+  position {
+    x: 95.0
+    y: 943.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale3 {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+}
+instances {
+  id: "base_asteroid2"
+  prototype: "/game_objects/asteroids/base_asteroid.go"
+  children: "base_asteroid6"
+  children: "base_asteroid7"
+  position {
+    x: 395.0
+    y: 431.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale3 {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+}
+instances {
+  id: "base_asteroid3"
+  prototype: "/game_objects/asteroids/base_asteroid.go"
+  position {
+    x: 2158.0
+    y: -51.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale3 {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+}
+instances {
+  id: "base_asteroid4"
+  prototype: "/game_objects/asteroids/base_asteroid.go"
+  position {
+    x: 2027.0
+    y: 1232.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale3 {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+}
+instances {
+  id: "base_asteroid6"
+  prototype: "/game_objects/asteroids/base_asteroid.go"
+  position {
+    x: 1143.0
+    y: -1143.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale3 {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+}
+instances {
+  id: "base_asteroid7"
+  prototype: "/game_objects/asteroids/base_asteroid.go"
+  position {
+    x: 4116.0
+    y: -183.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale3 {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+}
+instances {
+  id: "base_asteroid5"
+  prototype: "/game_objects/asteroids/base_asteroid.go"
+  position {
+    x: 1310.0
+    y: 472.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale3 {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+}
 scale_along_z: 0
 embedded_instances {
   id: "gui_container"
@@ -56,6 +218,32 @@ embedded_instances {
   position {
     x: 0.0
     y: 336.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale3 {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+}
+embedded_instances {
+  id: "asteroids"
+  children: "base_asteroid0"
+  children: "base_asteroid1"
+  children: "base_asteroid2"
+  children: "base_asteroid3"
+  children: "base_asteroid4"
+  children: "base_asteroid5"
+  data: ""
+  position {
+    x: 0.0
+    y: 0.0
     z: 0.0
   }
   rotation {

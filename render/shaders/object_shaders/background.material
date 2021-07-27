@@ -1,6 +1,6 @@
 name: "sprite"
 tags: "tile"
-vertex_program: "/render/shaders/object_shaders/sprite_modeltype.vp"
+vertex_program: "/builtins/materials/sprite.vp"
 fragment_program: "/render/shaders/object_shaders/background.fp"
 vertex_space: VERTEX_SPACE_WORLD
 vertex_constants {

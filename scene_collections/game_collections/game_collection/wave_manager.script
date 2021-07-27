@@ -20,16 +20,16 @@ end
 function init(self)
 	self.level = 1
 	self.wave = 1
-	self.waves = 1 + math.floor(self.level / 5)
-	self.wave_size = 1 + math.floor(self.level / 5)
+	self.waves = 2 + math.floor(self.level / 5)
+	self.wave_size = 6 + math.floor(self.level / 5)
 	self.wave_count = self.wave_size
 	self.spawn_count_down = 5
 	self.cooldown = 10
 	self.finished = false
+	msg.post("/gui_container#game", "update_wave", {current_wave = self.wave, max_wave = self.waves})
 end
 
 function update(self, dt)
-	print(self.wave .. "/" .. self.waves)
 	self.spawn_count_down = self.spawn_count_down - dt
 	self.cooldown = self.cooldown - dt
 	if self.wave_count > 0 and self.spawn_count_down <= 0 and self.wave <= self.waves then
@@ -43,9 +43,12 @@ function update(self, dt)
 			self.wave_count = self.wave_size
 			self.spawn_count_down = 5
 			self.cooldown = 10
+			if self.wave <= self.waves then
+				msg.post("/gui_container#game", "update_wave", {current_wave = self.wave, max_wave = self.waves})
+			end
 		elseif self.wave > self.waves and not self.finished then
 			self.finished = true
-			msg.post("main:/manager", "transition")
+			msg.post("main:/manager", "store_from_game")
 		end
 	end	
 end

@@ -1,3 +1,5 @@
+local applied_force = false
+
 function init(self)
 	msg.post(".", "acquire_input_focus")
 end
@@ -9,9 +11,17 @@ function final(self)
 end
 
 function update(self, dt)
-	-- Add update code here
-	-- Learn more: https://defold.com/manuals/script/
-	-- Remove this function if not needed
+	if not applied_force then
+		for i = 0,5 do 
+			local url = "/base_asteroid" .. i
+			local width, height = 1920, 1017
+			local velocity = vmath.vector3(0, math.random(-height, height), 0)
+			msg.post(url .. "#co3", "apply_force", {force = velocity * 30, 
+			position = go.get_position(url .. "#co3") + vmath.vector3(math.random(-20, 20), math.random(-20, 20), 0)})
+			msg.post(url .. "#health_display", "disable_health_display")
+		end 
+		applied_force = true
+	end
 end
 
 function on_message(self, message_id, message, sender)

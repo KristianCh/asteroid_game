@@ -56,50 +56,48 @@ void main()
 {
 	vec4 final_color = vec4(1);
 
+	float[25] kernel = float[] (
+		-0.125, -0.125, -0.125, -0.125, -0.125,
+		-0.125, -1.0, -1.0, -1.0, -0.125, 
+		-0.125, -1.0, 10.0, -1.0, -0.125,
+		-0.125, -1.0, -1.0, -1.0, -0.125,
+		-0.125, -0.125, -0.125, -0.125, -0.125
+	);
 
-	if (pow(var_texcoord0.x * 2 -1, 2) + pow(var_texcoord0.y * 2 -1, 2) > 2 - transition.x * 2) {
-		final_color = vec4(
+	float t = mod(time.x/2, 6)-1.5;
+	float d = dist(var_texcoord0, vec2(0, func(0, -t)), vec2(1, func(1, -t)));
+	float mult = 1;
+	if (d < 0.2) {
+		mult = 1.5-d*2.5;
+	}
+	vec2 texture_dims = textureSize(mesh_original,0);
+	vec4 gui_color = texture(gui_original, var_texcoord0.xy);
+	vec4 sprite_color = texture(sprite_original, var_texcoord0.xy);
+	vec4 fade_color = texture(fade_original, var_texcoord0.xy);
+	if (fade_color.r < 0.05 && fade_color.g < 0.05 && fade_color.b < 0.05) fade_color = vec4(0, 0, 0, 1);
+	vec4 mesh_color = vec4(0);
+	int index = 0;
+	for (int i = -2; i <= 2; i++) {
+		for (int j = -2; j <= 2; j++) {
+			vec2 shift = vec2(i,j) / texture_dims * 3;
+			mesh_color += kernel[index++] * texture(mesh_original, var_texcoord0.xy + shift);
+		}
+	}
+	
+	mesh_color = vec4(mesh_color.xyz, (mesh_color.x + mesh_color.y + mesh_color.z) / 3);
+	
+	final_color = sprite_color * (1 + (mult-1)/2) * vec4(5*fade_color.x + 1, 5*fade_color.y + 1, 5*fade_color.z + 1, 1);
+	final_color = final_color * (1 - fade_color.w * 0.25) + vec4(fade_color.xyz, fade_color.w * 0.25) * 0.5;
+	final_color = final_color * (1 - mesh_color.w) + mesh_color;
+	final_color = (final_color * (1 - gui_color.w) + gui_color * mult) * (1 + (mult-1)/2);
+
+	if (transition.x > 0) {
+		final_color = mix(final_color * (1-transition.x), vec4(
 			cnoise(var_texcoord0.xy * 200 + vec2(sin(time.x), cos(time.x))), 
 			cnoise(var_texcoord0.xx * 200 + vec2(sin(time.x), cos(time.x))), 
 			cnoise(var_texcoord0.yy * 200 + vec2(sin(time.x), cos(time.x))), 
-			2.5) / 2.5;
-	}
-	else {
-		float[25] kernel = float[] (
-			-0.125, -0.125, -0.125, -0.125, -0.125,
-			-0.125, -1.0, -1.0, -1.0, -0.125, 
-			-0.125, -1.0, 10.0, -1.0, -0.125,
-			-0.125, -1.0, -1.0, -1.0, -0.125,
-			-0.125, -0.125, -0.125, -0.125, -0.125
-		);
-
-		float t = mod(time.x/2, 6)-1.5;
-		float d = dist(var_texcoord0, vec2(0, func(0, -t)), vec2(1, func(1, -t)));
-		float mult = 1;
-		if (d < 0.1) {
-			mult = 1.5-d*5;
+			2.5) / 2.5, transition.x);
 		}
-		vec2 texture_dims = textureSize(mesh_original,0);
-		vec4 gui_color = texture(gui_original, var_texcoord0.xy);
-		vec4 sprite_color = texture(sprite_original, var_texcoord0.xy);
-		vec4 fade_color = texture(fade_original, var_texcoord0.xy);
-		if (fade_color.r < 0.05 && fade_color.g < 0.05 && fade_color.b < 0.05) fade_color = vec4(0, 0, 0, 1);
-		vec4 mesh_color = vec4(0);
-		int index = 0;
-		for (int i = -2; i <= 2; i++) {
-			for (int j = -2; j <= 2; j++) {
-				vec2 shift = vec2(i,j) / texture_dims * 3;
-				mesh_color += kernel[index++] * texture(mesh_original, var_texcoord0.xy + shift);
-			}
-		}
-		
-		mesh_color = vec4(mesh_color.xyz, (mesh_color.x + mesh_color.y + mesh_color.z) / 3);
-		
-		final_color = sprite_color * (1 + (mult-1)/2) * vec4(5*fade_color.x + 1, 5*fade_color.y + 1, 5*fade_color.z + 1, 1);
-		final_color = final_color * (1 - fade_color.w * 0.25) + vec4(fade_color.xyz, fade_color.w * 0.25) * 0.5;
-		final_color = final_color * (1 - mesh_color.w) + mesh_color;
-		final_color = (final_color * (1 - gui_color.w) + gui_color * mult) * (1 + (mult-1)/2);
-	}
 	
 	gl_FragColor = final_color;
 }
