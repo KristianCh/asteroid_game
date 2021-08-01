@@ -135,6 +135,8 @@ function update(self, dt)
 	start_time = start_time + dt
 	msg.post("@render:", "set_time", {start_time})
 	msg.post("@render:", "set_transition", {self.transition})
+
+	--msg.post("@render:", "draw_line", {start_point = vmath.vector3(0), end_point = vmath.vector3(1920, 1017, 0), color = vmath.vector4(1)})
 end
 
 function on_message(self, message_id, message, sender)

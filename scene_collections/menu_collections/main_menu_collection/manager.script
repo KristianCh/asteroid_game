@@ -18,7 +18,7 @@ function update(self, dt)
 			local velocity = vmath.vector3(0, math.random(-height, height), 0)
 			msg.post(url .. "#co3", "apply_force", {force = velocity * 30, 
 			position = go.get_position(url .. "#co3") + vmath.vector3(math.random(-20, 20), math.random(-20, 20), 0)})
-			msg.post(url .. "#health_display", "disable_health_display")
+			msg.post(url .. "#asteroid_gui", "disable_asteroid_gui")
 		end 
 		applied_force = true
 	end

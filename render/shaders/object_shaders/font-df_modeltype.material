@@ -1,5 +1,6 @@
 name: "font"
-tags: "model"
+tags: "model_gui"
+tags: "fade_gui"
 vertex_program: "/builtins/fonts/font-df.vp"
 fragment_program: "/builtins/fonts/font-df.fp"
 vertex_space: VERTEX_SPACE_WORLD

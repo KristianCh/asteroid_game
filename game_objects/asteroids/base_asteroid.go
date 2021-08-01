@@ -29,8 +29,8 @@ components {
   }
 }
 components {
-  id: "health_display"
-  component: "/game_objects/asteroids/health_display.gui"
+  id: "asteroid_gui"
+  component: "/game_objects/asteroids/asteroid_gui.gui"
   position {
     x: 0.0
     y: 0.0
