@@ -84,6 +84,10 @@ end
 
 function laser_cutter_init(self) 
 	self.target_offset = vmath.vector3(0, 0, 0)
+	self.evasion = 2 + self.level
+	self.speed = 250 + self.level * 100
+	print(self.evasion, self.speed)
+	msg.post("#sprite", "play_animation", {id = hash("laser_cutter")})
 end
 
 function laser_cutter_update(self, dt)
@@ -101,21 +105,40 @@ function laser_cutter_target(self, target)
 		local c = 1 * math.pow(range_falloff, 3)
 		msg.post("@render:", "draw_line", {start_point = go.get_position(), end_point = go.get_position() + self.target_offset, color = vmath.vector4(c*2, c/3, c/3, 1)})
 	end
-	if vmath.length(self.target_offset) > 1 then
-		--msg.post("@render:", "draw_line", {start_point = go.get_position(), end_point = go.get_position() + self.target_offset, color = vmath.vector4(1 * math.pow(range_falloff, 3), 0, 0, 1)})
-	end
 end
 
 function battleship_init(self) 
-
+	msg.post("#sprite", "play_animation", {id = hash("battleship")})
+	self.main_cooldown = 4 - self.level/2
+	self.small_cooldown = 0.25
+	self.charges = 2 + self.level
+	self.projectile_speed = 750
 end
 
 function battleship_update(self, dt)
-	
+	if self.main_cooldown > 0 then 
+		self.main_cooldown = self.main_cooldown - dt
+	end
+	if self.small_cooldown > 0 then 
+		self.small_cooldown = self.small_cooldown - dt
+	end
+	if self.small_cooldown <= 0 and self.main_cooldown <= 0 and self.charges > 0 then
+		msg.post("/manager", "target_closest_enemy", {pos = go.get_position(), range = 10000, dt = dt})
+	end
 end
 
 function battleship_target(self, target) 
-	
+	if target.found then
+		self.charges = self.charges - 1
+		self.small_cooldown = 0.25
+		local vec_to_target = vmath.normalize(go.get_position(target.enemy) - go.get_position() + go.get(target.enemy, "velocity") * (vmath.length(go.get_position(target.enemy) - go.get_position()) / self.projectile_speed))
+		factory.create("/manager#player_projectile_factory", go.get_position(), nil, {speed = self.projectile_speed, vector = vec_to_target, damage = 30 + self.level*20}, vmath.vector3(0.5))
+		if self.charges == 0 then
+			self.main_cooldown = 4 - self.level/2
+			self.small_cooldown = 0.25
+			self.charges = 2 + self.level
+		end
+	end
 end
 
 

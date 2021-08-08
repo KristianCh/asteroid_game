@@ -3,11 +3,23 @@ images {
   sprite_trim_mode: SPRITE_TRIM_MODE_OFF
 }
 images {
-  image: "/assets/images/gui/bg2.png"
+  image: "/assets/images/gui/asteroid_pointer.png"
   sprite_trim_mode: SPRITE_TRIM_MODE_OFF
 }
 images {
-  image: "/assets/images/gui/asteroid_pointer.png"
+  image: "/assets/images/gui/store_bg.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
+images {
+  image: "/assets/images/gui/target.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
+images {
+  image: "/assets/images/gui/checkbox_checked.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
+images {
+  image: "/assets/images/gui/checkbox_unchecked.png"
   sprite_trim_mode: SPRITE_TRIM_MODE_OFF
 }
 margin: 10

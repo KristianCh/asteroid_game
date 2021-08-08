@@ -102,6 +102,7 @@ go.property("buffer100", resource.buffer("/game_objects/asteroids/buffers/empty1
 go.property("size", 3)
 go.property("scale", 12)
 go.property("color", vmath.vector4(1, 1, 1, 1))
+go.property("velocity", vmath.vector3(0))
 go.property("health", 100)
 go.property("max_health", 100)
 go.property("buffer_index", 1)
@@ -252,18 +253,18 @@ function update(self, dt)
 		self.collision_timeout = self.collision_timeout - dt
 	end
 
-	local velocity = go.get("#co" .. self.size, "linear_velocity")
+	self.velocity = go.get("#co" .. self.size, "linear_velocity")
 	if self.health < 0 and not self.dying then
 		local angular_velocity = go.get("#co" .. self.size, "angular_velocity")
 		msg.post("#co" .. self.size, "disable")	
 		msg.post("#co_death", "enable")
-		go.set("#co_death", "linear_velocity", velocity)
+		go.set("#co_death", "linear_velocity", self.velocity)
 		go.set("#co_death", "angular_velocity", angular_velocity)
 		self.dying = true
 		death(self)
 	end
-	if vmath.length(velocity) > 600 and not self.dying then
-		msg.post("#co" .. self.size, "apply_force", {force = -velocity * dt * 1000, position = pos})
+	if vmath.length(self.velocity) > 600 and not self.dying then
+		msg.post("#co" .. self.size, "apply_force", {force = -self.velocity * dt * 1000, position = pos})
 	end
 	
 	local div = 1

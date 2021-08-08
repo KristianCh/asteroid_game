@@ -38,6 +38,10 @@ key_trigger {
   input: KEY_BACKSPACE
   action: "debug"
 }
+key_trigger {
+  input: KEY_BACKSPACE
+  action: "backspace"
+}
 mouse_trigger {
   input: MOUSE_BUTTON_LEFT
   action: "mouse_left"
@@ -45,4 +49,24 @@ mouse_trigger {
 mouse_trigger {
   input: MOUSE_BUTTON_RIGHT
   action: "mouse_right"
+}
+mouse_trigger {
+  input: MOUSE_BUTTON_LEFT
+  action: "touch"
+}
+mouse_trigger {
+  input: MOUSE_WHEEL_UP
+  action: "scroll_up"
+}
+mouse_trigger {
+  input: MOUSE_WHEEL_DOWN
+  action: "scroll_down"
+}
+text_trigger {
+  input: TEXT
+  action: "text"
+}
+text_trigger {
+  input: MARKED_TEXT
+  action: "marked_text"
 }

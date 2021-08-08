@@ -13,14 +13,6 @@ instances {
     z: 0.0
     w: 1.0
   }
-  component_properties {
-    id: "base_ship"
-    properties {
-      id: "type"
-      value: "2.0"
-      type: PROPERTY_TYPE_NUMBER
-    }
-  }
   scale3 {
     x: 0.35
     y: 0.35
@@ -128,8 +120,8 @@ embedded_instances {
   data: "embedded_components {\n"
   "  id: \"sprite\"\n"
   "  type: \"sprite\"\n"
-  "  data: \"tile_set: \\\"/builtins/graphics/particle_blob.tilesource\\\"\\n"
-  "default_animation: \\\"anim\\\"\\n"
+  "  data: \"tile_set: \\\"/assets/images/gui/gui.atlas\\\"\\n"
+  "default_animation: \\\"target\\\"\\n"
   "material: \\\"/builtins/materials/sprite.material\\\"\\n"
   "blend_mode: BLEND_MODE_ALPHA\\n"
   "\"\n"
@@ -158,9 +150,9 @@ embedded_instances {
     w: 1.0
   }
   scale3 {
-    x: 1.0
-    y: 1.0
-    z: 1.0
+    x: 0.2
+    y: 0.2
+    z: 0.2
   }
 }
 embedded_instances {

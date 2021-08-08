@@ -7,6 +7,10 @@ fonts {
   name: "ethnocentric"
   font: "/assets/fonts/ethnocentric.font"
 }
+textures {
+  name: "gui"
+  texture: "/assets/images/gui/gui.atlas"
+}
 background_color {
   x: 0.0
   y: 0.0
@@ -16,7 +20,7 @@ background_color {
 nodes {
   position {
     x: 0.0
-    y: 650.0
+    y: 660.0
     z: 0.0
     w: 1.0
   }
@@ -133,7 +137,7 @@ nodes {
 nodes {
   position {
     x: 0.0
-    y: 750.0
+    y: 790.0
     z: 0.0
     w: 1.0
   }
@@ -172,9 +176,9 @@ nodes {
   layer: ""
   inherit_alpha: true
   slice9 {
-    x: 0.0
+    x: 200.0
     y: 0.0
-    z: 0.0
+    z: 200.0
     w: 0.0
   }
   clipping_mode: CLIPPING_MODE_NONE
@@ -250,7 +254,7 @@ nodes {
 nodes {
   position {
     x: 0.0
-    y: 450.0
+    y: 390.0
     z: 0.0
     w: 1.0
   }
@@ -367,7 +371,7 @@ nodes {
 nodes {
   position {
     x: 0.0
-    y: 550.0
+    y: 530.0
     z: 0.0
     w: 1.0
   }
@@ -481,6 +485,6 @@ nodes {
   text_leading: 1.0
   text_tracking: 0.0
 }
-material: "/builtins/materials/gui.material"
+material: "/render/shaders/object_shaders/gui_modeltype.material"
 adjust_reference: ADJUST_REFERENCE_PARENT
 max_nodes: 512
