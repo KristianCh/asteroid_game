@@ -1,0 +1,85 @@
+go.property("vector", vmath.vector3(0, 1, 0))
+go.property("speed", 100)
+go.property("damage", 50)
+go.property("aim", 15)
+go.property("type", 1)
+go.property("target", msg.url())
+
+function init(self)
+	local angle = math.deg(math.atan2(self.vector.y, self.vector.x)) - 90
+	go.set(".", "euler.z", angle)
+
+	self.init = cannon_init
+	self.update = cannon_update
+	self.on_message = cannon_on_message
+	if self.type == 2 then
+		self.init = missile_init
+		self.update = missile_update
+		self.on_message = missile_on_message
+	end
+	self.init(self)
+end
+
+function final(self)
+	if self.target ~= nil then
+		msg.post(self.target, "unsubscribe")
+	end
+end
+
+function update(self, dt)
+	self.update(self, dt)
+
+	local pos = go.get_position()
+	if pos.x > 2120 or pos.x < -200 or pos.y > 1217 or pos.y < -200 then
+		go.delete()
+	end
+end
+
+function on_message(self, message_id, message, sender)
+	self.on_message(self, message_id, message, sender)
+end
+
+function cannon_init(missile)
+	msg.post("#sprite", "play_animation", {id = hash("cannon_round")})
+end
+
+function cannon_update(self, dt)
+	local pos = go.get_position() + vmath.normalize(self.vector) * self.speed * dt
+	go.set_position(pos)
+end
+
+function cannon_on_message(self, message_id, message, sender)
+	if message_id == hash("trigger_response") then
+		msg.post(message.other_id, "damage_asteroid", {damage = self.damage})
+		go.delete()
+	end
+end
+
+function missile_init(self)
+	msg.post("#sprite", "play_animation", {id = hash("missile")})
+	msg.post(self.target, "subscribe")
+end
+
+function missile_update(self, dt)	
+	local pos = go.get_position()
+
+	local vec_to_target = self.vector
+	if self.target ~= nil then 
+		vec_to_target = vmath.normalize(go.get_position(self.target) - pos)
+	end
+	self.vector = vmath.normalize(vmath.slerp(self.aim * dt, self.vector, vec_to_target))
+
+	pos = pos + vmath.normalize(self.vector) * self.speed * dt
+	go.set_position(pos)
+	local angle = math.deg(math.atan2(self.vector.y, self.vector.x)) - 90
+	go.set(".", "euler.z", angle)
+end
+
+function missile_on_message(self, message_id, message, sender)
+	if message_id == hash("trigger_response") then
+		msg.post(message.other_id, "damage_asteroid", {damage = self.damage})
+		go.delete()
+	elseif message_id == hash("unsubscribe") then
+		self.target = nil
+	end
+end
