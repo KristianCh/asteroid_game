@@ -13,6 +13,14 @@ instances {
     z: 0.0
     w: 1.0
   }
+  component_properties {
+    id: "base_ship"
+    properties {
+      id: "type"
+      value: "3.0"
+      type: PROPERTY_TYPE_NUMBER
+    }
+  }
   scale3 {
     x: 0.35
     y: 0.35

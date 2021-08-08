@@ -243,6 +243,8 @@ function init(self)
 		self.type_message_handling = magnetic_message_handling
 	end
 	self.type_init(self)
+
+	self.subscribers = {}
 end
 
 function update(self, dt)
@@ -296,11 +298,23 @@ function on_message(self, message_id, message, sender)
 	elseif message_id == hash("damage_asteroid") then
 		self.health = self.health - message.damage
 		msg.post("#asteroid_gui", "set_health", {health = self.health, max_health = self.max_health})
+	elseif message_id == hash("subscribe") then
+		self.subscribers[#self.subscribers+1] = sender
+	elseif message_id == hash("unsubscribe") then
+		for k,v in pairs(self.subscribers)do
+			if v == sender then
+				table.remove(self.subscribers, k)
+				break
+			end
+		end
 	end
 	self.type_message_handling(self, message_id, message, sender)
 end
 
 function final(self)
+	for i,v in ipairs(self.subscribers) do 
+		msg.post(v, "unsubscribe")
+	end
 	if self.found_buffer then
 		available_buffers[self.buffer_index] = 1	
 		msg.post("/manager", "enemy_destroyed")
