@@ -13,39 +13,6 @@ collection_instances {
     z: 0.0
     w: 1.0
   }
-  instance_properties {
-    id: "base_ship1"
-    properties {
-      id: "base_ship"
-      properties {
-        id: "type"
-        value: "2.0"
-        type: PROPERTY_TYPE_NUMBER
-      }
-    }
-  }
-  instance_properties {
-    id: "base_ship2"
-    properties {
-      id: "base_ship"
-      properties {
-        id: "type"
-        value: "2.0"
-        type: PROPERTY_TYPE_NUMBER
-      }
-    }
-  }
-  instance_properties {
-    id: "base_ship3"
-    properties {
-      id: "base_ship"
-      properties {
-        id: "type"
-        value: "2.0"
-        type: PROPERTY_TYPE_NUMBER
-      }
-    }
-  }
   scale3 {
     x: 1.0
     y: 1.0

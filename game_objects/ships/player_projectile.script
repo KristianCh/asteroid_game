@@ -1,4 +1,4 @@
-go.property("vector", vmath.vector3(0, 1, 0))
+go.property("heading", vmath.vector3(0, 1, 0))
 go.property("speed", 100)
 go.property("damage", 50)
 go.property("aim", 15)
@@ -6,12 +6,14 @@ go.property("type", 1)
 go.property("target", msg.url())
 
 function init(self)
-	local angle = math.deg(math.atan2(self.vector.y, self.vector.x)) - 90
+	local angle = math.deg(math.atan2(self.heading.y, self.heading.x)) - 90
 	go.set(".", "euler.z", angle)
 
 	self.init = cannon_init
 	self.update = cannon_update
 	self.on_message = cannon_on_message
+	self.d_steer = 0
+	self.rot = 0
 	if self.type == 2 then
 		self.init = missile_init
 		self.update = missile_update
@@ -30,9 +32,14 @@ function update(self, dt)
 	self.update(self, dt)
 
 	local pos = go.get_position()
-	if pos.x > 2120 or pos.x < -200 or pos.y > 1217 or pos.y < -200 then
+	if pos.x > 2320 or pos.x < -400 or pos.y > 1417 or pos.y < -400 then
 		go.delete()
 	end
+
+	self.rot = self.rot + dt * 500
+	local rot_z = vmath.quat_rotation_y(math.rad(self.rot))
+	local current_rot = go.get_rotation()
+	go.set_rotation(current_rot * rot_z)
 end
 
 function on_message(self, message_id, message, sender)
@@ -40,43 +47,47 @@ function on_message(self, message_id, message, sender)
 end
 
 function cannon_init(missile)
-	msg.post("#sprite", "play_animation", {id = hash("cannon_round")})
+	--msg.post("#sprite", "play_animation", {id = hash("cannon_round")})
 end
 
 function cannon_update(self, dt)
-	local pos = go.get_position() + vmath.normalize(self.vector) * self.speed * dt
+	local pos = go.get_position() + vmath.normalize(self.heading) * self.speed * dt
 	go.set_position(pos)
 end
 
 function cannon_on_message(self, message_id, message, sender)
-	if message_id == hash("trigger_response") then
+	if message_id == hash("trigger_response") and message.enter then
 		msg.post(message.other_id, "damage_asteroid", {damage = self.damage})
 		go.delete()
 	end
 end
 
 function missile_init(self)
-	msg.post("#sprite", "play_animation", {id = hash("missile")})
 	msg.post(self.target, "subscribe")
 end
 
 function missile_update(self, dt)	
 	local pos = go.get_position()
 
-	local vec_to_target = self.vector
+	local vec_to_target = self.heading
 	if self.target ~= nil then 
 		vec_to_target = vmath.normalize(go.get_position(self.target) - pos)
 	end
-	self.vector = vmath.normalize(vmath.slerp(self.aim * dt, self.vector, vec_to_target))
+	
+	local d_steer = vmath.cross(vmath.slerp(self.aim * dt, self.heading, vec_to_target), self.heading).z * 10000
+	self.d_steer = vmath.lerp(self.aim * dt, self.d_steer, d_steer)
+	self.heading = vmath.normalize(vmath.slerp(self.aim * dt, self.heading, vec_to_target))
+	local angle = math.deg(math.atan2(self.heading.y, self.heading.x)) - 90
+	local rot_z = vmath.quat_rotation_z(math.rad(angle))
+	local rot_y = vmath.quat_rotation_y(math.rad(self.d_steer))
+	go.set_rotation(rot_z * rot_y)
 
-	pos = pos + vmath.normalize(self.vector) * self.speed * dt
+	pos = pos + vmath.normalize(self.heading) * self.speed * dt
 	go.set_position(pos)
-	local angle = math.deg(math.atan2(self.vector.y, self.vector.x)) - 90
-	go.set(".", "euler.z", angle)
 end
 
 function missile_on_message(self, message_id, message, sender)
-	if message_id == hash("trigger_response") then
+	if message_id == hash("trigger_response") and message.enter then
 		msg.post(message.other_id, "damage_asteroid", {damage = self.damage})
 		go.delete()
 	elseif message_id == hash("unsubscribe") then

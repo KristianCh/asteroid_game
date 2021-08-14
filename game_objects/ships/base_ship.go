@@ -76,11 +76,11 @@ embedded_components {
   "    index: 3\n"
   "    count: 3\n"
   "  }\n"
-  "  data: 26.747\n"
-  "  data: 96.1175\n"
+  "  data: 30.0\n"
+  "  data: 100.0\n"
   "  data: 10.0\n"
-  "  data: 52.0\n"
-  "  data: 36.0965\n"
+  "  data: 55.0\n"
+  "  data: 50.0\n"
   "  data: 10.0\n"
   "}\n"
   "linear_damping: 0.0\n"
@@ -143,16 +143,85 @@ embedded_components {
   "    index: 3\n"
   "    count: 3\n"
   "  }\n"
-  "  data: 26.747\n"
-  "  data: 96.1175\n"
+  "  data: 30.0\n"
+  "  data: 100.0\n"
   "  data: 10.0\n"
-  "  data: 52.0\n"
-  "  data: 36.0965\n"
+  "  data: 55.0\n"
+  "  data: 50.0\n"
   "  data: 10.0\n"
   "}\n"
   "linear_damping: 0.0\n"
   "angular_damping: 0.0\n"
   "locked_rotation: false\n"
+  ""
+  position {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+}
+embedded_components {
+  id: "model_1"
+  type: "model"
+  data: "mesh: \"/assets/models/ships/untitled2.dae\"\n"
+  "material: \"/render/materials/model.material\"\n"
+  "textures: \"/assets/images/gui/checkbox_unchecked.png\"\n"
+  "skeleton: \"/assets/models/ships/untitled.dae\"\n"
+  "animations: \"/assets/models/ships/untitled.dae\"\n"
+  "default_animation: \"\"\n"
+  "name: \"unnamed\"\n"
+  ""
+  position {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+}
+embedded_components {
+  id: "model_3"
+  type: "model"
+  data: "mesh: \"/assets/models/ships/untitled2.dae\"\n"
+  "material: \"/render/materials/model.material\"\n"
+  "textures: \"/assets/images/gui/checkbox_unchecked.png\"\n"
+  "skeleton: \"/assets/models/ships/untitled.dae\"\n"
+  "animations: \"/assets/models/ships/untitled.dae\"\n"
+  "default_animation: \"\"\n"
+  "name: \"unnamed\"\n"
+  ""
+  position {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+}
+embedded_components {
+  id: "model_2"
+  type: "model"
+  data: "mesh: \"/assets/models/ships/untitled2.dae\"\n"
+  "material: \"/render/materials/model.material\"\n"
+  "textures: \"/assets/images/gui/checkbox_unchecked.png\"\n"
+  "skeleton: \"/assets/models/ships/untitled.dae\"\n"
+  "animations: \"/assets/models/ships/untitled.dae\"\n"
+  "default_animation: \"\"\n"
+  "name: \"unnamed\"\n"
   ""
   position {
     x: 0.0
