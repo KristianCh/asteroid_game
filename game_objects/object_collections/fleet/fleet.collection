@@ -13,6 +13,82 @@ instances {
     z: 0.0
     w: 1.0
   }
+  scale3 {
+    x: 0.35
+    y: 0.35
+    z: 0.35
+  }
+}
+instances {
+  id: "base_ship1"
+  prototype: "/game_objects/ships/base_ship.go"
+  position {
+    x: 429.0
+    y: 723.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  component_properties {
+    id: "base_ship"
+    properties {
+      id: "type"
+      value: "2.0"
+      type: PROPERTY_TYPE_NUMBER
+    }
+  }
+  scale3 {
+    x: 0.2
+    y: 0.2
+    z: 0.2
+  }
+}
+instances {
+  id: "base_ship2"
+  prototype: "/game_objects/ships/base_ship.go"
+  position {
+    x: 1467.0
+    y: 260.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  component_properties {
+    id: "base_ship"
+    properties {
+      id: "type"
+      value: "2.0"
+      type: PROPERTY_TYPE_NUMBER
+    }
+  }
+  scale3 {
+    x: 0.2
+    y: 0.2
+    z: 0.2
+  }
+}
+instances {
+  id: "base_ship3"
+  prototype: "/game_objects/ships/base_ship.go"
+  position {
+    x: 363.0
+    y: 242.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
   component_properties {
     id: "base_ship"
     properties {
@@ -22,9 +98,9 @@ instances {
     }
   }
   scale3 {
-    x: 0.35
-    y: 0.35
-    z: 0.35
+    x: 0.2
+    y: 0.2
+    z: 0.2
   }
 }
 scale_along_z: 0

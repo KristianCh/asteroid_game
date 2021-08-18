@@ -324,3 +324,46 @@ embedded_instances {
     z: 1.0
   }
 }
+embedded_instances {
+  id: "go1"
+  data: "embedded_components {\n"
+  "  id: \"model_2\"\n"
+  "  type: \"model\"\n"
+  "  data: \"mesh: \\\"/assets/models/ships/laser_cutter.dae\\\"\\n"
+  "material: \\\"/render/materials/model.material\\\"\\n"
+  "textures: \\\"/assets/images/palette.png\\\"\\n"
+  "skeleton: \\\"/assets/models/ships/laser_cutter.dae\\\"\\n"
+  "animations: \\\"/assets/models/ships/laser_cutter.dae\\\"\\n"
+  "default_animation: \\\"\\\"\\n"
+  "name: \\\"unnamed\\\"\\n"
+  "\"\n"
+  "  position {\n"
+  "    x: 0.0\n"
+  "    y: 0.0\n"
+  "    z: 0.0\n"
+  "  }\n"
+  "  rotation {\n"
+  "    x: -0.81915206\n"
+  "    y: 0.0\n"
+  "    z: 0.0\n"
+  "    w: 0.57357645\n"
+  "  }\n"
+  "}\n"
+  ""
+  position {
+    x: -1037.0
+    y: 510.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale3 {
+    x: 3.0
+    y: 3.0
+    z: 3.0
+  }
+}

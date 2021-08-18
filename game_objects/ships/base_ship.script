@@ -107,7 +107,7 @@ function laser_cutter_init(self)
 	self.target_offset = vmath.vector3(0, 0, 0)
 	self.evasion = 2 + self.level
 	self.speed = 250 + self.level * 100
-	msg.post("#sprite", "play_animation", {id = hash("laser_cutter")})
+	--msg.post("#sprite", "play_animation", {id = hash("laser_cutter")})
 end
 
 function laser_cutter_update(self, dt)
@@ -128,7 +128,7 @@ function laser_cutter_target(self, target)
 end
 
 function battleship_init(self) 
-	msg.post("#sprite", "play_animation", {id = hash("battleship")})
+	--msg.post("#sprite", "play_animation", {id = hash("battleship")})
 	self.main_cooldown = 4 - self.level/2
 	self.small_cooldown = 0.25
 	self.charges = 2 + self.level
@@ -162,7 +162,7 @@ function battleship_target(self, target)
 end
 
 function missile_cruiser_init(self) 
-	msg.post("#sprite", "play_animation", {id = hash("battleship")})
+	--msg.post("#sprite", "play_animation", {id = hash("battleship")})
 	self.main_cooldown = 4 - self.level/2
 	self.small_cooldown = 0.25
 	self.charges = 2 + self.level

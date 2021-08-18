@@ -1,15 +1,72 @@
-attribute highp vec3 position;
+
+// Positions can be world or local space, since world and normal
+// matrices are identity for world vertex space materials.
+// If world vertex space is selected, you can remove the
+// normal matrix multiplication for optimal performance.
+
+attribute highp vec4 position;
+attribute mediump vec2 texcoord0;
+attribute mediump vec3 normal;
 
 uniform mediump mat4 mtx_worldview;
+uniform mediump mat4 mtx_world;
+uniform mediump mat4 mtx_view;
 uniform mediump mat4 mtx_proj;
+uniform mediump mat4 mtx_normal;
+uniform mediump vec4 light;
+uniform mediump vec4 rotation;
 
-uniform highp vec4 rotation;
-varying highp vec3 var_position;
+varying highp vec4 var_position;
+varying mediump vec3 var_normal;
+varying mediump vec2 var_texcoord0;
+varying mediump vec4 var_light;
+
+mat4 mat4_from_quat() {
+    /*float qx = rotation.x;
+    float qy = rotation.y;
+    float qz = rotation.z;
+    float qw = rotation.w;
+
+    float n = 1.0/sqrt(qx*qx+qy*qy+qz*qz+qw*qw);
+    qx *= n;
+    qy *= n;
+    qz *= n;
+    qw *= n;
+
+
+    mat4 res = mat4(
+        1.0f - 2.0f*qy*qy - 2.0f*qz*qz, 2.0f*qx*qy + 2.0f*qz*qw, 2.0f*qx*qz - 2.0f*qy*qw, 0.0f,
+        2.0f*qx*qy - 2.0f*qz*qw, 1.0f - 2.0f*qx*qx - 2.0f*qz*qz, 2.0f*qy*qz + 2.0f*qx*qw, 0.0f, 
+        2.0f*qx*qz + 2.0f*qy*qw, 2.0f*qy*qz - 2.0f*qx*qw, 1.0f - 2.0f*qx*qx - 2.0f*qy*qy, 0.0f, 
+        0.0f, 0.0f, 0.0f, 1.0f
+    );
+    return res;
+
+
+    mat4 res = mat4(
+        1.0f - 2.0f*qy*qy - 2.0f*qz*qz, 2.0f*qx*qy - 2.0f*qz*qw, 2.0f*qx*qz + 2.0f*qy*qw, 0.0f,
+        2.0f*qx*qy + 2.0f*qz*qw, 1.0f - 2.0f*qx*qx - 2.0f*qz*qz, 2.0f*qy*qz - 2.0f*qx*qw, 0.0f,
+        2.0f*qx*qz - 2.0f*qy*qw, 2.0f*qy*qz + 2.0f*qx*qw, 1.0f - 2.0f*qx*qx - 2.0f*qy*qy, 0.0f,
+        0.0f, 0.0f, 0.0f, 1.0f
+    );
+    return res;*/
+
+    mat4 rot = mat4(
+        1, 0, 0, 0,
+        0, cos(rotation.x), -sin(rotation.x), 0, 
+        0, sin(rotation.x), cos(rotation.x), 0, 
+        0, 0, 0, 1
+    );
+    
+    return rot;
+}
 
 void main()
 {
     vec4 p = mtx_worldview * vec4(position.xyz, 1.0);
-    var_position = position.xyz;
+    var_light = mtx_view * vec4(light.xyz, 1.0);
+    var_position = p;
+    var_texcoord0 = texcoord0;
+    var_normal = normalize((mtx_normal * vec4(normal, 0.0)).xyz);
     gl_Position = mtx_proj * p;
 }
-

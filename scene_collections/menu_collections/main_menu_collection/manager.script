@@ -12,8 +12,8 @@ end
 
 function update(self, dt)
 	if not applied_force then
-		for i = 0,5 do 
-			local url = "/base_asteroid" .. i
+		for i = 1,5 do 
+			local url = "/asteroid" .. i .. "/base_asteroid"
 			local width, height = 1920, 1017
 			local velocity = vmath.vector3(0, math.random(-height, height), 0)
 			msg.post(url .. "#co3", "apply_force", {force = velocity * 30, 

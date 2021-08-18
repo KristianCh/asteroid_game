@@ -20,6 +20,11 @@ function init(self)
 		self.on_message = missile_on_message
 	end
 	self.init(self)
+	for i=1,2 do
+		if i ~= self.type then
+			msg.post("#model_" .. i, "disable")
+		end
+	end
 end
 
 function final(self)

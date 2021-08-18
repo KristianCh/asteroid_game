@@ -41,7 +41,7 @@ embedded_components {
   "    count: 3\n"
   "  }\n"
   "  data: 10.0\n"
-  "  data: 33.2375\n"
+  "  data: 29.2445\n"
   "  data: 10.0\n"
   "}\n"
   "linear_damping: 0.0\n"
@@ -61,7 +61,7 @@ embedded_components {
   }
 }
 embedded_components {
-  id: "model"
+  id: "model_2"
   type: "model"
   data: "mesh: \"/assets/models/projectiles/missile.dae\"\n"
   "material: \"/render/materials/model.material\"\n"
@@ -74,6 +74,29 @@ embedded_components {
   position {
     x: 0.0
     y: 0.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+}
+embedded_components {
+  id: "model_1"
+  type: "model"
+  data: "mesh: \"/assets/models/projectiles/cannon_round.dae\"\n"
+  "material: \"/render/materials/model.material\"\n"
+  "textures: \"/assets/images/palette.png\"\n"
+  "skeleton: \"/assets/models/projectiles/cannon_round.dae\"\n"
+  "animations: \"/assets/models/projectiles/cannon_round.dae\"\n"
+  "default_animation: \"\"\n"
+  "name: \"unnamed\"\n"
+  ""
+  position {
+    x: 0.0
+    y: -5.0
     z: 0.0
   }
   rotation {

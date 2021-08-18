@@ -14,26 +14,6 @@ components {
   }
 }
 embedded_components {
-  id: "sprite"
-  type: "sprite"
-  data: "tile_set: \"/assets/images/ships/ships.atlas\"\n"
-  "default_animation: \"battleship\"\n"
-  "material: \"/render/shaders/object_shaders/sprite_modeltype.material\"\n"
-  "blend_mode: BLEND_MODE_ALPHA\n"
-  ""
-  position {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-  }
-  rotation {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-}
-embedded_components {
   id: "co_boid"
   type: "collisionobject"
   data: "collision_shape: \"\"\n"
@@ -169,11 +149,11 @@ embedded_components {
 embedded_components {
   id: "model_1"
   type: "model"
-  data: "mesh: \"/assets/models/ships/untitled2.dae\"\n"
+  data: "mesh: \"/assets/models/ships/battleship.dae\"\n"
   "material: \"/render/materials/model.material\"\n"
-  "textures: \"/assets/images/gui/checkbox_unchecked.png\"\n"
-  "skeleton: \"/assets/models/ships/untitled.dae\"\n"
-  "animations: \"/assets/models/ships/untitled.dae\"\n"
+  "textures: \"/assets/images/palette.png\"\n"
+  "skeleton: \"/assets/models/ships/battleship.dae\"\n"
+  "animations: \"/assets/models/ships/battleship.dae\"\n"
   "default_animation: \"\"\n"
   "name: \"unnamed\"\n"
   ""
@@ -194,7 +174,7 @@ embedded_components {
   type: "model"
   data: "mesh: \"/assets/models/ships/untitled2.dae\"\n"
   "material: \"/render/materials/model.material\"\n"
-  "textures: \"/assets/images/gui/checkbox_unchecked.png\"\n"
+  "textures: \"/assets/images/palette.png\"\n"
   "skeleton: \"/assets/models/ships/untitled.dae\"\n"
   "animations: \"/assets/models/ships/untitled.dae\"\n"
   "default_animation: \"\"\n"
@@ -215,11 +195,11 @@ embedded_components {
 embedded_components {
   id: "model_2"
   type: "model"
-  data: "mesh: \"/assets/models/ships/untitled2.dae\"\n"
+  data: "mesh: \"/assets/models/ships/laser_cutter.dae\"\n"
   "material: \"/render/materials/model.material\"\n"
-  "textures: \"/assets/images/gui/checkbox_unchecked.png\"\n"
-  "skeleton: \"/assets/models/ships/untitled.dae\"\n"
-  "animations: \"/assets/models/ships/untitled.dae\"\n"
+  "textures: \"/assets/images/palette.png\"\n"
+  "skeleton: \"/assets/models/ships/laser_cutter.dae\"\n"
+  "animations: \"/assets/models/ships/laser_cutter.dae\"\n"
   "default_animation: \"\"\n"
   "name: \"unnamed\"\n"
   ""

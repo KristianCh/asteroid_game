@@ -136,6 +136,9 @@ function update(self, dt)
 	msg.post("@render:", "set_time", {start_time})
 	msg.post("@render:", "set_transition", {self.transition})
 
+	--local rot = vmath.quat_rotation_y(dt)
+	--go.set_rotation(go.get_rotation("/go1") * rot, "/go1")
+
 	--msg.post("@render:", "draw_line", {start_point = vmath.vector3(0), end_point = vmath.vector3(1920, 1017, 0), color = vmath.vector4(1)})
 end
 
