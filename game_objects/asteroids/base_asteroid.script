@@ -1,182 +1,12 @@
-go.property("buffer1", resource.buffer("/game_objects/asteroids/buffers/empty1.buffer")) 
-go.property("buffer2", resource.buffer("/game_objects/asteroids/buffers/empty2.buffer")) 
-go.property("buffer3", resource.buffer("/game_objects/asteroids/buffers/empty3.buffer")) 
-go.property("buffer4", resource.buffer("/game_objects/asteroids/buffers/empty4.buffer")) 
-go.property("buffer5", resource.buffer("/game_objects/asteroids/buffers/empty5.buffer")) 
-go.property("buffer6", resource.buffer("/game_objects/asteroids/buffers/empty6.buffer")) 
-go.property("buffer7", resource.buffer("/game_objects/asteroids/buffers/empty7.buffer")) 
-go.property("buffer8", resource.buffer("/game_objects/asteroids/buffers/empty8.buffer")) 
-go.property("buffer9", resource.buffer("/game_objects/asteroids/buffers/empty9.buffer")) 
-go.property("buffer10", resource.buffer("/game_objects/asteroids/buffers/empty10.buffer")) 
-go.property("buffer11", resource.buffer("/game_objects/asteroids/buffers/empty11.buffer")) 
-go.property("buffer12", resource.buffer("/game_objects/asteroids/buffers/empty12.buffer")) 
-go.property("buffer13", resource.buffer("/game_objects/asteroids/buffers/empty13.buffer")) 
-go.property("buffer14", resource.buffer("/game_objects/asteroids/buffers/empty14.buffer")) 
-go.property("buffer15", resource.buffer("/game_objects/asteroids/buffers/empty15.buffer")) 
-go.property("buffer16", resource.buffer("/game_objects/asteroids/buffers/empty16.buffer")) 
-go.property("buffer17", resource.buffer("/game_objects/asteroids/buffers/empty17.buffer")) 
-go.property("buffer18", resource.buffer("/game_objects/asteroids/buffers/empty18.buffer")) 
-go.property("buffer19", resource.buffer("/game_objects/asteroids/buffers/empty19.buffer")) 
-go.property("buffer20", resource.buffer("/game_objects/asteroids/buffers/empty20.buffer")) 
-go.property("buffer21", resource.buffer("/game_objects/asteroids/buffers/empty21.buffer")) 
-go.property("buffer22", resource.buffer("/game_objects/asteroids/buffers/empty22.buffer")) 
-go.property("buffer23", resource.buffer("/game_objects/asteroids/buffers/empty23.buffer")) 
-go.property("buffer24", resource.buffer("/game_objects/asteroids/buffers/empty24.buffer")) 
-go.property("buffer25", resource.buffer("/game_objects/asteroids/buffers/empty25.buffer")) 
-go.property("buffer26", resource.buffer("/game_objects/asteroids/buffers/empty26.buffer")) 
-go.property("buffer27", resource.buffer("/game_objects/asteroids/buffers/empty27.buffer")) 
-go.property("buffer28", resource.buffer("/game_objects/asteroids/buffers/empty28.buffer")) 
-go.property("buffer29", resource.buffer("/game_objects/asteroids/buffers/empty29.buffer")) 
-go.property("buffer30", resource.buffer("/game_objects/asteroids/buffers/empty30.buffer")) 
-go.property("buffer31", resource.buffer("/game_objects/asteroids/buffers/empty31.buffer")) 
-go.property("buffer32", resource.buffer("/game_objects/asteroids/buffers/empty32.buffer")) 
-go.property("buffer33", resource.buffer("/game_objects/asteroids/buffers/empty33.buffer")) 
-go.property("buffer34", resource.buffer("/game_objects/asteroids/buffers/empty34.buffer")) 
-go.property("buffer35", resource.buffer("/game_objects/asteroids/buffers/empty35.buffer")) 
-go.property("buffer36", resource.buffer("/game_objects/asteroids/buffers/empty36.buffer")) 
-go.property("buffer37", resource.buffer("/game_objects/asteroids/buffers/empty37.buffer")) 
-go.property("buffer38", resource.buffer("/game_objects/asteroids/buffers/empty38.buffer")) 
-go.property("buffer39", resource.buffer("/game_objects/asteroids/buffers/empty39.buffer")) 
-go.property("buffer40", resource.buffer("/game_objects/asteroids/buffers/empty40.buffer")) 
-go.property("buffer41", resource.buffer("/game_objects/asteroids/buffers/empty41.buffer")) 
-go.property("buffer42", resource.buffer("/game_objects/asteroids/buffers/empty42.buffer")) 
-go.property("buffer43", resource.buffer("/game_objects/asteroids/buffers/empty43.buffer")) 
-go.property("buffer44", resource.buffer("/game_objects/asteroids/buffers/empty44.buffer")) 
-go.property("buffer45", resource.buffer("/game_objects/asteroids/buffers/empty45.buffer")) 
-go.property("buffer46", resource.buffer("/game_objects/asteroids/buffers/empty46.buffer")) 
-go.property("buffer47", resource.buffer("/game_objects/asteroids/buffers/empty47.buffer")) 
-go.property("buffer48", resource.buffer("/game_objects/asteroids/buffers/empty48.buffer")) 
-go.property("buffer49", resource.buffer("/game_objects/asteroids/buffers/empty49.buffer")) 
-go.property("buffer50", resource.buffer("/game_objects/asteroids/buffers/empty50.buffer")) 
-go.property("buffer51", resource.buffer("/game_objects/asteroids/buffers/empty51.buffer")) 
-go.property("buffer52", resource.buffer("/game_objects/asteroids/buffers/empty52.buffer")) 
-go.property("buffer53", resource.buffer("/game_objects/asteroids/buffers/empty53.buffer")) 
-go.property("buffer54", resource.buffer("/game_objects/asteroids/buffers/empty54.buffer")) 
-go.property("buffer55", resource.buffer("/game_objects/asteroids/buffers/empty55.buffer")) 
-go.property("buffer56", resource.buffer("/game_objects/asteroids/buffers/empty56.buffer")) 
-go.property("buffer57", resource.buffer("/game_objects/asteroids/buffers/empty57.buffer")) 
-go.property("buffer58", resource.buffer("/game_objects/asteroids/buffers/empty58.buffer")) 
-go.property("buffer59", resource.buffer("/game_objects/asteroids/buffers/empty59.buffer")) 
-go.property("buffer60", resource.buffer("/game_objects/asteroids/buffers/empty60.buffer")) 
-go.property("buffer61", resource.buffer("/game_objects/asteroids/buffers/empty61.buffer")) 
-go.property("buffer62", resource.buffer("/game_objects/asteroids/buffers/empty62.buffer")) 
-go.property("buffer63", resource.buffer("/game_objects/asteroids/buffers/empty63.buffer")) 
-go.property("buffer64", resource.buffer("/game_objects/asteroids/buffers/empty64.buffer")) 
-go.property("buffer65", resource.buffer("/game_objects/asteroids/buffers/empty65.buffer")) 
-go.property("buffer66", resource.buffer("/game_objects/asteroids/buffers/empty66.buffer")) 
-go.property("buffer67", resource.buffer("/game_objects/asteroids/buffers/empty67.buffer")) 
-go.property("buffer68", resource.buffer("/game_objects/asteroids/buffers/empty68.buffer")) 
-go.property("buffer69", resource.buffer("/game_objects/asteroids/buffers/empty69.buffer")) 
-go.property("buffer70", resource.buffer("/game_objects/asteroids/buffers/empty70.buffer")) 
-go.property("buffer71", resource.buffer("/game_objects/asteroids/buffers/empty71.buffer")) 
-go.property("buffer72", resource.buffer("/game_objects/asteroids/buffers/empty72.buffer")) 
-go.property("buffer73", resource.buffer("/game_objects/asteroids/buffers/empty73.buffer")) 
-go.property("buffer74", resource.buffer("/game_objects/asteroids/buffers/empty74.buffer")) 
-go.property("buffer75", resource.buffer("/game_objects/asteroids/buffers/empty75.buffer")) 
-go.property("buffer76", resource.buffer("/game_objects/asteroids/buffers/empty76.buffer")) 
-go.property("buffer77", resource.buffer("/game_objects/asteroids/buffers/empty77.buffer")) 
-go.property("buffer78", resource.buffer("/game_objects/asteroids/buffers/empty78.buffer")) 
-go.property("buffer79", resource.buffer("/game_objects/asteroids/buffers/empty79.buffer")) 
-go.property("buffer80", resource.buffer("/game_objects/asteroids/buffers/empty80.buffer")) 
-go.property("buffer81", resource.buffer("/game_objects/asteroids/buffers/empty81.buffer")) 
-go.property("buffer82", resource.buffer("/game_objects/asteroids/buffers/empty82.buffer")) 
-go.property("buffer83", resource.buffer("/game_objects/asteroids/buffers/empty83.buffer")) 
-go.property("buffer84", resource.buffer("/game_objects/asteroids/buffers/empty84.buffer")) 
-go.property("buffer85", resource.buffer("/game_objects/asteroids/buffers/empty85.buffer")) 
-go.property("buffer86", resource.buffer("/game_objects/asteroids/buffers/empty86.buffer")) 
-go.property("buffer87", resource.buffer("/game_objects/asteroids/buffers/empty87.buffer")) 
-go.property("buffer88", resource.buffer("/game_objects/asteroids/buffers/empty88.buffer")) 
-go.property("buffer89", resource.buffer("/game_objects/asteroids/buffers/empty89.buffer")) 
-go.property("buffer90", resource.buffer("/game_objects/asteroids/buffers/empty90.buffer")) 
-go.property("buffer91", resource.buffer("/game_objects/asteroids/buffers/empty91.buffer")) 
-go.property("buffer92", resource.buffer("/game_objects/asteroids/buffers/empty92.buffer")) 
-go.property("buffer93", resource.buffer("/game_objects/asteroids/buffers/empty93.buffer")) 
-go.property("buffer94", resource.buffer("/game_objects/asteroids/buffers/empty94.buffer")) 
-go.property("buffer95", resource.buffer("/game_objects/asteroids/buffers/empty95.buffer")) 
-go.property("buffer96", resource.buffer("/game_objects/asteroids/buffers/empty96.buffer")) 
-go.property("buffer97", resource.buffer("/game_objects/asteroids/buffers/empty97.buffer")) 
-go.property("buffer98", resource.buffer("/game_objects/asteroids/buffers/empty98.buffer")) 
-go.property("buffer99", resource.buffer("/game_objects/asteroids/buffers/empty99.buffer")) 
-go.property("buffer100", resource.buffer("/game_objects/asteroids/buffers/empty100.buffer")) 
-
 go.property("size", 3)
 go.property("scale", 12)
 go.property("color", vmath.vector4(1, 1, 1, 1))
 go.property("velocity", vmath.vector3(0))
 go.property("health", 100)
 go.property("max_health", 100)
-go.property("buffer_index", 1)
 go.property("collision_timeout", 0.5)
-go.property("found_buffer", false)
 go.property("initial_slowdown", 1)
 go.property("type", 0)
-
-local available_buffers = {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-						   1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-						   1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-						   1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-						   1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1
-					}
-
-local function push_vertex(self, v, index) 
-	self.positions[index] = self.vertices[v].x
-	self.positions[index+1] = self.vertices[v].y
-	self.positions[index+2] = self.vertices[v].z
-end
-
-local function generate_vertices(self, count, distance, rand_angle_range, rand_dist_range, spikyness) 
-	spikyness = spikyness or 0
-	if count < 3 then
-		count = 3
-	end
-	self.vertices = {vmath.vector4(0, 0, 10, 0)}
-	local angle = math.pi * 2 / count
-	for i = 2,count+1 do
-		local angle_offset = (math.random() -0.5) * rand_angle_range * angle
-		local distance_offset = 1 + (math.random() * 0.5) * rand_dist_range + 
-			math.random() * rand_dist_range * (i%2==0 and spikyness or -spikyness)
-			self.vertices[i] = vmath.vector4(
-		math.cos((angle + angle_offset) * (i-2)) * distance * distance_offset, 
-		math.sin((angle + angle_offset) * (i-2)) * distance * distance_offset, 
-		math.random(-10, 10), 
-		0)
-	end
-end
-
-local function fill_buffer_data(self, vertices)
-	for i = 0,#vertices-2 do
-		local v2 = i+2
-		local v3 = i+3
-		if v3 > #vertices then 
-			v3 = 2
-		end
-		self.positions[i*9+1] = vertices[1].x
-		self.positions[i*9+2] = vertices[1].y
-		self.positions[i*9+3] = vertices[1].z
-
-		self.positions[i*9+4] = vertices[v2].x
-		self.positions[i*9+5] = vertices[v2].y
-		self.positions[i*9+6] = vertices[v2].z
-
-		self.positions[i*9+7] = vertices[v3].x
-		self.positions[i*9+8] = vertices[v3].y
-		self.positions[i*9+9] = vertices[v3].z
-
-
-		self.normals[i*9+1] = 0
-		self.normals[i*9+2] = 0
-		self.normals[i*9+3] = 1
-		
-		self.normals[i*9+4] = vertices[v2].x
-		self.normals[i*9+5] = vertices[v2].y
-		self.normals[i*9+6] = vertices[v2].z
-
-		self.normals[i*9+7] = vertices[v3].x
-		self.normals[i*9+8] = vertices[v3].y
-		self.normals[i*9+9] = vertices[v3].z
-	end
-	resource.set_buffer(go.get("#mesh", "vertices"), self.vertex_buffer)
-end
 
 local function emitter_state_change(self, id, emitter, state)
 	if emitter == hash("death_fx") and state == particlefx.EMITTER_STATE_POSTSPAWN then
@@ -187,7 +17,6 @@ end
 
 local function death(self) 
 	particlefx.play("#asteroid_pfx", emitter_state_change)	
-	particlefx.set_constant("#asteroid_pfx", "death_fx", "color", go.get("#mesh", "color"))
 	msg.post("#asteroid_gui", "set_health", {health = 0, max_health = self.max_health})
 	if self.size > 1 then
 		local c = math.random(1,3)
@@ -199,58 +28,23 @@ local function death(self)
 			local lower_y = -velocity.x/3 < 1+velocity.x/3 and -velocity.x/3 or 1+velocity.x/3
 			local higher_y = (not(-velocity.x/3 < 1+velocity.x/3)) and -velocity.x/3 or 1+velocity.x/3
 			local d_vel = vmath.vector3(10+math.random(lower_x, higher_x), 
-				10+math.random(lower_y, higher_y), 0)
+			10+math.random(lower_y, higher_y), 0)
 			local props = {}
 			props[hash("/base_asteroid")] = {size = self.size-1}
 			props[hash("/mesh_container")] = {size = self.size-1}
 			local ids = collectionfactory.create("/manager#asteroid_collection_factory", go.get_position(), nil, props, 1)
-			---go.set(msg.url(nil, ids[hash("/base_asteroid")], "co" .. self.size-1), "linear_velocity", velocity + d_vel)
-			--go.set(msg.url(nil, ids[hash("/base_asteroid")], "co" .. self.size-1), "angular_velocity", angular_velocity)
-			--print(go.get(ids[hash("/base_asteroid#base_asteroid")], "size"), self.size)
 			msg.post(ids[hash("/base_asteroid")], "set_velocities", {linear_velocity = velocity + d_vel, angular_velocity = angular_velocity})
 		end
 	end
 end
 
 function init(self)
-	for i=1,100 do
-		if available_buffers[i] == 1 then
-			available_buffers[i] = 0
-			self.found_buffer = true
-			self.buffer_index = i
-			go.set("#mesh", "vertices", go.get("#base_asteroid", "buffer" .. i))
-			break
-		end
-	end
-	if not self.found_buffer then 
-		go.delete()
-		return
-	end
 	self.dying = false
 	self.min_life = 1.5
 	self.health = 100 * self.size
 	self.max_health = 100 * self.size
 	self.screen_dimensions = vmath.vector3(1920, 1017, 0)
 	msg.post("#asteroid_gui", "set_scale", {scale = vmath.vector3(self.size / 2.5)})
-
-	self.vertices = {}
-	self.positions = {}
-	self.normals = {}
-	local vertex_count = 8 + self.size
-	generate_vertices(self, vertex_count, self.scale * self.size, 0.1, 1, 0.25)
-
-	self.vertex_buffer = buffer.create(vertex_count*3, {
-		{ name = hash("position"),
-		type=buffer.VALUE_TYPE_FLOAT32,
-		count = 3 },
-		{ name = hash("normal"),
-		type=buffer.VALUE_TYPE_FLOAT32,
-		count = 3 }
-	})
-
-	self.positions = buffer.get_stream(self.vertex_buffer, "position")
-	self.normals = buffer.get_stream(self.vertex_buffer, "normal")
-	fill_buffer_data(self, self.vertices)
 
 	msg.post("#co1", "disable")
 	msg.post("#co2", "disable")
@@ -259,11 +53,9 @@ function init(self)
 	msg.post("#co1_kinematic", "disable")
 	msg.post("#co2_kinematic", "disable")
 	msg.post("#co3_kinematic", "disable")
-	print(self.size)
 	msg.post("#co" .. self.size, "enable")	
 	msg.post("/manager", "enemy_created")
 
-	go.set("#mesh", "color", vmath.vector4(0.75, 0.75, 0.75, 1))
 	go.set("mesh_container#mesh", "color", vmath.vector4(0.75, 0.75, 0.75, 1))
 	self.type = math.random(0, 1)
 	self.type_init = base_init
@@ -281,19 +73,19 @@ end
 
 function update(self, dt)
 	local pos = go.get_position()
-
-	--[[local rot = go.get("#mesh", "rotation")
-	rot.x = rot.x + dt
-	go.set("#mesh", "rotation", rot)]]--
-	msg.post("#asteroid_gui", "set_data", {pos = pos, color = go.get("#mesh", "color")})
+	msg.post("#asteroid_gui", "set_data", {pos = pos, color = go.get("mesh_container#mesh", "color")})
 
 	if self.collision_timeout > 0 then
 		self.collision_timeout = self.collision_timeout - dt
 	end
 
 	self.velocity = go.get("#co" .. self.size, "linear_velocity")
+	local angular_velocity = go.get("#co" .. self.size, "angular_velocity")
+	local rot = go.get_rotation("mesh_container")
+	print(math.sin(angular_velocity.z*dt), math.cos(angular_velocity.z*dt))
+	rot = rot * vmath.quat_rotation_x(math.sin(angular_velocity.z)*dt) * vmath.quat_rotation_y(math.cos(angular_velocity.z)*dt)
+	go.set_rotation(rot, "mesh_container")
 	if self.health <= 0 and not self.dying then
-		local angular_velocity = go.get("#co" .. self.size, "angular_velocity")
 		msg.post("#co" .. self.size, "disable")	
 		msg.post("#co_death", "enable")
 		go.set("#co_death", "linear_velocity", self.velocity)
@@ -301,11 +93,11 @@ function update(self, dt)
 		self.dying = true
 		death(self)
 	end
-	
+
 	if vmath.length(self.velocity) > 600 and not self.dying then
 		msg.post("#co" .. self.size, "apply_force", {force = -self.velocity * dt * 1000, position = pos})
 	end
-	
+
 	local div = 1
 	if self.initial_slowdown > 0 then
 		div = div + self.initial_slowdown
@@ -327,7 +119,7 @@ function on_message(self, message_id, message, sender)
 			self.collision_timeout = 0.5
 			self.health = self.health - vmath.length(message.relative_velocity) / go.get("#co" .. self.size, "mass")
 			msg.post("#co" .. self.size, "apply_force", {force = message.normal * (10 + vmath.length(message.relative_velocity)), 
-				position = message.position})
+			position = message.position})
 			msg.post("#asteroid_gui", "set_health", {health = self.health, max_health = self.max_health})
 		end	
 	elseif message_id == hash("update_screen_dimensions") then
@@ -345,7 +137,6 @@ function on_message(self, message_id, message, sender)
 			end
 		end
 	elseif message_id == hash("set_velocities") then
-		print(self.size)
 		msg.post("#co" .. self.size, "enable")
 		go.set("#co" .. self.size, "linear_velocity", message.linear_velocity)
 		go.set("#co" .. self.size, "angular_velocity", message.angular_velocity)
@@ -357,12 +148,7 @@ function final(self)
 	for i,v in ipairs(self.subscribers) do 
 		msg.post(v, "unsubscribe")
 	end
-	if self.found_buffer then
-		available_buffers[self.buffer_index] = 1	
-		msg.post("/manager", "enemy_destroyed")
-	else
-		print("No buffer available")
-	end
+	msg.post("/manager", "enemy_destroyed")
 end
 
 function base_init(self) end
@@ -372,9 +158,6 @@ function base_message_handling(self, message_id, message, sender) end
 function magnetic_init(self) 
 	go.set("mesh_container#mesh", "color", vmath.vector4(1, 0, 0, 1))
 	go.animate("mesh_container#mesh", "color", go.PLAYBACK_LOOP_PINGPONG, vmath.vector4(0, 0, 1, 1), go.EASING_INOUTSINE, 5)
-	
-	--go.set("#mesh", "color", vmath.vector4(1, 0, 0, 1))
-	go.animate("#mesh", "color", go.PLAYBACK_LOOP_PINGPONG, vmath.vector4(0, 0, 1, 1), go.EASING_INOUTSINE, 5)
 end
 
 function magnetic_update(self, dt) 
@@ -397,5 +180,3 @@ function magnetic_message_handling(self, message_id, message, sender)
 		end
 	end
 end
-
-

@@ -44,27 +44,6 @@ components {
   }
 }
 embedded_components {
-  id: "mesh"
-  type: "mesh"
-  data: "material: \"/render/materials/asteroid_material/asteroid_material.material\"\n"
-  "vertices: \"/game_objects/asteroids/buffers/empty1.buffer\"\n"
-  "primitive_type: PRIMITIVE_TRIANGLES\n"
-  "position_stream: \"position\"\n"
-  "normal_stream: \"normal\"\n"
-  ""
-  position {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-  }
-  rotation {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-}
-embedded_components {
   id: "co3"
   type: "collisionobject"
   data: "collision_shape: \"\"\n"
