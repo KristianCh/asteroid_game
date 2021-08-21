@@ -233,7 +233,7 @@ embedded_instances {
   "  id: \"model\"\n"
   "  type: \"model\"\n"
   "  data: \"mesh: \\\"/render/quad/quad.dae\\\"\\n"
-  "material: \\\"/render/shaders/post_process_shaders/pixelate_pps.material\\\"\\n"
+  "material: \\\"/render/shaders/post_process_shaders/crt_pps.material\\\"\\n"
   "skeleton: \\\"\\\"\\n"
   "animations: \\\"\\\"\\n"
   "default_animation: \\\"\\\"\\n"

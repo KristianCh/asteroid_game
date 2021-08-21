@@ -43,6 +43,7 @@ function init(self)
     self.fade_gui_pred = render.predicate({"fade_gui"})
     self.merge_framebuffers_pred = render.predicate({"merge_framebuffer"})
     self.pixelate_pred = render.predicate({"pixelate"})
+    self.crt_pred = render.predicate({"crt"})
 
     self.clear_color = vmath.vector4(0, 0, 0, 0)
     self.clear_color.x = sys.get_config("render.clear_color_red", 0)
@@ -54,6 +55,7 @@ function init(self)
     self.near = -10000
     self.far = 10000
     self.projection_fn = fixed_fit_projection
+    self.enable_pps = true
 
     local color_params = {format = render.FORMAT_RGBA, 
         width = render.get_width(), height = render.get_height()}
@@ -153,27 +155,26 @@ function update(self)
     render.enable_texture(0, self.mesh_target, render.BUFFER_COLOR_BIT)
     render.enable_texture(1, self.sprite_target, render.BUFFER_COLOR_BIT)
     render.enable_texture(2, self.gui_target, render.BUFFER_COLOR_BIT)
-    
-    --render.enable_render_target(self.pps_target)
+
+    if self.enable_pps then
+        render.enable_render_target(self.pps_target)
+    end
     render.draw(self.merge_framebuffers_pred, self.constants)
-    --render.disable_render_target(self.pps_target)
+    if self.enable_pps then
+        render.disable_render_target(self.pps_target)
+    end
     
     render.disable_texture(0, self.mesh_target)
     render.disable_texture(1, self.sprite_target)
     render.disable_texture(2, self.gui_target)
     render.disable_texture(3, self.fade_target)
 
-    render.set_depth_mask(true)
-    render.enable_state(render.STATE_DEPTH_TEST)
-    render.set_projection(stretch_projection(-1000, 1000))  -- orthographic
-    render.draw(self.model_test_pred)
-    render.set_depth_mask(false) 
-
-    --[[
-    render.enable_texture(0, self.pps_target, render.BUFFER_COLOR_BIT)
-    render.draw(self.pixelate_pred)
-    render.disable_texture(0, self.pps_target)
-    ]]--
+    if self.enable_pps then
+        render.enable_texture(0, self.pps_target, render.BUFFER_COLOR_BIT)
+        render.clear({[render.BUFFER_COLOR_BIT] = vmath.vector4(0, 0, 0, 1), [render.BUFFER_DEPTH_BIT] = 1, [render.BUFFER_STENCIL_BIT] = 0})
+        render.draw(self.crt_pred, self.constants)
+        render.disable_texture(0, self.pps_target)
+    end
 end
 
 function on_message(self, message_id, message)
@@ -201,5 +202,9 @@ function on_message(self, message_id, message)
         self.constants.time = vmath.vector4(message[1], 0, 0, 0)
     elseif message_id == hash("set_transition") then
         self.constants.transition = message[1]
+    elseif message_id == hash("toggle_pps") then
+        self.enable_pps = not self.enable_pps
+    elseif message_id == hash("set_pps") then
+        self.enable_pps = message.enabled
     end
 end

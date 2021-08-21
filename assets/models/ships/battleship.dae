@@ -3,10 +3,10 @@
   <asset>
     <contributor>
       <author>Blender User</author>
-      <authoring_tool>Blender 2.93.2 commit date:2021-08-03, commit time:05:58, hash:1eb06de2607a</authoring_tool>
+      <authoring_tool>Blender 2.93.3 commit date:2021-08-17, commit time:18:30, hash:8b80d19f3641</authoring_tool>
     </contributor>
-    <created>2021-08-15T13:08:14</created>
-    <modified>2021-08-15T13:08:14</modified>
+    <created>2021-08-21T17:45:01</created>
+    <modified>2021-08-21T17:45:01</modified>
     <unit name="meter" meter="1"/>
     <up_axis>Z_UP</up_axis>
   </asset>
@@ -57,9 +57,9 @@
   </library_geometries>
   <library_visual_scenes>
     <visual_scene id="Scene" name="Scene">
-      <node id="Cylinder" name="Cylinder" type="NODE">
-        <matrix sid="transform">7.54979e-8 -1 0 0 1 7.54979e-8 0 0 0 0 1 0 0 0 0 1</matrix>
-        <instance_geometry url="#Cylinder-mesh" name="Cylinder"/>
+      <node id="battleship" name="battleship" type="NODE">
+        <matrix sid="transform">7.54979e-8 1 0 0 -1 7.54979e-8 0 177.4058 0 0 1 0 0 0 0 1</matrix>
+        <instance_geometry url="#Cylinder-mesh" name="battleship"/>
       </node>
     </visual_scene>
   </library_visual_scenes>

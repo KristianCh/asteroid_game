@@ -206,5 +206,7 @@ function on_input(self, action_id, action)
 	if action_id == hash("debug") and action.released then
 		debug = not debug
 		profiler.enable_ui(debug)
+	elseif action_id == hash("pps") and action.released then
+		msg.post("@render:", "toggle_pps")
 	end
 end

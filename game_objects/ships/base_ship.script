@@ -68,7 +68,7 @@ function update(self, dt)
 	self.heading = vmath.normalize(vmath.slerp(self.evasion * dt, self.heading, vec_to_target))
 	local angle = math.deg(math.atan2(self.heading.y, self.heading.x)) - 90
 	local rot_z = vmath.quat_rotation_z(math.rad(angle))
-	local rot_y = vmath.quat_rotation_y(math.rad(self.d_steer))
+	local rot_y = vmath.quat_rotation_y(math.rad(-self.d_steer))
 	go.set_rotation(rot_z * rot_y)
 
 	for i=-3,2 do
