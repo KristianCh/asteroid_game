@@ -198,8 +198,11 @@ function init(self)
 	self.vertex_positions = {}
 	self.vertex_normals = {}
 	self.vertex_position_normals = {}
-	local count = 5 + self.size
-	generate_vertices(self, count, count, self.scale * self.size, 10, self.scale * self.size)
+	local count_range = 3 + self.size * 2
+	local stack_count = math.random(2 + self.size, 2 + self.size * 3)
+	local sector_count = math.random(2 + self.size, 2 + self.size * 3)
+	
+	generate_vertices(self, stack_count, sector_count, self.scale * self.size, 10, self.scale * self.size)
 
 	self.vertex_buffer = buffer.create(#self.vertex_positions/3, {
 		{ name = hash("position"),
