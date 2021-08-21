@@ -170,8 +170,10 @@ function update(self)
     render.disable_texture(3, self.fade_target)
 
     if self.enable_pps then
+        render.set_viewport(0, 0, render.get_width(), render.get_height())
         render.enable_texture(0, self.pps_target, render.BUFFER_COLOR_BIT)
         render.clear({[render.BUFFER_COLOR_BIT] = vmath.vector4(0, 0, 0, 1), [render.BUFFER_DEPTH_BIT] = 1, [render.BUFFER_STENCIL_BIT] = 0})
+        self.constants.viewport = vmath.vector4(0, 0, render.get_window_width(), render.get_window_height())
         render.draw(self.crt_pred, self.constants)
         render.disable_texture(0, self.pps_target)
     end

@@ -194,10 +194,15 @@ function on_message(self, message_id, message, sender)
 		self.transition = vmath.vector4(0, 1, 0, 0)
 		go.animate("#main", "transition", go.PLAYBACK_ONCE_PINGPONG, vmath.vector4(1, 1, 0, 0), easing, 1)
 	elseif message_id == hash("apply_settings") then
-		if message.fullscreen then
-			defos.set_fullscreen(true)
-		else 
-			defos.set_maximized(true)
+		if message.fullscreen ~= nil then
+			if message.fullscreen then
+				defos.set_fullscreen(true)
+			else 
+				defos.set_maximized(true)
+			end
+		end
+		if message.crt ~= nil then
+			msg.post("@render:", "set_pps", {enabled = message.crt})
 		end
 	end
 end

@@ -4,6 +4,7 @@ varying highp vec4 position;
 varying highp vec2 var_texcoord0;
 
 uniform lowp vec4 time;
+uniform lowp vec4 viewport;
 uniform highp sampler2D original;
 
 vec2 curveRemapUV(vec2 curvature, vec2 uv)
@@ -32,7 +33,7 @@ void main()
 {
 	vec2 curvature = vec2(5, 5);
 	vec2 scanLineOpacity = vec2(1, 1) * 0.25;
-	vec2 screenResolution = textureSize(original,0) * (2.5 + sin(time.x/25)*0.025);
+	vec2 screenResolution = vec2(viewport.z, viewport.w) * (2.5 + sin(time.x/25)*0.025);
 	vec2 remappedUV = curveRemapUV(curvature, vec2(var_texcoord0.x, var_texcoord0.y));
 	vec4 baseColor = texture2D(original, remappedUV);
 	baseColor *= vignetteIntensity(remappedUV, screenResolution, 1, length(screenResolution)/200);
