@@ -12,8 +12,6 @@ end
 
 function update(self, dt)
 	local rot = go.get_rotation()
-	--rot = rot * vmath.quat_rotation_x(dt)
-	--rot = rot * vmath.quat_rotation_y(dt * 2)
 	go.set_rotation(rot)
 end
 
