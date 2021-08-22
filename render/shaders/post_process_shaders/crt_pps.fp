@@ -31,9 +31,9 @@ vec4 vignetteIntensity(vec2 uv, vec2 resolution, float opacity, float roundness)
 
 void main()
 {
-	vec2 curvature = vec2(5, 5);
+	vec2 curvature = vec2(4, 4);
 	vec2 scanLineOpacity = vec2(1, 1) * 0.25;
-	vec2 screenResolution = vec2(viewport.z, viewport.w) * (2.5 + sin(time.x/25)*0.025);
+	vec2 screenResolution = /*textureSize(original,0)*/ vec2(viewport.z, viewport.w) * (3.5 + sin(time.x/25)*0.025);
 	vec2 remappedUV = curveRemapUV(curvature, vec2(var_texcoord0.x, var_texcoord0.y));
 	vec4 baseColor = texture2D(original, remappedUV);
 	baseColor *= vignetteIntensity(remappedUV, screenResolution, 1, length(screenResolution)/200);

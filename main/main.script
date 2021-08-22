@@ -124,6 +124,7 @@ function init(self)
 	window.set_listener(window_resized)
 	defos.set_maximized(true)
 	defos.set_fullscreen(false)
+	msg.post("@render:", "set_fullscreen", {fullscreen = false})
 	--defos.disable_window_resize()
 
 	msg.post("#main_menu_proxy", "load")
@@ -200,6 +201,7 @@ function on_message(self, message_id, message, sender)
 			else 
 				defos.set_maximized(true)
 			end
+			msg.post("@render:", "set_fullscreen", {fullscreen = message.fullscreen})
 		end
 		if message.crt ~= nil then
 			msg.post("@render:", "set_pps", {enabled = message.crt})

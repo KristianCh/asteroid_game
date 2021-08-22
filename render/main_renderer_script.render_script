@@ -56,6 +56,7 @@ function init(self)
     self.far = 10000
     self.projection_fn = fixed_fit_projection
     self.enable_pps = true
+    self.is_fullscreen = false
 
     local color_params = {format = render.FORMAT_RGBA, 
         width = render.get_width(), height = render.get_height()}
@@ -157,6 +158,7 @@ function update(self)
     render.enable_texture(2, self.gui_target, render.BUFFER_COLOR_BIT)
 
     if self.enable_pps then
+        render.set_viewport(0, 0, render.get_width(), render.get_height())
         render.enable_render_target(self.pps_target)
     end
     render.draw(self.merge_framebuffers_pred, self.constants)
@@ -170,10 +172,10 @@ function update(self)
     render.disable_texture(3, self.fade_target)
 
     if self.enable_pps then
-        render.set_viewport(0, 0, render.get_width(), render.get_height())
+        render.set_viewport(0, 0, render.get_window_width(), render.get_window_height())
+        self.constants.viewport = vmath.vector4(0, 0, render.get_window_width(), render.get_window_height())
         render.enable_texture(0, self.pps_target, render.BUFFER_COLOR_BIT)
         render.clear({[render.BUFFER_COLOR_BIT] = vmath.vector4(0, 0, 0, 1), [render.BUFFER_DEPTH_BIT] = 1, [render.BUFFER_STENCIL_BIT] = 0})
-        self.constants.viewport = vmath.vector4(0, 0, render.get_window_width(), render.get_window_height())
         render.draw(self.crt_pred, self.constants)
         render.disable_texture(0, self.pps_target)
     end
@@ -208,5 +210,7 @@ function on_message(self, message_id, message)
         self.enable_pps = not self.enable_pps
     elseif message_id == hash("set_pps") then
         self.enable_pps = message.enabled
+    elseif message_id == hash("set_fullscreen") then
+        self.is_fullscreen = message.fullscreen
     end
 end
