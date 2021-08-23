@@ -1,3 +1,9 @@
+local function clamp(n, min, max) 
+	if n > max then return max
+	elseif n < min then return min
+	else return n end
+end
+
 function init(self)
 	-- Add initialization code here
 	-- Learn more: https://defold.com/manuals/script/
@@ -11,14 +17,21 @@ function final(self)
 end
 
 function update(self, dt)
-	local rot = go.get_rotation()
-	go.set_rotation(rot)
+	-- Add update code here
+	-- Learn more: https://defold.com/manuals/script/
+	-- Remove this function if not needed
 end
 
 function on_message(self, message_id, message, sender)
-	-- Add message-handling code here
-	-- Learn more: https://defold.com/manuals/message-passing/
-	-- Remove this function if not needed
+	if message_id == hash("set_pos") then
+		gui.set_position(gui.get_node("health"), message.position)
+		gui.set_position(gui.get_node("cooldown"), message.position)
+	elseif message_id == hash("set_stats") then
+		local health = clamp(message.health*360, 0, 360)
+		local cooldown = clamp(message.cooldown*360, 0, 360)
+		gui.set_fill_angle(gui.get_node("health"), health)
+		gui.set_fill_angle(gui.get_node("cooldown"), cooldown)
+	end	
 end
 
 function on_input(self, action_id, action)

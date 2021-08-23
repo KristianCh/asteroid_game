@@ -11,7 +11,7 @@ local function emitter_state_change(self, id, emitter, state)
 	if emitter == hash("death_fx") and state == particlefx.EMITTER_STATE_POSTSPAWN then
 		go.delete("mesh_container")
 		go.delete()
-	elseif emitter == hash("death_fx") and state == particlefx.EMITTER_STATE_PRESPAWN then
+	elseif emitter == hash("death_fx") and state == particlefx.EMITTER_STATE_SPAWNING then
 		local color = go.get("mesh_container#mesh", "color")
 		particlefx.set_constant("#asteroid_pfx", "death_fx", "tint", color)
 		particlefx.set_constant("#asteroid_pfx", "death_fx", "scale", vmath.vector4(self.size/3))

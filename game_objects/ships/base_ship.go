@@ -66,6 +66,7 @@ embedded_components {
   "linear_damping: 0.0\n"
   "angular_damping: 0.0\n"
   "locked_rotation: false\n"
+  "bullet: false\n"
   ""
   position {
     x: 0.0
@@ -133,6 +134,7 @@ embedded_components {
   "linear_damping: 0.0\n"
   "angular_damping: 0.0\n"
   "locked_rotation: false\n"
+  "bullet: false\n"
   ""
   position {
     x: 0.0
@@ -172,11 +174,11 @@ embedded_components {
 embedded_components {
   id: "model_3"
   type: "model"
-  data: "mesh: \"/assets/models/ships/untitled2.dae\"\n"
+  data: "mesh: \"/assets/models/ships/battleship.dae\"\n"
   "material: \"/render/materials/model.material\"\n"
   "textures: \"/assets/images/palette.png\"\n"
-  "skeleton: \"/assets/models/ships/untitled.dae\"\n"
-  "animations: \"/assets/models/ships/untitled.dae\"\n"
+  "skeleton: \"/assets/models/ships/battleship.dae\"\n"
+  "animations: \"/assets/models/ships/battleship.dae\"\n"
   "default_animation: \"\"\n"
   "name: \"unnamed\"\n"
   ""

@@ -1,3 +1,5 @@
+fleet_data = require "data.active_fleet"
+
 go.property("target_speed", 500)
 
 WIDTH = 1920
@@ -6,8 +8,6 @@ HEIGHT = 1017
 local function window_resized(self, event, data)
 	if event == window.WINDOW_EVENT_RESIZED then
 		if data.width ~= 0 and data.height ~= 0 then
-			--WIDTH = data.width
-			--HEIGHT = data.height
 			go.set("/fleet/border_bottom_left", "position", vmath.vector3(0, 0, 0))
 			go.set("/fleet/border_top_right", "position", vmath.vector3(WIDTH, HEIGHT, 0))
 		end
@@ -20,6 +20,17 @@ function init(self)
 	self.mouse_pos = vmath.vector3(WIDTH/2, HEIGHT/2, 0)
 
 	window.set_listener(window_resized)
+	local pos = vmath.vector3(0, 250, 0)
+	local rot_quat = vmath.quat_rotation_z(math.pi*2/#fleet_data)
+	for i = 1, #fleet_data do
+		local scale = vmath.vector3(0.2)
+		local stat_tracker = factory.create("#ship_stat_tracker_factory", vmath.vector3(90*i-45, 937, 0), nil, {type = fleet_data[i].type}, nil)
+		fleet_data[i].stat_tracker = stat_tracker
+		pprint(fleet_data)
+		if fleet_data[i].is_flagship then scale = vmath.vector3(0.35) end
+			factory.create("#ship_factory", vmath.vector3(960, 508.5, 0)+pos, nil, fleet_data[i], scale)
+		pos = vmath.rotate(rot_quat, pos)
+	end
 end
 
 function final(self)

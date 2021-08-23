@@ -59,7 +59,7 @@ function init(self)
     self.is_fullscreen = false
 
     local color_params = {format = render.FORMAT_RGBA, 
-        width = render.get_width(), height = render.get_height()}
+    width = render.get_width(), height = render.get_height()}
     local target_params = {[render.BUFFER_COLOR_BIT] = color_params}
     self.mesh_target = render.render_target("mesh_original", target_params)
     self.sprite_target = render.render_target("sprite_original", target_params)
@@ -129,14 +129,14 @@ function update(self)
     render.enable_render_target(self.fade_target)
     render.draw(self.fade_gui_pred)
     render.disable_render_target(self.fade_target)
-    
+
     render.enable_render_target(self.mesh_target)
-    
+
     render.draw(self.model_gui_pred)
     render.set_blend_func(render.BLEND_SRC_ALPHA, render.BLEND_ONE_MINUS_SRC_ALPHA)  
 
     render.disable_render_target(self.mesh_target)
-    
+
     render.disable_state(render.STATE_STENCIL_TEST)
     -------------------------------------------------------
     -- render to screen quad
@@ -146,13 +146,13 @@ function update(self)
     render.set_projection(vmath.matrix4())
 
     render.enable_texture(3, self.fade_target, render.BUFFER_COLOR_BIT)
-    
+
     render.enable_render_target(self.fade_target)
     render.set_viewport(0, 0, render.get_width(), render.get_height())
     render.draw(self.fade_fb_pred)    
     render.disable_render_target(self.fade_target)
     render.set_viewport(0, 0, render.get_window_width(), render.get_window_height())
-    
+
     render.enable_texture(0, self.mesh_target, render.BUFFER_COLOR_BIT)
     render.enable_texture(1, self.sprite_target, render.BUFFER_COLOR_BIT)
     render.enable_texture(2, self.gui_target, render.BUFFER_COLOR_BIT)
@@ -165,7 +165,7 @@ function update(self)
     if self.enable_pps then
         render.disable_render_target(self.pps_target)
     end
-    
+
     render.disable_texture(0, self.mesh_target)
     render.disable_texture(1, self.sprite_target)
     render.disable_texture(2, self.gui_target)
@@ -173,7 +173,7 @@ function update(self)
 
     if self.enable_pps then
         render.set_viewport(0, 0, render.get_window_width(), render.get_window_height())
-        self.constants.viewport = vmath.vector4(0, 0, render.get_window_width(), render.get_window_height())
+        self.constants.viewport = vmath.vector4(0, 0, render.get_width(), render.get_height())
         render.enable_texture(0, self.pps_target, render.BUFFER_COLOR_BIT)
         render.clear({[render.BUFFER_COLOR_BIT] = vmath.vector4(0, 0, 0, 1), [render.BUFFER_DEPTH_BIT] = 1, [render.BUFFER_STENCIL_BIT] = 0})
         render.draw(self.crt_pred, self.constants)

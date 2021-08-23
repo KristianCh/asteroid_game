@@ -1,114 +1,46 @@
 name: "fleet"
-instances {
-  id: "base_ship"
-  prototype: "/game_objects/ships/base_ship.go"
-  position {
-    x: 1293.0
-    y: 716.0
-    z: 0.0
-  }
-  rotation {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-  scale3 {
-    x: 0.35
-    y: 0.35
-    z: 0.35
-  }
-}
-instances {
-  id: "base_ship1"
-  prototype: "/game_objects/ships/base_ship.go"
-  position {
-    x: 429.0
-    y: 723.0
-    z: 0.0
-  }
-  rotation {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-  component_properties {
-    id: "base_ship"
-    properties {
-      id: "type"
-      value: "2.0"
-      type: PROPERTY_TYPE_NUMBER
-    }
-  }
-  scale3 {
-    x: 0.2
-    y: 0.2
-    z: 0.2
-  }
-}
-instances {
-  id: "base_ship2"
-  prototype: "/game_objects/ships/base_ship.go"
-  position {
-    x: 1467.0
-    y: 260.0
-    z: 0.0
-  }
-  rotation {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-  component_properties {
-    id: "base_ship"
-    properties {
-      id: "type"
-      value: "2.0"
-      type: PROPERTY_TYPE_NUMBER
-    }
-  }
-  scale3 {
-    x: 0.2
-    y: 0.2
-    z: 0.2
-  }
-}
-instances {
-  id: "base_ship3"
-  prototype: "/game_objects/ships/base_ship.go"
-  position {
-    x: 363.0
-    y: 242.0
-    z: 0.0
-  }
-  rotation {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-  component_properties {
-    id: "base_ship"
-    properties {
-      id: "type"
-      value: "3.0"
-      type: PROPERTY_TYPE_NUMBER
-    }
-  }
-  scale3 {
-    x: 0.2
-    y: 0.2
-    z: 0.2
-  }
-}
 scale_along_z: 0
 embedded_instances {
   id: "fleet_manager"
   data: "components {\n"
   "  id: \"fleet_manager\"\n"
   "  component: \"/game_objects/object_collections/fleet/fleet_manager.script\"\n"
+  "  position {\n"
+  "    x: 0.0\n"
+  "    y: 0.0\n"
+  "    z: 0.0\n"
+  "  }\n"
+  "  rotation {\n"
+  "    x: 0.0\n"
+  "    y: 0.0\n"
+  "    z: 0.0\n"
+  "    w: 1.0\n"
+  "  }\n"
+  "}\n"
+  "embedded_components {\n"
+  "  id: \"ship_factory\"\n"
+  "  type: \"factory\"\n"
+  "  data: \"prototype: \\\"/game_objects/ships/base_ship.go\\\"\\n"
+  "load_dynamically: false\\n"
+  "\"\n"
+  "  position {\n"
+  "    x: 0.0\n"
+  "    y: 0.0\n"
+  "    z: 0.0\n"
+  "  }\n"
+  "  rotation {\n"
+  "    x: 0.0\n"
+  "    y: 0.0\n"
+  "    z: 0.0\n"
+  "    w: 1.0\n"
+  "  }\n"
+  "}\n"
+  "embedded_components {\n"
+  "  id: \"ship_stat_tracker_factory\"\n"
+  "  type: \"factory\"\n"
+  "  data: \"prototype: \\\"/game_objects/object_collections/fleet/ship_stat_tracker.go\\\"\\n"
+  "load_dynamically: false\\n"
+  "\"\n"
   "  position {\n"
   "    x: 0.0\n"
   "    y: 0.0\n"
@@ -234,6 +166,7 @@ embedded_instances {
   "linear_damping: 0.0\\n"
   "angular_damping: 0.0\\n"
   "locked_rotation: false\\n"
+  "bullet: false\\n"
   "\"\n"
   "  position {\n"
   "    x: 0.0\n"
@@ -320,6 +253,7 @@ embedded_instances {
   "linear_damping: 0.0\\n"
   "angular_damping: 0.0\\n"
   "locked_rotation: false\\n"
+  "bullet: false\\n"
   "\"\n"
   "  position {\n"
   "    x: 0.0\n"

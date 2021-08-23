@@ -1,11 +1,15 @@
 go.property("target_pos", vmath.vector3(960, 500, 0))
 go.property("heading", vmath.vector3(0, 1, 0))
-go.property("speed", 250)
+go.property("speed", 300)
 go.property("visibility_range", 150)
 go.property("evasion", 2)
 go.property("targeting_range", 500)
 go.property("level", 1)
 go.property("type", 1)
+go.property("health", 100)
+go.property("max_health", 100)
+go.property("is_flagship", false)
+go.property("stat_tracker", hash("."))
 
 local function sign(n) 
 	if n >= 0 then return 1
@@ -91,6 +95,8 @@ function update(self, dt)
 	pos = pos + self.heading * res_speed * dt
 	go.set_position(pos)
 
+	msg.post(self.stat_tracker, "set_health", {health = self.health / self.max_health})
+
 	self.update_type(self, dt)
 end
 
@@ -106,7 +112,8 @@ end
 function laser_cutter_init(self) 
 	self.target_offset = vmath.vector3(0, 0, 0)
 	self.evasion = 2 + self.level
-	self.speed = 250 + self.level * 100
+	self.damage = 50 + 25 * self.level
+	self.speed = 300 + self.level * 100
 	--msg.post("#sprite", "play_animation", {id = hash("laser_cutter")})
 end
 
@@ -121,7 +128,7 @@ function laser_cutter_target(self, target)
 		self.target_offset = vmath.lerp(target.dt * 30, self.target_offset, go.get_position(target.enemy) - go.get_position())
 		local target_pos = go.get_position() + self.target_offset
 		range_falloff = math.sqrt(1 - (vmath.length(go.get_position(target.enemy) - go.get_position()) / self.targeting_range))
-		msg.post(target.enemy, "damage_asteroid", {damage = 30 * target.dt * self.level})
+		msg.post(target.enemy, "damage_asteroid", {damage = self.damage * target.dt * self.level})
 		local c = 1 * math.pow(range_falloff, 3)
 		msg.post("@render:", "draw_line", {start_point = go.get_position(), end_point = go.get_position() + self.target_offset, color = vmath.vector4(c*2, c/3, c/3, 1)})
 	end
@@ -129,7 +136,8 @@ end
 
 function battleship_init(self) 
 	--msg.post("#sprite", "play_animation", {id = hash("battleship")})
-	self.main_cooldown = 4 - self.level/2
+	self.main_cooldown_time = 3 - self.level/2
+	self.main_cooldown = self.main_cooldown_time
 	self.small_cooldown = 0.25
 	self.charges = 2 + self.level
 	self.projectile_speed = 750
@@ -145,6 +153,7 @@ function battleship_update(self, dt)
 	if self.small_cooldown <= 0 and self.main_cooldown <= 0 and self.charges > 0 then
 		msg.post("/manager", "target_closest_enemy", {pos = go.get_position(), range = 10000, dt = dt})
 	end
+	msg.post(self.stat_tracker, "set_cooldown", {cooldown = 1 - self.main_cooldown / self.main_cooldown_time})
 end
 
 function battleship_target(self, target) 
@@ -154,7 +163,7 @@ function battleship_target(self, target)
 		local vec_to_target = vmath.normalize(go.get_position(target.enemy) - go.get_position() + go.get(target.enemy, "velocity") * (vmath.length(go.get_position(target.enemy) - go.get_position()) / self.projectile_speed))
 		factory.create("/manager#player_projectile_factory", go.get_position(), nil, {speed = self.projectile_speed, heading = vec_to_target, damage = 30 + self.level*20}, vmath.vector3(0.5))
 		if self.charges == 0 then
-			self.main_cooldown = 4 - self.level/2
+			self.main_cooldown = self.main_cooldown_time
 			self.small_cooldown = 0.25
 			self.charges = 2 + self.level
 		end
@@ -163,7 +172,8 @@ end
 
 function missile_cruiser_init(self) 
 	--msg.post("#sprite", "play_animation", {id = hash("battleship")})
-	self.main_cooldown = 4 - self.level/2
+	self.main_cooldown_time = 4 - self.level/2
+	self.main_cooldown = self.main_cooldown_time
 	self.small_cooldown = 0.25
 	self.charges = 2 + self.level
 	self.projectile_speed = 400
@@ -179,6 +189,7 @@ function missile_cruiser_update(self, dt)
 	if self.small_cooldown <= 0 and self.main_cooldown <= 0 and self.charges > 0 then
 		msg.post("/manager", "target_closest_enemy", {pos = go.get_position(), range = 10000, dt = dt})
 	end
+	msg.post(self.stat_tracker, "set_cooldown", {cooldown = 1 - self.main_cooldown / self.main_cooldown_time})
 end
 
 function missile_cruiser_target(self, target) 
@@ -190,7 +201,7 @@ function missile_cruiser_target(self, target)
 			{speed = self.projectile_speed, heading = vec_to_target, damage = 30 + self.level*20, 
 			target = target.enemy, type = 2}, vmath.vector3(0.5))
 		if self.charges == 0 then
-			self.main_cooldown = 4 - self.level/2
+			self.main_cooldown = self.main_cooldown_time
 			self.small_cooldown = 0.25
 			self.charges = 2 + self.level
 		end
