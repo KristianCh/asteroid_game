@@ -16,11 +16,18 @@ local function sign(n)
 	else return -1 end
 end
 
+local function emitter_state_change(self, id, emitter, state)
+	if emitter == hash("death_fx") and state == particlefx.EMITTER_STATE_POSTSPAWN then
+		go.delete()
+	end
+end
+
 function init(self)
 	self.d_steer = 0
 	self.init_type = battleship_init
 	self.update_type = battleship_update
 	self.target_type = battleship_target
+	self.collision_timeout = 0.5
 	if self.type == 2 then
 		self.init_type = laser_cutter_init
 		self.update_type = laser_cutter_update
@@ -40,10 +47,13 @@ function init(self)
 end
 
 function final(self)
+	msg.post(self.stat_tracker, "set_cooldown", {cooldown = 0})
+	msg.post(self.stat_tracker, "set_health", {health = 0})
 	msg.post("/manager", "ship_destroyed")
 end
 
 function update(self, dt)
+	self.collision_timeout = self.collision_timeout - dt
 	local max_x, max_y = 1920, 1017
 	local pos = go.get_position()
 	
@@ -65,7 +75,7 @@ function update(self, dt)
 	if dist_to_target == 0 then
 		vec_to_target = vmath.vector3(0, 1, 0)
 	end
-	
+	print(self.evasion * dt, self.heading, vec_to_target)
 	local d_steer = vmath.cross(vmath.slerp(self.evasion * dt, self.heading, vec_to_target), self.heading).z * 2000
 	self.d_steer = vmath.lerp(self.evasion * dt, self.d_steer, d_steer)
 	
@@ -106,6 +116,16 @@ function on_message(self, message_id, message, sender)
 			self.target_type(self, message)
 			--msg.post("@render:", "draw_line", {start_point = go.get_position(), end_point = go.get_position(message.enemy), color = vmath.vector4(1, 0, 0, 1)})
 		end
+	elseif message_id == hash("contact_point_response") then
+		if message.other_group == hash("asteroid") and self.collision_timeout <= 0 then
+			self.collision_timeout = 0.5
+			local damage = (vmath.length(message.relative_velocity) * message.other_mass) / 50
+			print(damage)
+			self.health = self.health - damage
+			if self.health <= 0 then
+				particlefx.play("#ship_pfx", emitter_state_change)	
+			end
+		end	
 	end
 end
 
@@ -114,7 +134,6 @@ function laser_cutter_init(self)
 	self.evasion = 2 + self.level
 	self.damage = 50 + 25 * self.level
 	self.speed = 300 + self.level * 100
-	--msg.post("#sprite", "play_animation", {id = hash("laser_cutter")})
 end
 
 function laser_cutter_update(self, dt)
@@ -135,7 +154,6 @@ function laser_cutter_target(self, target)
 end
 
 function battleship_init(self) 
-	--msg.post("#sprite", "play_animation", {id = hash("battleship")})
 	self.main_cooldown_time = 3 - self.level/2
 	self.main_cooldown = self.main_cooldown_time
 	self.small_cooldown = 0.25
@@ -171,7 +189,6 @@ function battleship_target(self, target)
 end
 
 function missile_cruiser_init(self) 
-	--msg.post("#sprite", "play_animation", {id = hash("battleship")})
 	self.main_cooldown_time = 4 - self.level/2
 	self.main_cooldown = self.main_cooldown_time
 	self.small_cooldown = 0.25
