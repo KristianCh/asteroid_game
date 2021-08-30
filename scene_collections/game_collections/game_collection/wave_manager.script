@@ -22,10 +22,10 @@ function spawn(self)
 end
 
 function init(self)
-	self.level = 1
+	self.stage = 1
 	self.wave = 1
-	self.waves = 2 + math.floor(self.level / 5)
-	self.wave_size = 6 + math.floor(self.level / 5)
+	self.waves = 2 + math.floor(self.stage / 5)
+	self.wave_size = 6 + math.floor(self.stage / 5)
 	self.wave_count = self.wave_size
 	self.spawn_count_down = 5
 	self.cooldown = 10
@@ -58,7 +58,13 @@ function update(self, dt)
 end
 
 function on_message(self, message_id, message, sender)
-	-- Add message-handling code here
-	-- Learn more: https://defold.com/manuals/message-passing/
-	-- Remove this function if not needed
+	if message_id == hash("setup") then
+		self.stage = message.data.stage
+		self.wave = 1
+		self.waves = 2 + math.floor(self.stage / 5)
+		self.wave_size = 6 + math.floor(self.stage / 5)
+		self.wave_count = self.wave_size
+		msg.post("/gui_container#game", "update_wave", {current_wave = self.wave, max_wave = self.waves})
+		msg.post("/gui_container#game", "update_stage", {stage = self.stage})
+	end
 end

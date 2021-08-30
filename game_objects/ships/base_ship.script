@@ -49,6 +49,7 @@ end
 function final(self)
 	msg.post(self.stat_tracker, "set_cooldown", {cooldown = 0})
 	msg.post(self.stat_tracker, "set_health", {health = 0})
+	msg.post(self.stat_tracker, "death")
 	msg.post("/manager", "ship_destroyed")
 end
 
@@ -75,7 +76,7 @@ function update(self, dt)
 	if dist_to_target == 0 then
 		vec_to_target = vmath.vector3(0, 1, 0)
 	end
-	print(self.evasion * dt, self.heading, vec_to_target)
+	--print(self.evasion * dt, self.heading, vec_to_target)
 	local d_steer = vmath.cross(vmath.slerp(self.evasion * dt, self.heading, vec_to_target), self.heading).z * 2000
 	self.d_steer = vmath.lerp(self.evasion * dt, self.d_steer, d_steer)
 	
@@ -120,7 +121,6 @@ function on_message(self, message_id, message, sender)
 		if message.other_group == hash("asteroid") and self.collision_timeout <= 0 then
 			self.collision_timeout = 0.5
 			local damage = (vmath.length(message.relative_velocity) * message.other_mass) / 50
-			print(damage)
 			self.health = self.health - damage
 			if self.health <= 0 then
 				particlefx.play("#ship_pfx", emitter_state_change)	

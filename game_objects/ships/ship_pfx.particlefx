@@ -37,7 +37,7 @@ emitters {
     key: EMITTER_KEY_SIZE_X
     points {
       x: 0.0
-      y: 100.0
+      y: 200.0
       t_x: 1.0
       t_y: 0.0
     }
@@ -47,7 +47,7 @@ emitters {
     key: EMITTER_KEY_SIZE_Y
     points {
       x: 0.0
-      y: 100.0
+      y: 200.0
       t_x: 1.0
       t_y: 0.0
     }
@@ -87,7 +87,7 @@ emitters {
     key: EMITTER_KEY_PARTICLE_SIZE
     points {
       x: 0.0
-      y: 30.0
+      y: 90.0
       t_x: 1.0
       t_y: 0.0
     }

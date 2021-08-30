@@ -39,10 +39,10 @@ void main()
 	//vec2 screenResolution = textureSize(original,0) * (3 + sin(time.x/25)*0.025);
 	vec2 remappedUV = curveRemapUV(curvature, vec2(var_texcoord0.x, var_texcoord0.y));
 	vec4 baseColor = texture2D(original, remappedUV);
-	baseColor *= vignetteIntensity(remappedUV, screenResolution, 1, length(screenResolution)/200);
+	baseColor *= vignetteIntensity(remappedUV, screenResolution, 0.5, length(screenResolution)/200);
 	baseColor *= scanLineIntensity(remappedUV.x, screenResolution.y, scanLineOpacity.x);
 	baseColor *= scanLineIntensity(remappedUV.y, screenResolution.x, scanLineOpacity.y);
-	baseColor *= vec4(vec3(1.5), 1.0);
+	baseColor *= vec4(vec3(2.0), 1.0);
 	if (remappedUV.x < 0.0 || remappedUV.y < 0.0 || remappedUV.x > 1.0 || remappedUV.y > 1.0){
 		gl_FragColor = vec4(0.0, 0.0, 0.0, 1.0);
 	} else {

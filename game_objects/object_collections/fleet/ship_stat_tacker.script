@@ -14,6 +14,7 @@ function init(self)
 	go.set_scale(vmath.vector3(0.25))
 	msg.post("#ship_stat_tacker", "set_pos", {position = go.get_position()})
 	self.target_health = 1
+	self.alive = 1
 end
 
 function final(self)
@@ -23,7 +24,7 @@ function final(self)
 end
 
 function update(self, dt)
-	local rot = go.get_rotation() * vmath.quat_rotation_y(dt)
+	local rot = go.get_rotation() * vmath.quat_rotation_y(dt * self.alive)
 	go.set_rotation(rot)
 	self.health = vmath.lerp(10 * dt, self.health, self.target_health)
 	self.cooldown = vmath.lerp(10 * dt, self.cooldown, self.target_cooldown)
@@ -37,6 +38,9 @@ function on_message(self, message_id, message, sender)
 	elseif message_id == hash("set_cooldown") then
 		self.target_cooldown = message.cooldown
 		if self.target_cooldown < 0 then self.target_cooldown = 0 end
+	elseif message_id == hash("death") then
+		go.set("#model_" .. self.type, "tint", vmath.vector4(0.4))
+		self.alive = 0
 	end
 end
 

@@ -73,6 +73,24 @@ function on_message(self, message_id, message, sender)
 		else 
 			msg.post(sender, "target_ship_response", {found = false})
 		end
+	elseif message_id == hash("target_ship_by_property") then
+		if self.ship_count > 0 then 
+			local closest = 100000000
+			if message.get_by == "highest" then closest = 0 end
+			local ship_url = msg.url()
+			local found = false
+			for k, v in pairs(self.ships) do
+				local prop_value = go.get(v, message.property)
+				if message.get_by == "highest" and prop_value > closest or message.get_by == "lowest" and prop_value < closest then
+					ship_url = v
+					closest = prop_value
+					found = true
+				end
+			end
+			msg.post(sender, "target_ship_response", {found = found, ship = ship_url, dt = message.dt})
+		else 
+			msg.post(sender, "target_ship_response", {found = false})
+		end
 	end
 end
 

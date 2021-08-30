@@ -14,6 +14,9 @@ function on_message(self, message_id, message, sender)
 		gui.set_text(display_node, "Wave: " .. message.current_wave .. "/" .. message.max_wave)
 		gui.animate(display_node, gui.PROP_POSITION, vmath.vector3(960, 508.5, 0), gui.EASING_INOUTQUINT, 5, 0, nil, gui.PLAYBACK_ONCE_PINGPONG)
 		gui.animate(display_node, "scale", vmath.vector3(2, 2, 1), gui.EASING_INOUTQUINT, 5, 0, nil, gui.PLAYBACK_ONCE_PINGPONG)
+	elseif message_id == hash("update_stage") then
+		local display_node = gui.get_node("stage_display")
+		gui.set_text(display_node, "Stage: " .. message.stage)
 	end	
 end
 
