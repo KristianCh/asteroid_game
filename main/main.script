@@ -1,6 +1,10 @@
 local active_run_data = require "data.active_run_data"
 local active_fleet = require "data.active_fleet"
 local user_settings = require "data.config.user_settings"
+local default_active_run_data = require "data.active_run_data"
+local default_active_fleet = require "data.active_fleet"
+local default_user_settings = require "data.config.user_settings"
+require "modules.utils"
 
 go.property("screen_dimensions", vmath.vector3(1920, 1017, 0))
 go.property("transition", vmath.vector4(0, 1, 0, 0))
@@ -12,11 +16,43 @@ local debug = false
 local start_time = 0
 local easing = vmath.vector({ 0, 0.4, 0.2, 0.2, 0.5, 1 })
 
+local function load_saved_data(filename, default)
+	local file = sys.get_save_file("asteroid_game", filename)
+	local data = sys.load(file)
+	local new = copy_table(default)
+	for k,v in pairs(data) do
+		new[k] = v
+	end
+	return new
+end
+
+local function save_saved_data(filename, data)
+	local file = sys.get_save_file("asteroid_game", filename)
+	sys.save(file, data)
+end
+
+local function apply_settings(self) 
+	if user_settings.fullscreen then
+		defos.set_fullscreen(true)
+	else 
+		defos.set_maximized(true)
+	end
+	msg.post("@render:", "set_fullscreen", {fullscreen = user_settings.fullscreen})
+	msg.post("@render:", "set_crt", {enabled = user_settings.crt_shader})
+	msg.post("@render:", "set_pixelate", {enabled = user_settings.pixel_shader})
+	save_saved_data("user_settings", user_settings)
+end
+
 local function new_game_from_main(self) 
 	msg.post("#main_menu_proxy", "disable")
 	msg.post("#main_menu_proxy", "final")
 	msg.post("#main_menu_proxy", "unload")
 
+	save_saved_data("active_run_data", default_active_run_data)
+	save_saved_data("active_fleet", default_active_fleet)
+	active_fleet = copy_table(default_active_fleet)
+	active_run_data = copy_table(default_active_run_data)
+	
 	msg.post("#new_game_proxy", "load")
 	current_active_proxy = "#new_game_proxy"
 end
@@ -120,32 +156,9 @@ local function return_to_main(self)
 	current_active_proxy = "#main_menu_proxy"
 end
 
-local function load_saved_data(filename, default)
-	local file = sys.get_save_file("asteroid_game", filename)
-	local data = sys.load(file)
-	return data or default
-end
-
-local function save_saved_data(filename, data)
-	local file = sys.get_save_file("asteroid_game", filename)
-	print("saving file " .. filename)
-	pprint(data)
-	sys.save(file, data)
-end
-
-local function apply_settings(self) 
-	if user_settings.fullscreen then
-		defos.set_fullscreen(true)
-	else 
-		defos.set_maximized(true)
-	end
-	msg.post("@render:", "set_fullscreen", {fullscreen = user_settings.fullscreen})
-	msg.post("@render:", "set_pps", {enabled = user_settings.crt_shader})
-	save_saved_data("user_settings", user_settings)
-end
-
 function init(self)
 	msg.post(".", "acquire_input_focus")
+	msg.post("#camera", "acquire_camera_focus")
 	msg.post("@render:", "use_fixed_fit_projection", { near = -1, far = 1 })
 
 	math.randomseed(os.clock()*100000000000)
@@ -154,8 +167,10 @@ function init(self)
 	msg.post("#main_menu_proxy", "load")
 	go.set("/go#sprite", "tint", vmath.vector4(1, 1, 1, 0.4))
 	current_active_proxy = "#main_menu_proxy"	
-	user_settings = load_saved_data("user_settings", user_settings)
+	user_settings = load_saved_data("user_settings", default_user_settings)
 	apply_settings(self)
+	active_fleet = load_saved_data("active_fleet", default_active_fleet)
+	active_run_data = load_saved_data("active_run_data", default_active_run_data)
 end
 
 function update(self, dt)
@@ -163,8 +178,8 @@ function update(self, dt)
 	msg.post("@render:", "set_time", {start_time})
 	msg.post("@render:", "set_transition", {self.transition})
 
-	--local rot = vmath.quat_rotation_y(dt)
-	--go.set_rotation(go.get_rotation("/go1") * rot, "/go1")
+	local rot = vmath.quat_rotation_y(dt)
+	go.set_rotation(go.get_rotation("/go1") * rot, "/go1")
 
 	--msg.post("@render:", "draw_line", {start_point = vmath.vector3(0), end_point = vmath.vector3(1920, 1017, 0), color = vmath.vector4(1)})
 end
@@ -227,6 +242,14 @@ function on_message(self, message_id, message, sender)
 	elseif message_id == hash("apply_setting") then
 		user_settings[message.id] = message.value
 		apply_settings(self)
+	elseif message_id == hash("advance_stage") then
+		active_run_data.stage = active_run_data.stage + 1
+		save_saved_data("active_run_data", active_run_data)
+	elseif message_id == hash("end_run") then
+		save_saved_data("active_run_data", default_active_run_data)
+		save_saved_data("active_fleet", default_active_fleet)
+		active_fleet = copy_table(default_active_fleet)
+		active_run_data = copy_table(default_active_run_data)
 	end
 end
 
@@ -235,6 +258,6 @@ function on_input(self, action_id, action)
 		debug = not debug
 		profiler.enable_ui(debug)
 	elseif action_id == hash("pps") and action.released then
-		msg.post("@render:", "toggle_pps")
+		msg.post("@render:", "toggle_crt")
 	end
 end

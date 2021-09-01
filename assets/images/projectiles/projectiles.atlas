@@ -1,9 +1,5 @@
 images {
-  image: "/assets/images/projectiles/missile.png"
-  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
-}
-images {
-  image: "/assets/images/projectiles/cannon_round.png"
+  image: "/assets/images/projectiles/circular_aoe.png"
   sprite_trim_mode: SPRITE_TRIM_MODE_OFF
 }
 margin: 10

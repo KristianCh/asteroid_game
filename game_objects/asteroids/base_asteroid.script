@@ -33,7 +33,7 @@ local function death(self)
 			local d_vel = vmath.vector3(10+math.random(lower_x, higher_x), 
 			10+math.random(lower_y, higher_y), 0)
 			local props = {}
-			props[hash("/base_asteroid")] = {size = self.size-1}
+			props[hash("/base_asteroid")] = {size = self.size-1, type = self.type}
 			props[hash("/mesh_container")] = {size = self.size-1}
 			local ids = collectionfactory.create("/manager#asteroid_collection_factory", go.get_position(), nil, props, 1)
 			msg.post(ids[hash("/base_asteroid")], "set_velocities", {linear_velocity = velocity + d_vel, angular_velocity = angular_velocity})
@@ -59,8 +59,7 @@ function init(self)
 	msg.post("#co" .. self.size, "enable")	
 	msg.post("/manager", "enemy_created")
 
-	go.set("mesh_container#mesh", "color", vmath.vector4(0.75, 0.75, 0.75, 1))
-	self.type = math.random(0, 1)
+	go.set("mesh_container#mesh", "color", vmath.vector4(0.25, 0.4, 0.5, 1))
 	self.type_init = base_init
 	self.type_update = base_update
 	self.type_message_handling = base_message_handling

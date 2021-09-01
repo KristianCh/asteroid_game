@@ -1,6 +1,7 @@
 local settings = {
 	fullscreen = false,
 	crt_shader = true,
+	pixel_shader = true,
 	mouse_controls = true,
 	music_on = true,
 	music_volume = 100,

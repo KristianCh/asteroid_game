@@ -17,6 +17,21 @@ embedded_instances {
   "    w: 1.0\n"
   "  }\n"
   "}\n"
+  "components {\n"
+  "  id: \"camera_controller\"\n"
+  "  component: \"/main/camera_controller.script\"\n"
+  "  position {\n"
+  "    x: 0.0\n"
+  "    y: 0.0\n"
+  "    z: 0.0\n"
+  "  }\n"
+  "  rotation {\n"
+  "    x: 0.0\n"
+  "    y: 0.0\n"
+  "    z: 0.0\n"
+  "    w: 1.0\n"
+  "  }\n"
+  "}\n"
   "embedded_components {\n"
   "  id: \"game_proxy\"\n"
   "  type: \"collectionproxy\"\n"
@@ -125,10 +140,31 @@ embedded_instances {
   "    w: 1.0\n"
   "  }\n"
   "}\n"
+  "embedded_components {\n"
+  "  id: \"camera\"\n"
+  "  type: \"camera\"\n"
+  "  data: \"aspect_ratio: 1.0\\n"
+  "fov: 0.7854\\n"
+  "near_z: 1000.0\\n"
+  "far_z: 1000.0\\n"
+  "auto_aspect_ratio: 0\\n"
+  "\"\n"
+  "  position {\n"
+  "    x: 0.0\n"
+  "    y: 0.0\n"
+  "    z: 0.0\n"
+  "  }\n"
+  "  rotation {\n"
+  "    x: 0.0\n"
+  "    y: 0.0\n"
+  "    z: 0.0\n"
+  "    w: 1.0\n"
+  "  }\n"
+  "}\n"
   ""
   position {
-    x: 640.0
-    y: 360.0
+    x: 0.0
+    y: 0.0
     z: 0.0
   }
   rotation {
@@ -233,7 +269,7 @@ embedded_instances {
   "  id: \"model\"\n"
   "  type: \"model\"\n"
   "  data: \"mesh: \\\"/render/quad/quad.dae\\\"\\n"
-  "material: \\\"/render/shaders/post_process_shaders/crt_pps.material\\\"\\n"
+  "material: \\\"/render/shaders/post_process_shaders/pps.material\\\"\\n"
   "skeleton: \\\"\\\"\\n"
   "animations: \\\"\\\"\\n"
   "default_animation: \\\"\\\"\\n"
@@ -343,7 +379,7 @@ embedded_instances {
   "    z: 0.0\n"
   "  }\n"
   "  rotation {\n"
-  "    x: -0.81915206\n"
+  "    x: 0.81915206\n"
   "    y: 0.0\n"
   "    z: 0.0\n"
   "    w: 0.57357645\n"
@@ -351,7 +387,7 @@ embedded_instances {
   "}\n"
   ""
   position {
-    x: -1037.0
+    x: -2783.0
     y: 510.0
     z: 0.0
   }

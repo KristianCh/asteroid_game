@@ -191,7 +191,7 @@ function init(self)
 		end
 	end
 	if not self.found_buffer then 
-		go.delete()
+		--go.delete()
 		return
 	end
 	self.vertices = {}
@@ -220,9 +220,9 @@ function init(self)
 end
 
 function final(self)
-	-- Add finalization code here
-	-- Learn more: https://defold.com/manuals/script/
-	-- Remove this function if not needed
+	if self.found_buffer then
+		available_buffers[self.buffer_index] = 1
+	end
 end
 
 function update(self, dt)

@@ -37,6 +37,7 @@ function on_message(self, message_id, message, sender)
 		self.ships[url_to_hash(sender)] = nil
 		self.ship_count = self.ship_count - 1
 		if self.ship_count <= 0 then
+			msg.post("main:/manager", "end_run", {success = false})
 			msg.post("main:/manager", "end_from_game")
 		end
 	elseif message_id == hash("target_closest_enemy") then

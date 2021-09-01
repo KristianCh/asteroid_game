@@ -1,10 +1,11 @@
 function spawn(self)
 	local width, height = 1920, 1017
+	local type = math.random(0, 1)
+	local props = {}
+	props[hash("/base_asteroid")] = {initial_slowdown = 2, type = type}
 	if math.random() > 0.5 then
 		local lr = math.random(0, 1)
 		local p = vmath.vector3(-100 + (width+200) * lr, math.random(-100, height+100), 0)
-		local props = {}
-		props[hash("/base_asteroid")] = {initial_slowdown = 2}
 		local ids = collectionfactory.create("#asteroid_collection_factory", p, nil, props)
 		local velocity = vmath.vector3(0, math.random(-height, height), 0)
 		local url = msg.url(nil, ids[hash("/base_asteroid")], "co3")
@@ -12,8 +13,6 @@ function spawn(self)
 	else 
 		local ud = math.random(0, 1)
 		local p = vmath.vector3(math.random(-100, width+100), -100 + (height+200) * ud, 0)
-		local props = {}
-		props[hash("/base_asteroid")] = {initial_slowdown = 2}
 		local ids = collectionfactory.create("#asteroid_collection_factory", p, nil, props)
 		local velocity = vmath.vector3(0, math.random(-height, height), 0)
 		local url = msg.url(nil, ids[hash("/base_asteroid")], "co3")
@@ -25,7 +24,7 @@ function init(self)
 	self.stage = 1
 	self.wave = 1
 	self.waves = 2 + math.floor(self.stage / 5)
-	self.wave_size = 6 + math.floor(self.stage / 5)
+	self.wave_size = 5 + math.floor(self.stage / 2)
 	self.wave_count = self.wave_size
 	self.spawn_count_down = 5
 	self.cooldown = 10
@@ -39,7 +38,7 @@ function update(self, dt)
 	if self.wave_count > 0 and self.spawn_count_down <= 0 and self.wave <= self.waves then
 		spawn(self)
 		self.wave_count = self.wave_count - 1
-		self.spawn_count_down = 1
+		self.spawn_count_down = 1 + math.floor(go.get("#manager", "enemy_count") / 2)
 	end
 	if go.get("/manager#manager", "enemy_count") == 0 then
 		if self.wave <= self.waves and self.cooldown <= 0 then
@@ -52,7 +51,13 @@ function update(self, dt)
 			end
 		elseif self.wave > self.waves and not self.finished then
 			self.finished = true
-			msg.post("main:/manager", "store_from_game")
+			if self.stage >= 5 then
+				msg.post("main:/manager", "end_run", {success = false})
+				msg.post("main:/manager", "end_from_game")
+			else
+				msg.post("main:/manager", "advance_stage")
+				msg.post("main:/manager", "store_from_game")
+			end
 		end
 	end	
 end
@@ -62,7 +67,7 @@ function on_message(self, message_id, message, sender)
 		self.stage = message.data.stage
 		self.wave = 1
 		self.waves = 2 + math.floor(self.stage / 5)
-		self.wave_size = 6 + math.floor(self.stage / 5)
+		self.wave_size = 5 + math.floor(self.stage / 2)
 		self.wave_count = self.wave_size
 		msg.post("/gui_container#game", "update_wave", {current_wave = self.wave, max_wave = self.waves})
 		msg.post("/gui_container#game", "update_stage", {stage = self.stage})

@@ -1,0 +1,27 @@
+function init(self) 
+	self.target_pos = vmath.vector3(0)
+	self.shake_intensity = 10
+	self.shake_timer = 0
+end
+
+function update(self, dt)
+	local pos = go.get_position()
+	if self.shake_timer > 0 then
+		self.shake_timer = self.shake_timer - dt
+		self.target_pos = vmath.vector3(math.random()-0.5, math.random()-0.5, 0) * self.shake_intensity
+	end
+	
+	pos = vmath.lerp(dt*15, pos, self.target_pos)
+	self.target_pos = vmath.lerp(dt * 5, self.target_pos, vmath.vector3(0))
+	go.set_position(pos)
+end
+
+function on_message(self, message_id, message, sender)
+	if message_id == hash("bonk_camera") then
+		self.target_pos = message.pos * 2
+		print(self.target_pos)
+	elseif message_id == hash("camera_shake") then
+		self.shake_intensity = message.intensity
+		self.shake_timer = message.time
+	end
+end

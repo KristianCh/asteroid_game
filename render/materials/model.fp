@@ -18,7 +18,7 @@ void main()
     diff_light = max(dot(var_normal,diff_light), 0.0) + ambient_light;
     diff_light = clamp(diff_light, 0.0, 1.0);
     if (dot(var_normal,vec3(0, 0, 1)) > 0) {
-        color.rgb *= 0.1 - dot(var_normal,vec3(0, 0, 1)) * 0.1;
+        color.rgb *= 0.1 - dot(var_normal,vec3(0, 0, -1)) * 0.1;
     }
 
     gl_FragColor = vec4(color.rgb*(0.75 + diff_light * 0.25), 1.0);

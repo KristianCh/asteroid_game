@@ -1,5 +1,5 @@
 local run_data = {
-	stage = 10,
+	stage = 1,
 	credits = 0,
 	difficulty = 0
 }
