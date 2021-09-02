@@ -1,5 +1,5 @@
 name: "sprite_modeltype"
-tags: "model"
+tags: "model_pfx"
 vertex_program: "/builtins/materials/particlefx.vp"
 fragment_program: "/builtins/materials/particlefx.fp"
 vertex_space: VERTEX_SPACE_WORLD

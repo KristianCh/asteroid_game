@@ -365,11 +365,11 @@ embedded_instances {
   data: "embedded_components {\n"
   "  id: \"model_2\"\n"
   "  type: \"model\"\n"
-  "  data: \"mesh: \\\"/assets/models/ships/laser_cutter.dae\\\"\\n"
+  "  data: \"mesh: \\\"/assets/models/ships/battleship.dae\\\"\\n"
   "material: \\\"/render/materials/model.material\\\"\\n"
   "textures: \\\"/assets/images/palette.png\\\"\\n"
-  "skeleton: \\\"/assets/models/ships/laser_cutter.dae\\\"\\n"
-  "animations: \\\"/assets/models/ships/laser_cutter.dae\\\"\\n"
+  "skeleton: \\\"/assets/models/ships/sphere.dae\\\"\\n"
+  "animations: \\\"/assets/models/ships/sphere.dae\\\"\\n"
   "default_animation: \\\"\\\"\\n"
   "name: \\\"unnamed\\\"\\n"
   "\"\n"
@@ -387,7 +387,7 @@ embedded_instances {
   "}\n"
   ""
   position {
-    x: -2783.0
+    x: -1596.0
     y: 510.0
     z: 0.0
   }
