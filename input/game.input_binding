@@ -44,7 +44,7 @@ key_trigger {
 }
 key_trigger {
   input: KEY_ESC
-  action: "pps"
+  action: "esc"
 }
 mouse_trigger {
   input: MOUSE_BUTTON_LEFT

@@ -1,5 +1,12 @@
 local gooey = require "gooey.gooey"
+local richtext = require "richtext.richtext"
 local diffs = {"normal", "hard", "very_hard"}
+local extra_spawn_rate = 0
+local max_extra_spawn_rate = 100
+local extra_toughness = 0
+local max_extra_toughness = 100
+local extra_credits = 0
+local extra_armor = 0
 
 local function select_diff(self, new_diff)
 	self.selected_diff = new_diff
@@ -15,6 +22,37 @@ end
 function init(self)
 	msg.post(".", "acquire_input_focus")
 	select_diff(self, "normal")
+	local normal_description = "<size=0.2>Ships repair fully at end of stage\n\n" ..
+	"Normal enemy spawn rate and toughness</size>"
+	richtext.create(normal_description, "ethnocentric", 
+	{
+		position = vmath.vector3(-150, 200, 0),
+		parent = gui.get_node("normal"),
+		color = vmath.vector4(204, 255, 204, 255)/255,
+		width = 300
+	})
+
+	local hard_description = "<size=0.2>Ships repair <color=1,0.7,0.5,1>50%</color> of max health at end of stage\n\n" ..
+	"Enemy spawn rate and toughness increased by <color=1,0.7,0.5,1>20%</color>\n\n" ..
+	"Credit gain increased by <color=0.8,1,0.8,1>25%</color></size>"
+	richtext.create(hard_description, "ethnocentric", 
+	{
+		position = vmath.vector3(-150, 200, 0),
+		parent = gui.get_node("hard"),
+		color = vmath.vector4(255, 255, 179, 255)/255,
+		width = 300
+	})
+
+	local very_hard_description = "<size=0.2>Ships do not repair at end of stage, destroyed ships do not respawn\n\n" ..
+	"Enemy spawn rate and toughness increased by <color=1,0.7,0.5,1>30%</color>\nAll types of enemies can spawn from Stage 1\n\n" ..
+	"Credit gain increased by <color=0.8,1,0.8,1>35%</color></size>"
+	local a = richtext.create(very_hard_description, "ethnocentric", 
+	{
+		position = vmath.vector3(-150, 200, 0),
+		parent = gui.get_node("very_hard"),
+		color = vmath.vector4(255, 204, 204, 255)/255,
+		width = 300
+	})
 end
 
 function final(self)
@@ -37,7 +75,14 @@ end
 
 function on_input(self, action_id, action)
 	gooey.button("start_game_button", action_id, action, function(button)
-		msg.post("main:/manager", "store_from_new", {difficulty = self.selected_diff})
+		msg.post("main:/manager", "store_from_new", 
+		{
+			difficulty = self.selected_diff,
+			extra_spawn_rate = extra_spawn_rate,
+			extra_credits = extra_credits,
+			extra_toughness = extra_toughness,
+			extra_armor = extra_armor
+		})
 	end, 
 	function(button)
 		if button.over_now then 
@@ -66,6 +111,42 @@ function on_input(self, action_id, action)
 	end, function(button) end)
 	gooey.button("very_hard", action_id, action, function(button)
 		select_diff(self, "very_hard")
+	end, function(button) end)
+
+	gooey.button("spawn_rate+", action_id, action, function(button)
+		if extra_spawn_rate < max_extra_spawn_rate then
+			extra_spawn_rate = extra_spawn_rate + 10
+			extra_credits = extra_credits + 5
+			gui.set_text(gui.get_node("spawn_rate_increase"), extra_spawn_rate .. "%")
+			gui.set_text(gui.get_node("credit_gain_increase"), extra_credits .. "%")
+		end
+	end, function(button) end)
+
+	gooey.button("spawn_rate-", action_id, action, function(button)
+		if extra_spawn_rate > 0 then
+			extra_spawn_rate = extra_spawn_rate - 10
+			extra_credits = extra_credits - 5
+			gui.set_text(gui.get_node("spawn_rate_increase"), extra_spawn_rate .. "%")
+			gui.set_text(gui.get_node("credit_gain_increase"), extra_credits .. "%")
+		end
+	end, function(button) end)
+
+	gooey.button("toughness+", action_id, action, function(button)
+		if extra_toughness < max_extra_toughness then
+			extra_toughness = extra_toughness + 10
+			extra_armor = extra_armor + 1
+			gui.set_text(gui.get_node("toughness_increase"), extra_toughness .. "%")
+			gui.set_text(gui.get_node("armor_increase"), extra_armor)
+		end
+	end, function(button) end)
+
+	gooey.button("toughness-", action_id, action, function(button)
+		if extra_toughness > 0 then
+			extra_toughness = extra_toughness - 10
+			extra_armor = extra_armor - 1
+			gui.set_text(gui.get_node("toughness_increase"), extra_toughness .. "%")
+			gui.set_text(gui.get_node("armor_increase"), extra_armor)
+		end
 	end, function(button) end)
 end
 
