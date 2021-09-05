@@ -188,6 +188,7 @@ function on_message(self, message_id, message, sender)
 	if message_id == hash("exit_game") then
 		msg.post("@system:", "exit", {code = 0})
 	elseif message_id == hash("proxy_loaded") then
+		pprint(active_run_data)
 		msg.post(sender, "init")
 		msg.post(sender, "enable")
 
@@ -199,6 +200,10 @@ function on_message(self, message_id, message, sender)
 			msg.post("game:/manager#wave_manager", "setup", {data = active_run_data})
 		elseif current_active_proxy == "#settings_proxy" then
 			msg.post("settings:/gui_container#settings", "setup", {data = user_settings})
+		elseif current_active_proxy == "#main_menu_proxy" then
+			if active_run_data.stage == 1 then
+				msg.post("main_menu:/gui_container#main_menu", "disable_continue")
+			end
 		end
 	elseif message_id == hash("proxy_unloaded") then
 	elseif message_id == hash("new_game_from_main") then
@@ -208,6 +213,13 @@ function on_message(self, message_id, message, sender)
 		self.transition = vmath.vector4(0, 1, 0, 0)
 		go.animate("#main", "transition", go.PLAYBACK_ONCE_FORWARD, vmath.vector4(1, 1, 0, 0), easing, 1, 0, continue_game_from_main)
 	elseif message_id == hash("store_from_new") then
+		if message.difficulty == "normal" then
+			active_run_data.difficulty = 0
+		elseif message.difficulty == "hard" then
+			active_run_data.difficulty = 1
+		elseif message.difficulty == "very_hard" then
+			active_run_data.difficulty = 2
+		end
 		self.transition = vmath.vector4(0, 1, 0, 0)
 		go.animate("#main", "transition", go.PLAYBACK_ONCE_FORWARD, vmath.vector4(1, 1, 0, 0), easing, 1, 0, store_from_new)
 	elseif message_id == hash("game_from_store") then
