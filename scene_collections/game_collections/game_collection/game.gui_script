@@ -15,10 +15,6 @@ function init(self)
 	msg.post(".", "acquire_input_focus")
 end
 
-function update(self, dt)
-	
-end
-
 function on_message(self, message_id, message, sender)
 	if message_id == hash("update_wave") then
 		local display_node = gui.get_node("wave_display")

@@ -14,15 +14,6 @@ function init(self)
 	self.ship_count = 0
 end
 
-function final(self)
-	-- Add finalization code here
-	-- Learn more: https://defold.com/manuals/script/
-	-- Remove this function if not needed
-end
-
-function update(self, dt)
-end
-
 function on_message(self, message_id, message, sender)
 	if message_id == hash("enemy_created") then
 		self.enemies[url_to_hash(sender)] = sender
@@ -118,10 +109,4 @@ function on_input(self, action_id, action)
 			msg.post(url, "apply_force", {force = velocity * 30, position = p + vmath.vector3(math.random(-20, 20), math.random(-20, 20), 0)})
 		end
 	end
-end
-
-function on_reload(self)
-	-- Add reload-handling code here
-	-- Learn more: https://defold.com/manuals/hot-reload/
-	-- Remove this function if not needed
 end

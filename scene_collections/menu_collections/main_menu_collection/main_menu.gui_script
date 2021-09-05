@@ -5,14 +5,6 @@ function init(self)
 	self.continue_enable = true
 end
 
-function final(self)
-	
-end
-
-function update(self, dt)
-	
-end
-
 function on_message(self, message_id, message, sender)
 	if message_id == hash("disable_continue") then
 		self.continue_enable = false
