@@ -85,6 +85,7 @@ void main()
 			mesh_color += kernel[index++] * texture(mesh_original, var_texcoord0.xy + shift);
 		}
 	}
+	//mesh_color = texture(mesh_original, var_texcoord0.xy);
 	float alpha = 0;
 	if (mesh_color.x > 0 || mesh_color.y > 0 || mesh_color.z > 0 || mesh_color.w > 0) {
 		alpha = (mesh_color.x + mesh_color.y + mesh_color.z) / 4;

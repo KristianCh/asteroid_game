@@ -10,7 +10,7 @@ void main()
     // Diffuse light calculations
     vec3 ambient_light = vec3(0.2);
     vec3 diff_light = vec3(normalize(var_light.xyz - var_position.xyz));
-    diff_light = max(dot(var_normal,vec3(0, 0, 0.1)), 0.0) + ambient_light;
+    diff_light = max(dot(var_normal,diff_light), 0.0) + ambient_light;
     diff_light = clamp(diff_light, 0.0, 1.0);
 
     gl_FragColor = vec4(color.rgb * (0.25 + 0.75*diff_light), 1.0);

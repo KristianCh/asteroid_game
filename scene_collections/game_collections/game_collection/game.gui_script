@@ -5,9 +5,9 @@ local function pause()
 	msg.post("main:/manager", "toggle_game_pause")
 	is_paused = is_paused ~= true
 	if is_paused then
-		gui.animate(gui.get_node("pause"), "color", vmath.vector4(1, 0, 0, 1), gui.EASING_INOUTQUAD, 1, 0, nil, gui.PLAYBACK_ONCE_FORWARD)
+		gui.animate(gui.get_node("pause"), "color", vmath.vector4(1, 0, 0, 0.5), gui.EASING_INOUTQUAD, 1, 0, nil, gui.PLAYBACK_ONCE_FORWARD)
 	else
-		gui.animate(gui.get_node("pause"), "color", vmath.vector4(1, 1, 1, 1), gui.EASING_INOUTQUAD, 1, 0, nil, gui.PLAYBACK_ONCE_FORWARD)
+		gui.animate(gui.get_node("pause"), "color", vmath.vector4(1, 1, 1, 0.5), gui.EASING_INOUTQUAD, 1, 0, nil, gui.PLAYBACK_ONCE_FORWARD)
 	end
 end
 

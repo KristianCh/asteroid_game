@@ -199,8 +199,8 @@ function init(self)
 	self.vertex_normals = {}
 	self.vertex_position_normals = {}
 	local count_range = 3 + self.size * 2
-	local stack_count = math.random(2 + self.size, 2 + self.size * 3)
-	local sector_count = math.random(2 + self.size, 2 + self.size * 3)
+	local stack_count = math.random(3 + self.size, 3 + self.size * 2)
+	local sector_count = math.random(3 + self.size, 3 + self.size * 2)
 	
 	generate_vertices(self, stack_count, sector_count, self.scale * self.size + (3/self.size), 10, self.scale * self.size)
 
