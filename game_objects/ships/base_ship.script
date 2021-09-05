@@ -1,6 +1,7 @@
 require "modules.ships.laser_cutter"
 require "modules.ships.battleship"
 require "modules.ships.missile_cruiser"
+require "modules.utils"
 
 go.property("target_pos", vmath.vector3(960, 500, 0))
 go.property("heading", vmath.vector3(0, 1, 0))
@@ -12,13 +13,9 @@ go.property("level", 1)
 go.property("type", 1)
 go.property("health", 100)
 go.property("max_health", 100)
+go.property("armor", 0)
 go.property("is_flagship", false)
 go.property("stat_tracker", hash("."))
-
-local function sign(n) 
-	if n >= 0 then return 1
-	else return -1 end
-end
 
 local function emitter_state_change(self, id, emitter, state)
 	if emitter == hash("death_fx") and state == particlefx.EMITTER_STATE_POSTSPAWN then
@@ -129,6 +126,8 @@ function on_message(self, message_id, message, sender)
 		if message.other_group == hash("asteroid") and self.collision_timeout <= 0 then
 			self.collision_timeout = 0.5
 			local damage = (vmath.length(message.relative_velocity) * message.other_mass) / 50
+			print(damage, clamp(damage - self.armor, 0, damage), self.armor)
+			damage = clamp(damage - self.armor, 0, damage)
 			self.health = self.health - damage
 			if self.health <= 0 then
 				msg.post("main:/manager#camera_controller", "camera_shake", {time = 1, intensity = 50})

@@ -1,4 +1,5 @@
 function battleship_init(self) 
+	self.armor = 5 * self.level
 	self.main_cooldown_time = 3 - self.level/2
 	self.main_cooldown = self.main_cooldown_time
 	self.small_cooldown = 0.25

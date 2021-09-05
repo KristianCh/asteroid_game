@@ -11,3 +11,14 @@ function copy_table(table)
 	end
 	return new
 end
+
+function sign(n) 
+	if n >= 0 then return 1
+	else return -1 end
+end
+
+function clamp(x, min, max)
+	if x < min then return min end
+	if x > max then return max end
+	return x
+end
