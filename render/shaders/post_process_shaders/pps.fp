@@ -41,7 +41,8 @@ vec4 vignetteIntensity(vec2 uv, vec2 resolution, float opacity, float roundness)
 
 vec4 getCrtColor(vec2 coords, vec4 color) {
 	vec2 scanLineOpacity = vec2(0.25);
-	vec2 screenResolution = vec2(data.z, data.w) * (3 + sin(time.x/25)*0.025);
+	//vec2 screenResolution = vec2(data.z, data.w) * (3 + sin(time.x/25)*0.025);
+	vec2 screenResolution = vec2(640, 480);
 	color *= vignetteIntensity(coords, screenResolution, 0.5, length(screenResolution)/200);
 	color *= scanLineIntensity(coords.x, screenResolution.y, scanLineOpacity.x);
 	color *= scanLineIntensity(coords.y, screenResolution.x, scanLineOpacity.y);

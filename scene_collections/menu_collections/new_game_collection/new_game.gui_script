@@ -23,7 +23,7 @@ function init(self)
 	msg.post(".", "acquire_input_focus")
 	select_diff(self, "normal")
 	local normal_description = "<size=0.2>Ships repair fully at end of stage\n\n" ..
-	"Normal enemy spawn rate and toughness</size>"
+	"Normal asteroid spawn rate and toughness</size>"
 	richtext.create(normal_description, "ethnocentric", 
 	{
 		position = vmath.vector3(-150, 200, 0),
@@ -33,8 +33,8 @@ function init(self)
 	})
 
 	local hard_description = "<size=0.2>Ships repair <color=1,0.7,0.5,1>50%</color> of max health at end of stage\n\n" ..
-	"Enemy spawn rate and toughness increased by <color=1,0.7,0.5,1>20%</color>\n\n" ..
-	"Credit gain increased by <color=0.8,1,0.8,1>25%</color></size>"
+	"Asteroid spawn rate and toughness increased by <color=1,0.7,0.5,1>20%</color>\n\n" ..
+	"Credit gain increased by <color=0.6,1,0.6,1>25%</color></size>"
 	richtext.create(hard_description, "ethnocentric", 
 	{
 		position = vmath.vector3(-150, 200, 0),
@@ -44,8 +44,8 @@ function init(self)
 	})
 
 	local very_hard_description = "<size=0.2>Ships do not repair at end of stage, destroyed ships do not respawn\n\n" ..
-	"Enemy spawn rate and toughness increased by <color=1,0.7,0.5,1>30%</color>\nAll types of enemies can spawn from Stage 1\n\n" ..
-	"Credit gain increased by <color=0.8,1,0.8,1>35%</color></size>"
+	"Asteroid spawn rate and toughness increased by <color=1,0.7,0.5,1>30%</color>\nAll types of asteroids can spawn from Stage 1\n\n" ..
+	"Credit gain increased by <color=0.6,1,0.6,1>35%</color></size>"
 	local a = richtext.create(very_hard_description, "ethnocentric", 
 	{
 		position = vmath.vector3(-150, 200, 0),

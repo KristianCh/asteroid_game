@@ -8,13 +8,15 @@ require "modules.utils"
 
 go.property("screen_dimensions", vmath.vector3(1920, 1017, 0))
 go.property("transition", vmath.vector4(0, 1, 0, 0))
+go.property("game_speed", 1)
 
 local message_to_loaded_collection = {}
 local settings_disabled_proxy = ""
 local current_active_proxy = ""
+local last_game_speed = 1
 local debug = false
 local start_time = 0
-local game_speed = 1
+local is_paused = false
 local easing = vmath.vector({ 0, 0.4, 0.2, 0.2, 0.5, 1 })
 
 local function load_saved_data(filename, default)
@@ -48,11 +50,6 @@ local function new_game_from_main(self)
 	msg.post("#main_menu_proxy", "disable")
 	msg.post("#main_menu_proxy", "final")
 	msg.post("#main_menu_proxy", "unload")
-
-	save_saved_data("active_run_data", default_active_run_data)
-	save_saved_data("active_fleet", default_active_fleet)
-	active_fleet = copy_table(default_active_fleet)
-	active_run_data = copy_table(default_active_run_data)
 	
 	msg.post("#new_game_proxy", "load")
 	current_active_proxy = "#new_game_proxy"
@@ -144,6 +141,9 @@ local function close_settings(self)
 	msg.post("#settings_proxy", "unload")
 
 	current_active_proxy = settings_disabled_proxy
+	if current_active_proxy == "#game_proxy" and self.game_speed == 0 then
+		msg.post("/go#borders", "pause")
+	end
 	msg.post(current_active_proxy, "enable")	
 	go.animate("#main", "transition", go.PLAYBACK_ONCE_FORWARD, vmath.vector4(0, 1, 0, 0), easing, 1, 0, function(self) self.transition = vmath.vector4(0, 1, 0, 0) end)
 end
@@ -182,6 +182,11 @@ function update(self, dt)
 	local rot = vmath.quat_rotation_y(dt)
 	go.set_rotation(go.get_rotation("/go1") * rot, "/go1")
 
+	if current_active_proxy == "#game_proxy" and last_game_speed ~= self.game_speed then
+		last_game_speed = self.game_speed
+		msg.post("#game_proxy", "set_time_step", {factor = self.game_speed, mode = 0})
+	end
+
 	--msg.post("@render:", "draw_line", {start_point = vmath.vector3(0), end_point = vmath.vector3(1920, 1017, 0), color = vmath.vector4(1)})
 end
 
@@ -198,8 +203,7 @@ function on_message(self, message_id, message, sender)
 		if current_active_proxy == "#game_proxy" then
 			msg.post("game:/fleet/fleet_manager#fleet_manager", "setup", {data = active_fleet, mouse_control = user_settings.mouse_controls})
 			msg.post("game:/manager#wave_manager", "setup", {data = active_run_data})
-			game_speed = 1
-			msg.post("#game_proxy", "set_time_step", {factor = game_speed, mode = 0})
+			self.game_speed = 1
 		elseif current_active_proxy == "#settings_proxy" then
 			msg.post("settings:/gui_container#settings", "setup", {data = user_settings})
 		elseif current_active_proxy == "#main_menu_proxy" then
@@ -215,10 +219,13 @@ function on_message(self, message_id, message, sender)
 		self.transition = vmath.vector4(0, 1, 0, 0)
 		go.animate("#main", "transition", go.PLAYBACK_ONCE_FORWARD, vmath.vector4(1, 1, 0, 0), easing, 1, 0, continue_game_from_main)
 	elseif message_id == hash("store_from_new") then
+		save_saved_data("active_fleet", default_active_fleet)
+		active_fleet = copy_table(default_active_fleet)
+		active_run_data = copy_table(default_active_run_data)
+		save_saved_data("active_run_data", active_run_data)
 		for k,v in pairs(message) do
 			active_run_data[k] = v
 		end
-		pprint(active_run_data)
 		self.transition = vmath.vector4(0, 1, 0, 0)
 		go.animate("#main", "transition", go.PLAYBACK_ONCE_FORWARD, vmath.vector4(1, 1, 0, 0), easing, 1, 0, store_from_new)
 	elseif message_id == hash("game_from_store") then
@@ -262,9 +269,18 @@ function on_message(self, message_id, message, sender)
 		active_fleet = copy_table(default_active_fleet)
 		active_run_data = copy_table(default_active_run_data)
 	elseif message_id == hash("toggle_game_pause") then
-		game_speed = math.abs(game_speed - 1)
+		is_paused = is_paused ~= true
+		print(is_paused)
+		if is_paused then
+			msg.post("/go#borders", "pause")
+			go.animate("#main", "game_speed", go.PLAYBACK_ONCE_FORWARD, 0, go.EASING_INOUTQUAD, 1, 0, function(self) self.game_speed = 0 end)
+		else
+			msg.post("/go#borders", "unpause")
+			go.animate("#main", "game_speed", go.PLAYBACK_ONCE_FORWARD, 1, go.EASING_INOUTQUAD, 1, 0, function(self) self.game_speed = 1 end)
+		end	
+		--[[game_speed = math.abs(game_speed - 1)
 		print(game_speed)
-		msg.post("#game_proxy", "set_time_step", {factor = game_speed, mode = 0})
+		msg.post("#game_proxy", "set_time_step", {factor = game_speed, mode = 0})]]--
 	end
 end
 
