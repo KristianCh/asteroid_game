@@ -41,11 +41,22 @@ local function death(self)
 	end
 end
 
+local function play_damage_pfx(self)
+	if self.damage_pfx_gate <= 0 then 
+		local color = go.get("mesh_container#mesh", "color")
+		particlefx.play("#damage_pfx")
+		color.w = 0.5
+		particlefx.set_constant("#damage_pfx", "emitter", "tint", color)
+		self.damage_pfx_gate = 0.1
+	end
+end
+
 function init(self)
 	self.dying = false
 	self.min_life = 1.5
 	self.health = 100 * self.size
 	self.max_health = 100 * self.size
+	self.damage_pfx_gate = 0
 	self.screen_dimensions = vmath.vector3(1920, 1017, 0)
 	msg.post("#asteroid_gui", "set_scale", {scale = vmath.vector3(self.size / 2.5)})
 
@@ -110,6 +121,7 @@ function update(self, dt)
 	else 
 		msg.post("#co" .. self.size, "apply_force", {force = force * 0.1, position = pos})
 	end
+	if self.damage_pfx_gate > 0 then self.damage_pfx_gate = self.damage_pfx_gate-dt end
 
 	self.type_update(self, dt)
 end
@@ -122,11 +134,13 @@ function on_message(self, message_id, message, sender)
 			msg.post("#co" .. self.size, "apply_force", {force = message.normal * (10 + vmath.length(message.relative_velocity)), 
 			position = message.position})
 			msg.post("#asteroid_gui", "set_health", {health = self.health, max_health = self.max_health})
+			play_damage_pfx(self)
 		end	
 	elseif message_id == hash("update_screen_dimensions") then
 		self.screen_dimensions = message.screen_dimensions
 	elseif message_id == hash("damage_asteroid") then
 		self.health = self.health - message.damage
+		play_damage_pfx(self)
 		msg.post("#asteroid_gui", "set_health", {health = self.health, max_health = self.max_health})
 	elseif message_id == hash("subscribe") then
 		self.subscribers[#self.subscribers+1] = sender

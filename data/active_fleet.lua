@@ -1,7 +1,7 @@
 local fleet = {
 	{
 		type = 1,
-		level = 1,
+		level = 3,
 		sub_level = 0,
 		health = 100,
 		is_flagship = true

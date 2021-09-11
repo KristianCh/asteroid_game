@@ -46,7 +46,7 @@ function init(self)
 	local very_hard_description = "<size=0.2>Ships do not repair at end of stage, destroyed ships do not respawn\n\n" ..
 	"Asteroid spawn rate and toughness increased by <color=1,0.7,0.5,1>30%</color>\nAll types of asteroids can spawn from Stage 1\n\n" ..
 	"Credit gain increased by <color=0.6,1,0.6,1>35%</color></size>"
-	local a = richtext.create(very_hard_description, "ethnocentric", 
+	richtext.create(very_hard_description, "ethnocentric", 
 	{
 		position = vmath.vector3(-150, 200, 0),
 		parent = gui.get_node("very_hard"),
