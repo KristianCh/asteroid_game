@@ -126,7 +126,6 @@ function on_message(self, message_id, message, sender)
 		if message.other_group == hash("asteroid") and self.collision_timeout <= 0 then
 			self.collision_timeout = 0.5
 			local damage = (vmath.length(message.relative_velocity) * message.other_mass) / 50
-			print(damage, clamp(damage - self.armor, 0, damage), self.armor)
 			damage = clamp(damage - self.armor, 0, damage)
 			self.health = self.health - damage
 			if self.health <= 0 then

@@ -16,7 +16,7 @@ emitters {
   }
   tile_source: "/assets/images/pfx/pfx.atlas"
   animation: "triangle"
-  material: "/builtins/materials/particlefx.material"
+  material: "/render/shaders/object_shaders/trail.material"
   blend_mode: BLEND_MODE_ADD
   particle_orientation: PARTICLE_ORIENTATION_DEFAULT
   inherit_velocity: 1.0
@@ -27,11 +27,11 @@ emitters {
     key: EMITTER_KEY_SPAWN_RATE
     points {
       x: 0.0
-      y: 20.0
+      y: 25.0
       t_x: 1.0
       t_y: 0.0
     }
-    spread: 0.0
+    spread: 10.0
   }
   properties {
     key: EMITTER_KEY_SIZE_X
@@ -41,7 +41,7 @@ emitters {
       t_x: 1.0
       t_y: 0.0
     }
-    spread: 0.0
+    spread: 20.0
   }
   properties {
     key: EMITTER_KEY_SIZE_Y
@@ -51,7 +51,7 @@ emitters {
       t_x: 1.0
       t_y: 0.0
     }
-    spread: 0.0
+    spread: 20.0
   }
   properties {
     key: EMITTER_KEY_SIZE_Z

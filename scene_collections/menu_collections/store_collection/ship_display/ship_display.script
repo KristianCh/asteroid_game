@@ -1,14 +1,18 @@
-require "modules.texts.store_texts"
-go.property("type", 1)
+require "modules.store_texts"
+go.property("id", 1)
+go.property("cost", 100)
+go.property("name", "")
+go.property("text", "")
 
 function init(self)
 	for i=1,3 do
-		if i ~= self.type then
+		if i ~= self.id then
 			msg.post("#model_" .. i, "disable")
 		end
 	end
+	self.text = ""
+	self.name = ""
 	msg.post("#gui", "set_position", {pos = go.get_position()})
-	msg.post("#gui", "set_texts", store_texts[self.type])
 end
 
 function final(self)
@@ -17,13 +21,17 @@ end
 
 function update(self, dt)
 	local rot = vmath.quat_rotation_y(dt)
-	go.set_rotation(go.get_rotation("#model_" .. self.type) * rot, "#model_" .. self.type)
+	go.set_rotation(go.get_rotation("#model_" .. self.id) * rot, "#model_" .. self.id)
 end
 
 function on_message(self, message_id, message, sender)
-	-- Add message-handling code here
-	-- Learn more: https://defold.com/manuals/message-passing/
-	-- Remove this function if not needed
+	if message_id == hash("attempt_buy") then
+		msg.post("/manager#manager", "attempt_buy", {type = self.id})
+	elseif message_id == hash("setup") then
+		self.text = message.text
+		self.name = message.name
+		msg.post("#gui", "set_texts", {text = self.text, name = self.name})
+	end
 end
 
 function on_input(self, action_id, action)

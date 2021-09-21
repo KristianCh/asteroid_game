@@ -1,5 +1,5 @@
-name: "pfx_modeltype"
-tags: "model_pfx"
+name: "trail"
+tags: "trail"
 vertex_program: "/builtins/materials/particlefx.vp"
 fragment_program: "/builtins/materials/particlefx.fp"
 vertex_space: VERTEX_SPACE_WORLD

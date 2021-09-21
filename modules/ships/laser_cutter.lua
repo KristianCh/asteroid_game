@@ -1,8 +1,8 @@
 function laser_cutter_init(self) 
 	self.target_offset = vmath.vector3(0, 0, 0)
-	self.evasion = 2 + self.level
+	self.evasion = 2 + self.level * 0.25
 	self.damage = 50 + 25 * self.level * self.level
-	self.speed = 300 + self.level * 100
+	self.speed = 300 + self.level * 50
 	self.max_health = 75 + (self.level-1) * 25
 	self.health = self.max_health
 	self.targeting_range = 350 + self.level * 150

@@ -38,7 +38,8 @@ local function apply_settings(self)
 	if user_settings.fullscreen then
 		defos.set_fullscreen(true)
 	else 
-		defos.set_maximized(true)
+		defos.set_fullscreen(false)
+		--defos.set_maximized(true)
 	end
 	msg.post("@render:", "set_fullscreen", {fullscreen = user_settings.fullscreen})
 	msg.post("@render:", "set_crt", {enabled = user_settings.crt_shader})
@@ -164,6 +165,7 @@ function init(self)
 
 	math.randomseed(os.clock()*100000000000)
 	window.set_listener(window_resized)
+	defos.set_maximized(true)
 
 	msg.post("#main_menu_proxy", "load")
 	go.set("/go#sprite", "tint", vmath.vector4(1, 1, 1, 0.4))
@@ -210,6 +212,8 @@ function on_message(self, message_id, message, sender)
 			if active_run_data.stage == 1 then
 				msg.post("main_menu:/gui_container#main_menu", "disable_continue")
 			end
+		elseif current_active_proxy == "#store_proxy" then
+			msg.post("store:/manager#manager", "init_fleet", active_fleet)
 		end
 	elseif message_id == hash("proxy_unloaded") then
 	elseif message_id == hash("new_game_from_main") then
