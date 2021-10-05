@@ -132,6 +132,16 @@ function on_message(self, message_id, message, sender)
 		else
 			print("Not enough credits")
 		end
+	elseif message_id == hash("set_flagship") then
+		for i,v in ipairs(self.active_fleet) do
+			if v.type == message.type then
+				v.is_flagship = true
+			else 
+				v.is_flagship = false
+			end
+		end
+		build_fleet_displays(self)
+		msg.post("main:/manager", "save_fleet", {fleet = self.active_fleet})
 	end
 end
 

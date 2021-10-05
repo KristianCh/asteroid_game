@@ -27,6 +27,8 @@ end
 function on_message(self, message_id, message, sender)
 	if message_id == hash("attempt_buy") then
 		msg.post("/manager#manager", "attempt_buy", {type = self.id, cost = self.cost})
+	elseif message_id == hash("set_flagship") then
+		msg.post("/manager#manager", "set_flagship", {type = self.id})
 	elseif message_id == hash("setup") then
 		self.text = message.text
 		self.name = message.name
