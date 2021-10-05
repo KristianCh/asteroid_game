@@ -78,7 +78,7 @@ embedded_instances {
   "  type: \"sprite\"\n"
   "  data: \"tile_set: \\\"/assets/images/gui/gui.atlas\\\"\\n"
   "default_animation: \\\"target\\\"\\n"
-  "material: \\\"/render/shaders/object_shaders/sprite_modeltype.material\\\"\\n"
+  "material: \\\"/builtins/materials/sprite.material\\\"\\n"
   "blend_mode: BLEND_MODE_ALPHA\\n"
   "\"\n"
   "  position {\n"

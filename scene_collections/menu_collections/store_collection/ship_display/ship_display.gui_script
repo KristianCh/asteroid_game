@@ -31,11 +31,30 @@ local function create_text(self)
 	})
 end
 
+local function update_state(self)
+	gui.set_enabled(gui.get_node("bought_gui"), self.bought)
+	gui.set_enabled(gui.get_node("purchase_gui"), not self.bought)
+	gui.set_text(gui.get_node("level"), self.level)
+
+	for i = 1, self.sub_level do
+		gui.set_color(gui.get_node("sl_" .. i), vmath.vector4(1, 1, 1, 0.75))
+	end
+
+	if self.is_flagship then
+		gui.set_color(gui.get_node("flag"), vmath.vector4(1, 0, 1, 0.75))
+	end
+end
+
 function init(self)
 	msg.post(".", "acquire_input_focus")
 	self.words = {}
 	self.text = "nil"
 	self.align = richtext.ALIGN_CENTER
+	self.bought = false
+	self.level = 1
+	self.sub_level = 1
+	self.is_flagship = false
+	update_state(self)
 end
 
 function final(self)
@@ -61,9 +80,16 @@ function on_message(self, message_id, message, sender)
 		end
 	elseif message_id == hash("set_texts") then
 		gui.set_text(gui.get_node("name"), message.name)
+		gui.set_text(gui.get_node("cost"), message.cost)
 		self.text = message.text
 		richtext.remove(self.words)
 		self.words = create_text(self)
+	elseif message_id == hash("update_stats") then
+		self.bought = message.bought
+		self.level = message.level
+		self.sub_level = message.sub_level
+		self.is_flagship = message.is_flagship
+		update_state(self)
 	end	
 end
 
@@ -74,11 +100,23 @@ function on_input(self, action_id, action)
 		if button.over_now then 
 			gui.animate(gui.get_node("text_container"), "color.w", 1, gui.EASING_OUTQUINT, 1)
 			gui.animate(gui.get_node("info"), "color.w", 0, gui.EASING_OUTQUINT, 1)
+			gui.animate(gui.get_node("flag"), "color.w", 0.1, gui.EASING_OUTQUINT, 1)
+			gui.animate(gui.get_node("name"), "color.w", 0.1, gui.EASING_OUTQUINT, 1)
 			gui.animate(gui.get_node("main"), "color.w", 0.1, gui.EASING_OUTQUINT, 1)
+			if not self.bought then
+				gui.animate(gui.get_node("buy"), "color.w", 0.1, gui.EASING_OUTQUINT, 1)
+				gui.animate(gui.get_node("cost"), "color.w", 0.1, gui.EASING_OUTQUINT, 1)
+			end
 		elseif button.out_now then
 			gui.animate(gui.get_node("text_container"), "color.w", 0, gui.EASING_OUTQUINT, 0.5)
-			gui.animate(gui.get_node("info"), "color.w", 1, gui.EASING_OUTQUINT, 0.5)
-			gui.animate(gui.get_node("main"), "color.w", 1, gui.EASING_OUTQUINT, 0.5)
+			gui.animate(gui.get_node("info"), "color.w", 0.75, gui.EASING_OUTQUINT, 0.5)
+			gui.animate(gui.get_node("flag"), "color.w", 0.75, gui.EASING_OUTQUINT, 0.5)
+			gui.animate(gui.get_node("name"), "color.w", 0.75, gui.EASING_OUTQUINT, 0.5)
+			gui.animate(gui.get_node("main"), "color.w", 0.5, gui.EASING_OUTQUINT, 0.5)
+			if not self.bought then
+				gui.animate(gui.get_node("buy"), "color.w", 0.75, gui.EASING_OUTQUINT, 0.5)
+				gui.animate(gui.get_node("cost"), "color.w", 0.75, gui.EASING_OUTQUINT, 0.5)
+			end
 		end
 	end)
 

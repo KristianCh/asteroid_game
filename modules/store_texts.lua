@@ -9,7 +9,7 @@ store_texts = {
 	},
 	{
 		id = 2,
-		cost = 100,
+		cost = 150,
 		name = "Laser Cutter",
 		text = "<size=0.2>Fires laser beam up to <color=1,0.7,0.5,1>500/650/800</color> meters, dealing <color=1,0.7,0.5,1>75/150/275</color> damage/s decreasing with distance\n"..
 		"<color=1,0.7,0.5,1>75/100/125</color> Health <color=1,0.7,0.5,1>2.25/2.5/2.75</color> Evasion <color=1,0.7,0.5,1>350/400/450</color> Speed\n\n" ..

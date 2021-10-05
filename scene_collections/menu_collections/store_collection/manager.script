@@ -2,7 +2,7 @@ require "modules.utils"
 require "modules.store_texts"
 
 local store_slots = {nil, nil, nil}
-local bought_slots = {}
+local active_displays = {}
 local max_bought = 4
 
 local function random_types() 
@@ -13,6 +13,33 @@ local function random_types()
 		source[i], source[j] = source[j], source[i]
 	end
 	return {source[1], source[2], source[3]}
+end
+
+local function ship_display_from_data(self, data, pos)
+	local props = {id = store_texts[data.type].id, cost = store_texts[data.type].cost}
+	local new = factory.create("#factory", pos, nil, props)
+	msg.post(new, "setup", {name = store_texts[data.type].name, text = store_texts[data.type].text})
+	msg.post(new, "update_stats", {
+		bought = true, level = data.level, sub_level = data.sub_level, is_flagship = data.is_flagship
+	})
+	table.insert(active_displays, new)
+end
+
+local function build_fleet_displays(self) 
+	for i,v in ipairs(active_displays) do 
+		go.delete(v)
+	end
+	active_displays = {}
+	local x = 1
+	for i,ship in ipairs(self.active_fleet) do 
+		local pos = vmath.vector3(200 + 400*((x-1)%3), 700 - 270*(math.floor(x/4)), 0)
+		ship_display_from_data(self, ship, pos)
+		x = x + 1
+	end
+	msg.post("/gui_container", "set_texts", {
+		fleet_size = "Fleet Size: " .. #active_displays .. "/" .. max_bought,
+		credits = "Credits: " .. self.current_credits
+	})
 end
 
 local function generate_offers(self)
@@ -29,6 +56,8 @@ end
 
 function init(self)
 	msg.post(".", "acquire_input_focus")
+	self.active_fleet = {}
+	self.current_credits = 0
 	generate_offers(self)
 end
 
@@ -45,7 +74,65 @@ function update(self, dt)
 end
 
 function on_message(self, message_id, message, sender)
-	pprint(message)
+	if message_id == hash("init_fleet") then
+		self.active_fleet = message
+		build_fleet_displays(self)
+	elseif message_id == hash("init_run_data") then
+		self.current_credits = message.credits
+	elseif message_id == hash("attempt_buy") then
+		if message.cost <= self.current_credits then
+			local ship_idx = -1
+			local ship = nil
+			for i,v in ipairs(self.active_fleet) do
+				if v.type == message.type then
+					if v.level == 3 then 
+						ship_idx = -2
+						print("Ship already at max level")
+						break 
+					end
+					ship_idx = i
+					ship = v
+					break
+				end
+			end
+			if (ship_idx ~= -1 or ship_idx == -1 and #active_displays < max_bought) and ship_idx~= -2 then
+				self.current_credits = self.current_credits - message.cost
+				if ship_idx > 0 then
+					ship.sub_level = ship.sub_level + 1
+					if ship.sub_level == 3 then
+						ship.sub_level = 1
+						ship.level = ship.level + 1
+					end
+				else
+					local new_ship = {
+						type = message.type,
+						level = 1,
+						sub_level = 1,
+						health = 100,
+						is_flagship = false
+					}
+					table.insert(self.active_fleet, new_ship)
+				end
+				build_fleet_displays(self)
+				msg.post("main:/manager", "save_fleet", {fleet = self.active_fleet})
+				msg.post("main:/manager", "update_credits", {credits = self.current_credits})
+
+				for i=1,3 do
+					if store_slots[i] ~= nil and msg.url("store", store_slots[i], "ship_display") == sender then
+						go.delete(store_slots[i])
+						store_slots[i] = nil
+					end
+				end
+				if table_size(store_slots) == 0 then
+					generate_offers(self)
+				end
+			elseif ship_idx~= -2 then
+				print("All fleet slots are full")
+			end
+		else
+			print("Not enough credits")
+		end
+	end
 end
 
 function on_input(self, action_id, action)

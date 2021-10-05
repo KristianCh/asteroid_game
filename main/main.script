@@ -213,6 +213,7 @@ function on_message(self, message_id, message, sender)
 				msg.post("main_menu:/gui_container#main_menu", "disable_continue")
 			end
 		elseif current_active_proxy == "#store_proxy" then
+			msg.post("store:/manager#manager", "init_run_data", active_run_data)
 			msg.post("store:/manager#manager", "init_fleet", active_fleet)
 		end
 	elseif message_id == hash("proxy_unloaded") then
@@ -274,7 +275,6 @@ function on_message(self, message_id, message, sender)
 		active_run_data = copy_table(default_active_run_data)
 	elseif message_id == hash("toggle_game_pause") then
 		is_paused = is_paused ~= true
-		print(is_paused)
 		if is_paused then
 			msg.post("/go#borders", "pause")
 			go.animate("#main", "game_speed", go.PLAYBACK_ONCE_FORWARD, 0, go.EASING_INOUTQUAD, 1, 0, function(self) self.game_speed = 0 end)
@@ -282,9 +282,12 @@ function on_message(self, message_id, message, sender)
 			msg.post("/go#borders", "unpause")
 			go.animate("#main", "game_speed", go.PLAYBACK_ONCE_FORWARD, 1, go.EASING_INOUTQUAD, 1, 0, function(self) self.game_speed = 1 end)
 		end	
-		--[[game_speed = math.abs(game_speed - 1)
-		print(game_speed)
-		msg.post("#game_proxy", "set_time_step", {factor = game_speed, mode = 0})]]--
+	elseif message_id == hash("save_fleet") then
+		active_fleet = copy_table(message.fleet)
+		save_saved_data("active_fleet", active_fleet)
+	elseif message_id == hash("update_credits") then
+		active_run_data.credits = message.credits
+		save_saved_data("active_run_data", active_run_data)
 	end
 end
 

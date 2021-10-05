@@ -1,6 +1,6 @@
 local run_data = {
 	stage = 1,
-	credits = 0,
+	credits = 1000,
 	difficulty = "normal",
 	extra_spawn_rate = 0,
 	extra_credits = 0,

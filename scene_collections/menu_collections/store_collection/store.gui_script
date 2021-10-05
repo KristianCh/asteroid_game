@@ -4,6 +4,13 @@ function init(self)
 	msg.post(".", "acquire_input_focus")
 end
 
+function on_message(self, message_id, message, sender)
+	if message_id == hash("set_texts") then
+		gui.set_text(gui.get_node("fleet_size"), message.fleet_size)
+		gui.set_text(gui.get_node("credits"), message.credits)
+	end
+end
+	
 function on_input(self, action_id, action)
 	gooey.button("next_stage_button", action_id, action, function(button)
 		msg.post("main:/manager", "game_from_store")

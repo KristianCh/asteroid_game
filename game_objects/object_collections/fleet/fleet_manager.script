@@ -1,3 +1,5 @@
+require "modules.utils"
+
 go.property("target_speed", 500)
 
 WIDTH = 1920
@@ -13,20 +15,11 @@ end
 function update(self, dt)
 	local pos = go.get_position("/fleet/target_position")
 
-	if pos.x > WIDTH - WIDTH/(10*(WIDTH/HEIGHT)) then
-		pos.x = WIDTH - WIDTH/(10*(WIDTH/HEIGHT))
-	elseif pos.x < WIDTH/(10*(WIDTH/HEIGHT)) then
-		pos.x = WIDTH/(10*(WIDTH/HEIGHT))
-	end
-
-	if pos.y > HEIGHT - HEIGHT/10 then
-		pos.y = HEIGHT - HEIGHT/10
-	elseif pos.y < HEIGHT/10 then
-		pos.y = HEIGHT/10
-	end
+	pos.x = clamp(pos.x, WIDTH/(10*(WIDTH/HEIGHT)), WIDTH - WIDTH/(10*(WIDTH/HEIGHT)))
+	pos.y = clamp(pos.y, HEIGHT/10, HEIGHT - HEIGHT/10)
 
 	if self.mouse_control then
-		pos = vmath.lerp(dt * 10, pos, self.mouse_pos)--pos + self.vel * dt
+		pos = vmath.lerp(dt * 10, pos, self.mouse_pos)
 	else
 		pos = pos + self.vel * dt
 	end
@@ -54,11 +47,11 @@ end
 
 function on_input(self, action_id, action)
 	if action_id == hash("up") then
-		self.vel.y = self.target_speed -- <7>
+		self.vel.y = self.target_speed
 	elseif action_id == hash("down") then
 		self.vel.y = -self.target_speed
 	elseif action_id == hash("left") then
-		self.vel.x = -self.target_speed -- <8>
+		self.vel.x = -self.target_speed
 	elseif action_id == hash("right") then
 		self.vel.x = self.target_speed
 	else

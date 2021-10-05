@@ -22,6 +22,10 @@ images {
   image: "/assets/images/gui/checkbox_unchecked.png"
   sprite_trim_mode: SPRITE_TRIM_MODE_OFF
 }
+images {
+  image: "/assets/images/gui/flag.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
 margin: 10
 extrude_borders: 2
 inner_padding: 10
