@@ -87,7 +87,7 @@ function on_message(self, message_id, message, sender)
 				if v.type == message.type then
 					if v.level == 3 then 
 						ship_idx = -2
-						print("Ship already at max level")
+						msg.post("main:/manager", "display_alert", {text = "<size=0.5>Ship already at max level</size>", color = vmath.vector4(1, 0.25, 0.25, 0.75)})
 						break 
 					end
 					ship_idx = i
@@ -127,10 +127,10 @@ function on_message(self, message_id, message, sender)
 					generate_offers(self)
 				end
 			elseif ship_idx~= -2 then
-				print("All fleet slots are full")
+				msg.post("main:/manager", "display_alert", {text = "<size=0.5>All fleet slots are full</size>", color = vmath.vector4(1, 0.25, 0.25, 0.75)})
 			end
 		else
-			print("Not enough credits")
+			msg.post("main:/manager", "display_alert", {text = "<size=0.5>Not enough credits</size>", color = vmath.vector4(1, 0.25, 0.25, 0.75)})
 		end
 	elseif message_id == hash("set_flagship") then
 		for i,v in ipairs(self.active_fleet) do

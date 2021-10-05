@@ -1,0 +1,22 @@
+local richtext = require "richtext.richtext"
+
+function init(self)
+	self.node = gui.get_node("text_parent")
+end
+
+function on_message(self, message_id, message, sender)
+	if message_id == hash("set_pos") then
+		gui.set_position(self.node, message.pos)
+	elseif message_id == hash("set_data") then
+		local align = richtext.ALIGN_CENTER
+		local pos = vmath.vector3(0)
+		richtext.create(message.text, "ethnocentric", 
+		{
+			position = pos,
+			parent = self.node,
+			color = message.color,
+			align = align,
+			width = 1000
+		})
+	end	
+end

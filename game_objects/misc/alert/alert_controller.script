@@ -1,0 +1,17 @@
+local function death(self, url, property)
+	go.delete()
+end
+
+function update(self, dt)
+	msg.post("#alert_gui", "set_pos", {pos = go.get_position()})
+end
+
+function on_message(self, message_id, message, sender)
+	if message_id == hash("init") then
+		local duration = message.duration or 2
+		local color = message.color or vmath.vector4(1)
+		msg.post("#alert_gui", "set_data", {text = message.text, color = color})
+		go.set_position(vmath.vector3(960, 1217, 0))
+		go.animate(".", "position.y", go.PLAYBACK_ONCE_FORWARD, -200, go.EASING_OUTINEXPO, duration, 0, death)
+	end	
+end

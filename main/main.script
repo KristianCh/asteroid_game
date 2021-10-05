@@ -168,7 +168,7 @@ function init(self)
 	defos.set_maximized(true)
 
 	msg.post("#main_menu_proxy", "load")
-	go.set("/go#sprite", "tint", vmath.vector4(1, 1, 1, 0.4))
+	go.set("/borders#sprite", "tint", vmath.vector4(1, 1, 1, 0.4))
 	current_active_proxy = "#main_menu_proxy"	
 	user_settings = load_saved_data("user_settings", default_user_settings)
 	apply_settings(self)
@@ -180,9 +180,6 @@ function update(self, dt)
 	start_time = start_time + dt
 	msg.post("@render:", "set_time", {start_time})
 	msg.post("@render:", "set_transition", {self.transition})
-
-	local rot = vmath.quat_rotation_y(dt)
-	go.set_rotation(go.get_rotation("/go1") * rot, "/go1")
 
 	if current_active_proxy == "#game_proxy" and last_game_speed ~= self.game_speed then
 		last_game_speed = self.game_speed
@@ -288,6 +285,9 @@ function on_message(self, message_id, message, sender)
 	elseif message_id == hash("update_credits") then
 		active_run_data.credits = message.credits
 		save_saved_data("active_run_data", active_run_data)
+	elseif message_id == hash("display_alert") then
+		local alert = factory.create("#alert_factory", vmath.vector3(960, 1217, 0), nil, nil, nil)
+		msg.post(alert, "init", message)
 	end
 end
 
