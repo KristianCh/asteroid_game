@@ -29,6 +29,8 @@ function on_message(self, message_id, message, sender)
 		msg.post("/manager#manager", "attempt_buy", {type = self.id, cost = self.cost})
 	elseif message_id == hash("set_flagship") then
 		msg.post("/manager#manager", "set_flagship", {type = self.id})
+	elseif message_id == hash("remove_ship") then
+		msg.post("/manager#manager", "remove_ship", {type = self.id})
 	elseif message_id == hash("setup") then
 		self.text = message.text
 		self.name = message.name

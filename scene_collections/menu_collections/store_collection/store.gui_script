@@ -33,4 +33,15 @@ function on_input(self, action_id, action)
 			gui.animate(button.node, "scale", vmath.vector3(0.25), gui.EASING_OUTQUINT, 0.5)
 		end
 	end)
+
+	gooey.button("reroll", action_id, action, function(button)
+		msg.post("/manager#manager", "reroll")
+	end, 
+	function(button)
+		if button.over_now then 
+			gui.animate(button.node, "scale", vmath.vector3(0.36), gui.EASING_OUTQUINT, 0.36)
+		elseif button.out_now then
+			gui.animate(button.node, "scale", vmath.vector3(0.3), gui.EASING_OUTQUINT, 0.3)
+		end
+	end)
 end

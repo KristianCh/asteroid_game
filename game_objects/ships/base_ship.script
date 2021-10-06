@@ -77,9 +77,7 @@ function update(self, dt)
 	if dist_to_target == 0 then
 		vec_to_target = vmath.vector3(0, 1, 0)
 	end
-	--print(self.heading, self.heading.x, self.heading.y, self.heading.z, self.heading.x ~= self.heading.x)
 	if self.heading.x ~= self.heading.x then
-		print("error", self.heading)
 		self.heading = vmath.vector3(0, 1, 0)
 	end
 	local d_steer = vmath.cross(vmath.slerp(self.evasion * dt, self.heading, vec_to_target), self.heading).z * 2000

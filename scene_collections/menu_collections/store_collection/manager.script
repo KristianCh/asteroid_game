@@ -74,6 +74,8 @@ function update(self, dt)
 end
 
 function on_message(self, message_id, message, sender)
+	pprint(message)
+	print(message_id)
 	if message_id == hash("init_fleet") then
 		self.active_fleet = message
 		build_fleet_displays(self)
@@ -142,6 +144,26 @@ function on_message(self, message_id, message, sender)
 		end
 		build_fleet_displays(self)
 		msg.post("main:/manager", "save_fleet", {fleet = self.active_fleet})
+	elseif message_id == hash("remove_ship") then
+		if table_size(self.active_fleet) > 1 then
+			for i,v in ipairs(self.active_fleet) do
+				if self.active_fleet[i].type == message.type then
+					table.remove(self.active_fleet, i)
+				end
+			end
+			build_fleet_displays(self)
+			msg.post("main:/manager", "save_fleet", {fleet = self.active_fleet})
+		else
+			msg.post("main:/manager", "display_alert", {text = "<size=0.5>Cannot remove last ship</size>", color = vmath.vector4(1, 0.25, 0.25, 0.75)})
+		end
+	elseif message_id == hash("reroll") then
+		generate_offers(self)
+		self.current_credits = self.current_credits - 50
+		msg.post("main:/manager", "update_credits", {credits = self.current_credits})
+		msg.post("/gui_container", "set_texts", {
+			fleet_size = "Fleet Size: " .. #active_displays .. "/" .. max_bought,
+			credits = "Credits: " .. self.current_credits
+		})
 	end
 end
 
