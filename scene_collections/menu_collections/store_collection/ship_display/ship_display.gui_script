@@ -21,7 +21,7 @@ local function create_text(self)
 		pos.x = 100
 		align = richtext.ALIGN_RIGHT
 	end
-	return richtext.create(self.text, "ethnocentric", 
+	return richtext.create("<outline=black><size=0.25>" .. self.text .. "</size></outline>", "ethnocentric_bordered", 
 	{
 		position = pos,
 		parent = gui.get_node("text_container"),

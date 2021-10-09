@@ -1,3 +1,5 @@
+require "modules.utils"
+
 go.property("enemy_count", 0)
 go.property("ship_count", 0)
 
@@ -12,6 +14,7 @@ function init(self)
 	self.enemy_count = 0
 	self.ships = {}
 	self.ship_count = 0
+	self.run_data = {}
 end
 
 function on_message(self, message_id, message, sender)
@@ -31,6 +34,16 @@ function on_message(self, message_id, message, sender)
 			msg.post("main:/manager", "end_run", {success = false})
 			msg.post("main:/manager", "end_from_game")
 		end
+	elseif message_id == hash("fleet_post_init") then
+		for k, v in pairs(self.ships) do
+			msg.post(v, "post_init_ready")
+		end
+		msg.post("#", "apply_status_to_fleet", 
+		{
+			type = "property", property_name = "armor", value = self.run_data.extra_armor, mix = "additive"
+		})
+	elseif message_id == hash("setup") then
+		self.run_data = copy_table(message.data)
 	elseif message_id == hash("target_closest_enemy") then
 		if self.enemy_count > 0 then 
 			local shortest_distance = 100000000
@@ -83,6 +96,19 @@ function on_message(self, message_id, message, sender)
 		else 
 			msg.post(sender, "target_ship_response", {found = false})
 		end
+	elseif message_id == hash("apply_status_to_fleet") then
+		if message.type == "property" then
+			for k, v in pairs(self.ships) do
+				if message.class_mask == nil or message.class_mask == go.get(v, "class_1") or message.class_mask == go.get(v, "class_2") or message.class_mask == go.get(v, "class_2") then
+					local current_value = go.get(v, message.property_name)
+					if message.mix == "additive" then
+						go.set(v, message.property_name, current_value + message.value)
+					elseif message.mix == "multiply" then
+						go.set(v, message.property_name, current_value * message.value)
+					end
+				end
+			end
+		end	
 	end
 end
 

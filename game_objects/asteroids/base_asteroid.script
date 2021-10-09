@@ -1,6 +1,6 @@
 go.property("size", 3)
 go.property("color", vmath.vector4(1, 1, 1, 1))
-go.property("velocity", vmath.vector3(0))
+go.property("velocity", vmath.vector3(0, 0, 0))
 go.property("health", 100)
 go.property("max_health", 100)
 go.property("collision_timeout", 0.5)
@@ -8,21 +8,18 @@ go.property("initial_slowdown", 1)
 go.property("type", 0)
 
 local function emitter_state_change(self, id, emitter, state)
-	if emitter == hash("death_fx") and state == particlefx.EMITTER_STATE_POSTSPAWN then
+	if emitter == hash("death_fx") and state == particlefx.EMITTER_STATE_SLEEPING and self.dying then
 		go.delete("mesh_container")
 		go.delete()
 	elseif emitter == hash("death_fx") and state == particlefx.EMITTER_STATE_SPAWNING then
 		local color = go.get("mesh_container#mesh", "color")
-		particlefx.set_constant("#asteroid_pfx", "death_fx", "tint", self.color)
+		particlefx.set_constant("#asteroid_pfx", "death_fx", "tint", color)
 		particlefx.set_constant("#asteroid_pfx", "death_fx", "scale", vmath.vector4(self.size/3))
-	--[[elseif emitter == hash("emitter") and state == particlefx.EMITTER_STATE_SPAWNING then
-		local color = go.get("mesh_container#mesh", "color")
-		particlefx.set_constant("#damage_pfx", "emitter", "tint", color)]]--
 	end
 end
 
 local function death(self) 
-	--particlefx.stop("#damage_pfx")
+	particlefx.stop("#damage_pfx")
 	particlefx.play("#asteroid_pfx", emitter_state_change)	
 	msg.post("#asteroid_gui", "set_health", {health = 0, max_health = self.max_health})
 	if self.size > 1 then
@@ -43,13 +40,22 @@ local function death(self)
 			msg.post(ids[hash("/base_asteroid")], "set_velocities", {linear_velocity = velocity + d_vel, angular_velocity = angular_velocity})
 		end
 	end
+
+	for i,v in ipairs(self.subscribers) do 
+		msg.post(v, "unsubscribe")
+	end
+	msg.post("/manager", "enemy_destroyed")
+
+	msg.post("#asteroid_gui", "disable_asteroid_gui")
+	go.set_scale(vmath.vector3(0.0001), "mesh_container")
+	go.animate("mesh_container", "scale", go.PLAYBACK_ONCE_BACKWARD, vmath.vector3(1), go.EASING_OUTSINE, 0.75)
 end
 
 local function play_damage_pfx(self)
-	if self.damage_pfx_gate <= 0 then 
+	if self.damage_pfx_gate <= 0 and not self.dying then 
 		particlefx.play("#damage_pfx")
 		particlefx.set_constant("#damage_pfx", "emitter", "tint", self.color)
-		self.damage_pfx_gate = 0.1
+		self.damage_pfx_gate = 0.2
 	end
 end
 
@@ -163,10 +169,10 @@ function on_message(self, message_id, message, sender)
 end
 
 function final(self)
-	for i,v in ipairs(self.subscribers) do 
+	--[[for i,v in ipairs(self.subscribers) do 
 		msg.post(v, "unsubscribe")
 	end
-	msg.post("/manager", "enemy_destroyed")
+	msg.post("/manager", "enemy_destroyed")]]--
 end
 
 function base_init(self) end

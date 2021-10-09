@@ -42,6 +42,7 @@ function on_message(self, message_id, message, sender)
 			factory.create("#ship_factory", vmath.vector3(960, 508.5, 0)+pos, nil, message.data[i], scale)
 			pos = vmath.rotate(rot_quat, pos)
 		end
+		msg.post("game:/manager", "fleet_post_init")
 	end
 end
 

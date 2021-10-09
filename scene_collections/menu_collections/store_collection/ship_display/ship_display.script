@@ -1,8 +1,7 @@
 require "modules.store_texts"
+
 go.property("id", 1)
 go.property("cost", 100)
-go.property("name", "")
-go.property("text", "")
 
 function init(self)
 	for i=1,3 do

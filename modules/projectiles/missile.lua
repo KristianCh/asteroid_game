@@ -1,9 +1,14 @@
 function missile_init(self)
 	msg.post(self.target, "subscribe")
+	self.last_pos = vmath.vector3(-1)
 end
 
 function missile_update(self, dt)	
 	local pos = go.get_position()
+	if pos == self.last_pos then
+		self.target = nil
+	end
+	self.last_pos = pos
 
 	local vec_to_target = self.heading
 	if self.target ~= nil then 

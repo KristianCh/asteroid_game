@@ -3,6 +3,10 @@ fonts {
   name: "ethnocentric"
   font: "/assets/fonts/ethnocentric.font"
 }
+fonts {
+  name: "ethnocentric_bordered"
+  font: "/assets/fonts/ethnocentric_bordered.font"
+}
 textures {
   name: "gui"
   texture: "/assets/images/gui/gui.atlas"

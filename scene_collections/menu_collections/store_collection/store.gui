@@ -19,8 +19,8 @@ background_color {
 }
 nodes {
   position {
-    x: 163.0
-    y: 983.0
+    x: 50.0
+    y: 942.0
     z: 0.0
     w: 1.0
   }
@@ -55,7 +55,7 @@ nodes {
   id: "store_text"
   xanchor: XANCHOR_NONE
   yanchor: YANCHOR_NONE
-  pivot: PIVOT_N
+  pivot: PIVOT_W
   outline {
     x: 1.0
     y: 1.0
@@ -207,7 +207,7 @@ nodes {
 nodes {
   position {
     x: 333.0
-    y: 983.0
+    y: 942.0
     z: 0.0
     w: 1.0
   }
@@ -232,7 +232,7 @@ nodes {
   color {
     x: 1.0
     y: 1.0
-    z: 0.8
+    z: 0.5019608
     w: 1.0
   }
   type: TYPE_TEXT
@@ -242,7 +242,7 @@ nodes {
   id: "credits"
   xanchor: XANCHOR_NONE
   yanchor: YANCHOR_NONE
-  pivot: PIVOT_NW
+  pivot: PIVOT_SW
   outline {
     x: 1.0
     y: 1.0
@@ -268,8 +268,8 @@ nodes {
 }
 nodes {
   position {
-    x: 800.0
-    y: 983.0
+    x: 333.0
+    y: 942.0
     z: 0.0
     w: 1.0
   }
@@ -293,8 +293,8 @@ nodes {
   }
   color {
     x: 1.0
-    y: 0.8
-    z: 0.8
+    y: 0.6
+    z: 0.6
     w: 1.0
   }
   type: TYPE_TEXT
@@ -330,8 +330,116 @@ nodes {
 }
 nodes {
   position {
-    x: 1440.0
-    y: 983.0
+    x: 20.0
+    y: 1017.0
+    z: 0.0
+    w: 1.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+    w: 1.0
+  }
+  size {
+    x: 1400.0
+    y: 150.0
+    z: 0.0
+    w: 1.0
+  }
+  color {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+    w: 1.0
+  }
+  type: TYPE_BOX
+  blend_mode: BLEND_MODE_ALPHA
+  texture: "gui/checkbox_unchecked"
+  id: "box"
+  xanchor: XANCHOR_NONE
+  yanchor: YANCHOR_NONE
+  pivot: PIVOT_NW
+  adjust_mode: ADJUST_MODE_FIT
+  layer: ""
+  inherit_alpha: true
+  slice9 {
+    x: 25.0
+    y: 25.0
+    z: 25.0
+    w: 25.0
+  }
+  clipping_mode: CLIPPING_MODE_NONE
+  clipping_visible: true
+  clipping_inverted: false
+  alpha: 0.5
+  template_node_child: false
+  size_mode: SIZE_MODE_MANUAL
+}
+nodes {
+  position {
+    x: 1400.0
+    y: 942.0
+    z: 0.0
+    w: 1.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+    w: 1.0
+  }
+  size {
+    x: 200.0
+    y: 100.0
+    z: 0.0
+    w: 1.0
+  }
+  color {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+    w: 1.0
+  }
+  type: TYPE_BOX
+  blend_mode: BLEND_MODE_ALPHA
+  texture: "gui/checkbox_unchecked"
+  id: "reroll"
+  xanchor: XANCHOR_NONE
+  yanchor: YANCHOR_NONE
+  pivot: PIVOT_E
+  adjust_mode: ADJUST_MODE_FIT
+  layer: ""
+  inherit_alpha: true
+  slice9 {
+    x: 25.0
+    y: 25.0
+    z: 25.0
+    w: 25.0
+  }
+  clipping_mode: CLIPPING_MODE_NONE
+  clipping_visible: true
+  clipping_inverted: false
+  alpha: 1.0
+  template_node_child: false
+  size_mode: SIZE_MODE_MANUAL
+}
+nodes {
+  position {
+    x: -100.0
+    y: 0.0
     z: 0.0
     w: 1.0
   }
@@ -354,9 +462,9 @@ nodes {
     w: 1.0
   }
   color {
-    x: 0.8
-    y: 1.0
-    z: 0.8
+    x: 0.6
+    y: 0.8
+    z: 0.6
     w: 1.0
   }
   type: TYPE_TEXT
@@ -365,10 +473,10 @@ nodes {
   "50\n"
   ""
   font: "ethnocentric"
-  id: "reroll"
+  id: "reroll_text"
   xanchor: XANCHOR_NONE
   yanchor: YANCHOR_NONE
-  pivot: PIVOT_NE
+  pivot: PIVOT_CENTER
   outline {
     x: 1.0
     y: 1.0
@@ -383,6 +491,7 @@ nodes {
   }
   adjust_mode: ADJUST_MODE_FIT
   line_break: false
+  parent: "reroll"
   layer: ""
   inherit_alpha: false
   alpha: 1.0

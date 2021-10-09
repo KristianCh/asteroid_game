@@ -9,6 +9,8 @@ function missile_cruiser_init(self)
 	self.projectile_speed = 400
 	self.max_health = 100 + (self.level-1) * 50
 	self.health = self.max_health
+	self.class_1 = hash("physical")
+	self.class_2 = hash("guided")
 end
 
 function missile_cruiser_update(self, dt)
@@ -21,10 +23,10 @@ function missile_cruiser_update(self, dt)
 	if self.small_cooldown <= 0 and self.main_cooldown <= 0 and self.charges > 0 then
 		msg.post("/manager", "target_closest_enemy", {pos = go.get_position(), range = 10000, dt = dt})
 	end
-	msg.post(self.stat_tracker, "set_cooldown", {cooldown = 1 - self.main_cooldown / self.main_cooldown_time})
+	msg.post(self.stat_tracker, "set_cooldown", {cooldown = 1 - self.main_cooldown / self.main_cooldown_time * self.cooldown_mult})
 end
 
-function missile_cruiser_target(self, target) 
+local function missile_cruiser_target(self, target) 
 	if target.found then
 		self.charges = self.charges - 1
 		self.small_cooldown = 0.25
@@ -33,9 +35,24 @@ function missile_cruiser_target(self, target)
 		{speed = self.projectile_speed, heading = vec_to_target, damage = self.damage, 
 		target = target.enemy, type = 2}, vmath.vector3(0.5))
 		if self.charges == 0 then
-			self.main_cooldown = self.main_cooldown_time
+			self.main_cooldown = self.main_cooldown_time * self.cooldown_mult
 			self.small_cooldown = 0.25
 			self.charges = self.charges_reload
+		end
+	end
+end
+
+function missile_cruiser_message(self, message_id, message, sender) 
+	if message_id == hash("target_enemy_response") then
+		if message.found then
+			missile_cruiser_target(self, message)
+		end
+	elseif message_id == hash("post_init_ready") then
+		if self.is_flagship then
+			msg.post("game:/manager", "apply_status_to_fleet", 
+			{
+				type = "property", property_name = "armor", value = 5, mix = "additive"
+			})
 		end
 	end
 end

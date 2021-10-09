@@ -205,6 +205,7 @@ function on_message(self, message_id, message, sender)
 		if current_active_proxy == "#game_proxy" then
 			msg.post("game:/fleet/fleet_manager#fleet_manager", "setup", {data = active_fleet, mouse_control = user_settings.mouse_controls})
 			msg.post("game:/manager#wave_manager", "setup", {data = active_run_data})
+			msg.post("game:/manager#manager", "setup", {data = active_run_data})
 			self.game_speed = 1
 		elseif current_active_proxy == "#settings_proxy" then
 			msg.post("settings:/gui_container#settings", "setup", {data = user_settings})
