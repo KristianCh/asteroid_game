@@ -19,7 +19,6 @@ end
 function on_message(self, message_id, message, sender)
 	if message_id == hash("bonk_camera") then
 		self.target_pos = message.pos * 2
-		print(self.target_pos)
 	elseif message_id == hash("camera_shake") then
 		self.shake_intensity = message.intensity
 		self.shake_timer = message.time

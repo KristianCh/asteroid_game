@@ -74,8 +74,6 @@ function update(self, dt)
 end
 
 function on_message(self, message_id, message, sender)
-	pprint(message)
-	print(message_id)
 	if message_id == hash("init_fleet") then
 		self.active_fleet = message
 		build_fleet_displays(self)
