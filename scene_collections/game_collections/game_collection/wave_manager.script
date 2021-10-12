@@ -1,4 +1,4 @@
-require "modules.stage_data"
+require "modules.values.stage_data"
 
 function spawn(self)
 	local width, height = 1920, 1017

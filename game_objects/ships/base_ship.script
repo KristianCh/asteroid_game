@@ -31,18 +31,12 @@ end
 
 function init(self)
 	self.d_steer = 0
-	self.init_type = battleship_init
-	self.update_type = battleship_update
-	self.message_type = battleship_message
 	self.collision_timeout = 0.5
+	self.init_type = battleship_init
 	if self.type == 2 then
 		self.init_type = laser_cutter_init
-		self.update_type = laser_cutter_update
-		self.message_type = laser_cutter_message
 	elseif self.type == 3 then
 		self.init_type = missile_cruiser_init
-		self.update_type = missile_cruiser_update
-		self.message_type = missile_cruiser_message
 	end
 	self.init_type(self)
 	self.health = self.max_health * (self.health_percentage/100)

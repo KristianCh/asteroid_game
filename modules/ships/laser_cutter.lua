@@ -7,6 +7,9 @@ function laser_cutter_init(self)
 	self.health = self.max_health
 	self.targeting_range = 350 + self.level * 150
 	self.class_1 = hash("energy")
+
+	self.update_type = laser_cutter_update
+	self.message_type = laser_cutter_message
 end
 
 function laser_cutter_update(self, dt)

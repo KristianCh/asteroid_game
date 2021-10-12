@@ -10,6 +10,9 @@ function battleship_init(self)
 	self.max_health = 100 + (self.level-1) * 50
 	self.health = self.max_health
 	self.class_1 = hash("physical")
+
+	self.update_type = battleship_update
+	self.message_type = battleship_message
 end
 
 function battleship_update(self, dt)

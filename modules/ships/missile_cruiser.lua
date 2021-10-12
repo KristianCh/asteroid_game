@@ -11,6 +11,9 @@ function missile_cruiser_init(self)
 	self.health = self.max_health
 	self.class_1 = hash("physical")
 	self.class_2 = hash("guided")
+
+	self.update_type = missile_cruiser_update
+	self.message_type = missile_cruiser_message
 end
 
 function missile_cruiser_update(self, dt)

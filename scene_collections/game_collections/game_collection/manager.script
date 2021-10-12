@@ -1,5 +1,6 @@
 require "modules.utils"
-require "modules.asteroids.asteroid_score_rewards"
+require "modules.values.class_bonuses"
+require "modules.values.asteroid_score_rewards"
 
 go.property("enemy_count", 0)
 go.property("ship_count", 0)
@@ -82,8 +83,32 @@ function on_message(self, message_id, message, sender)
 		end
 	elseif message_id == hash("fleet_post_init") then
 		self.fleet_data = copy_table(message.fleet)
+		local active_class_bonuses = {}
+		for k, v in pairs(class_bonuses) do
+			active_class_bonuses[k] = 0
+		end
 		for k, v in pairs(self.ships) do
+			if go.get(v, "class_1") ~= hash("") then active_class_bonuses[go.get(v, "class_1")] = active_class_bonuses[go.get(v, "class_1")]+1 end
+			if go.get(v, "class_2") ~= hash("") then active_class_bonuses[go.get(v, "class_2")] = active_class_bonuses[go.get(v, "class_2")]+1 end
+			if go.get(v, "class_3") ~= hash("") then active_class_bonuses[go.get(v, "class_3")] = active_class_bonuses[go.get(v, "class_3")]+1 end
 			msg.post(v, "post_init_ready")
+		end
+		for k, v in pairs(active_class_bonuses) do
+			local bonus_value = 0
+			if class_bonuses[k].mix == "additive" then
+				bonus_value = v * class_bonuses[k].value_per_level
+			else
+				bonus_value = math.pow(class_bonuses[k].value_per_level, v)
+			end
+			if bonus_value > 0 then
+				for k_cm, cm in pairs(class_bonuses[k].class_masks) do
+					msg.post("#", "apply_status_to_fleet", 
+					{
+						type = "property", property_name = class_bonuses[k].affected_property, 
+						value = bonus_value, mix = class_bonuses[k].mix, class_mask = hash(cm)
+					})
+				end
+			end
 		end
 		msg.post("#", "apply_status_to_fleet", 
 		{
@@ -146,7 +171,7 @@ function on_message(self, message_id, message, sender)
 	elseif message_id == hash("apply_status_to_fleet") then
 		if message.type == "property" then
 			for k, v in pairs(self.ships) do
-				if message.class_mask == nil or message.class_mask == go.get(v, "class_1") or message.class_mask == go.get(v, "class_2") or message.class_mask == go.get(v, "class_2") then
+				if message.class_mask == nil or message.class_mask == hash("all") or message.class_mask == go.get(v, "class_1") or message.class_mask == go.get(v, "class_2") or message.class_mask == go.get(v, "class_2") then
 					local current_value = go.get(v, message.property_name)
 					if message.mix == "additive" then
 						go.set(v, message.property_name, current_value + message.value)
