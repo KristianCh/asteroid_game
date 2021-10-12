@@ -1,4 +1,5 @@
 require "modules.asteroids.magnetic"
+require "modules.subscriber_module"
 
 go.property("size", 3)
 go.property("color", vmath.vector4(1, 1, 1, 1))
@@ -42,10 +43,8 @@ local function death(self)
 			msg.post(ids[hash("/base_asteroid")], "set_velocities", {linear_velocity = velocity + d_vel, angular_velocity = angular_velocity})
 		end
 	end
-
-	for i,v in ipairs(self.subscribers) do 
-		msg.post(v, "unsubscribe")
-	end
+	
+	notify_subscribers_of_destruction(self)
 	msg.post("/manager", "enemy_destroyed")
 
 	msg.post("#asteroid_gui", "disable_asteroid_gui")
@@ -92,7 +91,7 @@ function init(self)
 	end
 	self.type_init(self)
 
-	self.subscribers = {}
+	init_subscriber_module(self)
 end
 
 function update(self, dt)
@@ -144,6 +143,7 @@ local function process_damage(self, damage, type)
 end
 
 function on_message(self, message_id, message, sender)
+	on_subscription_message(self, message_id, message, sender)
 	if message_id == hash("contact_point_response") then
 		if message.other_group == hash("ship") and self.collision_timeout <= 0 then
 			self.collision_timeout = 0.5
@@ -160,15 +160,6 @@ function on_message(self, message_id, message, sender)
 		self.screen_dimensions = message.screen_dimensions
 	elseif message_id == hash("damage_asteroid") then
 		process_damage(self, message.damage, message.type)
-	elseif message_id == hash("subscribe") then
-		self.subscribers[#self.subscribers+1] = sender
-	elseif message_id == hash("unsubscribe") then
-		for k,v in pairs(self.subscribers)do
-			if v == sender then
-				table.remove(self.subscribers, k)
-				break
-			end
-		end
 	elseif message_id == hash("set_velocities") then
 		msg.post("#co" .. self.size, "enable")
 		go.set("#co" .. self.size, "linear_velocity", message.linear_velocity)

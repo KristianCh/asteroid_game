@@ -1,7 +1,7 @@
 class_texts = {
 	["physical"] = "<color=0.7,1,0.5,1>Physical</color>: All <color=0.7,1,0.5,1>Physical</color> ships get <color=1,0.7,0.5,1>+1</color> armor",
 	["energy"] = "<color=0.7,1,0.5,1>Energy</color>: All ships get <color=1,0.7,0.5,1>5%</color> firing cooldown reduction",
-	["guided"] = "<color=0.7,1,0.5,1>Guided</color>: All <color=0.7,1,0.5,1>Guided</color> ships get <color=1,0.7,0.5,1>5%</color> firing cooldown reduction"
+	["guided"] = "<color=0.7,1,0.5,1>Guided</color>: All <color=0.7,1,0.5,1>Guided</color> ships get <color=1,0.7,0.5,1>10%</color> firing cooldown reduction"
 }
 
 store_texts = {
