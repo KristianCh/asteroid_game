@@ -1,3 +1,5 @@
+require "modules.asteroids.magnetic"
+
 go.property("size", 3)
 go.property("color", vmath.vector4(1, 1, 1, 1))
 go.property("velocity", vmath.vector3(0, 0, 0))
@@ -135,11 +137,20 @@ function update(self, dt)
 	self.type_update(self, dt)
 end
 
+local function process_damage(self, damage, type)
+	self.health = self.health - damage
+	play_damage_pfx(self)
+	msg.post("#asteroid_gui", "set_health", {health = self.health, max_health = self.max_health})
+end
+
 function on_message(self, message_id, message, sender)
 	if message_id == hash("contact_point_response") then
 		if message.other_group == hash("ship") and self.collision_timeout <= 0 then
 			self.collision_timeout = 0.5
-			self.health = self.health - vmath.length(message.relative_velocity) / go.get("#co" .. self.size, "mass")
+			local damage = vmath.length(message.relative_velocity) / go.get("#co" .. self.size, "mass")
+
+			process_damage(self, damage, "physical")
+			
 			msg.post("#co" .. self.size, "apply_force", {force = message.normal * (10 + vmath.length(message.relative_velocity)), 
 			position = message.position})
 			msg.post("#asteroid_gui", "set_health", {health = self.health, max_health = self.max_health})
@@ -148,9 +159,7 @@ function on_message(self, message_id, message, sender)
 	elseif message_id == hash("update_screen_dimensions") then
 		self.screen_dimensions = message.screen_dimensions
 	elseif message_id == hash("damage_asteroid") then
-		self.health = self.health - message.damage
-		play_damage_pfx(self)
-		msg.post("#asteroid_gui", "set_health", {health = self.health, max_health = self.max_health})
+		process_damage(self, message.damage, message.type)
 	elseif message_id == hash("subscribe") then
 		self.subscribers[#self.subscribers+1] = sender
 	elseif message_id == hash("unsubscribe") then
@@ -169,17 +178,13 @@ function on_message(self, message_id, message, sender)
 end
 
 function final(self)
-	--[[for i,v in ipairs(self.subscribers) do 
-		msg.post(v, "unsubscribe")
-	end
-	msg.post("/manager", "enemy_destroyed")]]--
 end
 
 function base_init(self) end
 function base_update(self, dt) end
 function base_message_handling(self, message_id, message, sender) end
 
-function magnetic_init(self) 
+--[[function magnetic_init(self) 
 	go.set("mesh_container#mesh", "color", vmath.vector4(1, 0, 0, 1))
 	self.color = vmath.vector4(1, 0, 0, 1)
 	go.animate("mesh_container#mesh", "color", go.PLAYBACK_LOOP_PINGPONG, vmath.vector4(0, 0, 1, 1), go.EASING_INOUTSINE, 5)
@@ -194,7 +199,7 @@ function magnetic_message_handling(self, message_id, message, sender)
 		if message.found then
 			local vector_to_target = vmath.normalize(go.get_position(message.ship) - go.get_position())
 			local dist = vmath.length(go.get_position(message.ship) - go.get_position())
-			local force = vector_to_target * (math.pow(go.get("#co" .. self.size, "mass"), 2) / math.pow(dist, 1.75) * message.dt) * 1000000000
+			local force = vector_to_target * go.get("#co" .. self.size, "mass") / math.pow(dist, 1.75) * message.dt) * 2000000000
 			if vmath.length(force) > 500 then 
 				force = vmath.normalize(force) * 500
 			end
@@ -204,4 +209,4 @@ function magnetic_message_handling(self, message_id, message, sender)
 			})
 		end
 	end
-end
+end]]--

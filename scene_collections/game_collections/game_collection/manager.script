@@ -15,6 +15,39 @@ function init(self)
 	self.ships = {}
 	self.ship_count = 0
 	self.run_data = {}
+	self.fleet_data = {}
+end
+
+function get_health_percentage_by_type(self, type)
+	for k, v in pairs(self.ships) do
+		if go.get(v, "type") == type then
+			return math.ceil((go.get(v, "health") / go.get(v, "max_health")) * 100)
+		end	
+	end
+	return 0
+end
+
+function final(self)
+	pprint(self.fleet_data)
+	if self.run_data.difficulty == "normal" then
+
+	elseif self.run_data.difficulty == "hard" then
+		for k, v in pairs(self.fleet_data) do
+			local health_p = get_health_percentage_by_type(self, v.type)
+			v.health = math.min(100, health_p + 50)
+		end
+		msg.post("main:/manager", "save_fleet", {fleet = self.fleet_data})
+	else
+		for k, v in pairs(self.fleet_data) do
+			local health_p = get_health_percentage_by_type(self, v.type)
+			v.health = health_p
+			if health_p == 0 then
+				table.remove(self.fleet_data, k)
+			end
+		end
+		msg.post("main:/manager", "save_fleet", {fleet = self.fleet_data})
+	end	
+	pprint(self.fleet_data)
 end
 
 function on_message(self, message_id, message, sender)
@@ -35,6 +68,7 @@ function on_message(self, message_id, message, sender)
 			msg.post("main:/manager", "end_from_game")
 		end
 	elseif message_id == hash("fleet_post_init") then
+		self.fleet_data = copy_table(message.fleet)
 		for k, v in pairs(self.ships) do
 			msg.post(v, "post_init_ready")
 		end

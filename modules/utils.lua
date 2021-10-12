@@ -4,6 +4,15 @@ function table_size(table)
 	return count
 end
 
+function table_contains(table, element)
+	for k,v in pairs(table) do
+		if v == element then
+			return true
+		end
+	end
+	return false
+end
+
 function copy_table(table)
 	local new = {}
 	for k,v in pairs(table) do

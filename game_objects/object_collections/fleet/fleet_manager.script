@@ -39,10 +39,13 @@ function on_message(self, message_id, message, sender)
 			local stat_tracker = factory.create("#ship_stat_tracker_factory", vmath.vector3(90*i-45, 937, 0), nil, {type = message.data[i].type}, nil)
 			message.data[i].stat_tracker = stat_tracker
 			if message.data[i].is_flagship then scale = vmath.vector3(0.35) end
-			factory.create("#ship_factory", vmath.vector3(960, 508.5, 0)+pos, nil, message.data[i], scale)
+			local props = copy_table(message.data[i])
+			props.health = nil
+			props.health_percentage = message.data[i].health
+			factory.create("#ship_factory", vmath.vector3(960, 508.5, 0)+pos, nil, props, scale)
 			pos = vmath.rotate(rot_quat, pos)
 		end
-		msg.post("game:/manager", "fleet_post_init")
+		msg.post("game:/manager", "fleet_post_init", {fleet = message.data})
 	end
 end
 
