@@ -1,4 +1,5 @@
-require "modules.store_texts"
+require "modules.values.store_texts"
+require "modules.values.class_bonuses"
 
 go.property("id", 1)
 go.property("cost", 100)
@@ -10,6 +11,7 @@ function init(self)
 		end
 	end
 	self.text = ""
+	self.class_text = ""
 	self.name = ""
 	msg.post("#gui", "set_position", {pos = go.get_position()})
 end
@@ -32,27 +34,10 @@ function on_message(self, message_id, message, sender)
 		msg.post("/manager#manager", "remove_ship", {type = self.id})
 	elseif message_id == hash("setup") then
 		self.text = message.text
+		self.class_text = message.class_text
 		self.name = message.name
-		msg.post("#gui", "set_texts", {text = self.text, name = self.name, cost = self.cost})
+		msg.post("#gui", "set_texts", {text = self.text, class_text = self.class_text, name = self.name, cost = self.cost})
 	elseif message_id == hash("update_stats") then
 		msg.post("#gui", "update_stats", message)
 	end
-end
-
-function on_input(self, action_id, action)
-	-- Add input-handling code here. The game object this script is attached to
-	-- must have acquired input focus:
-	--
-	--    msg.post(".", "acquire_input_focus")
-	--
-	-- All mapped input bindings will be received. Mouse and touch input will
-	-- be received regardless of where on the screen it happened.
-	-- Learn more: https://defold.com/manuals/input/
-	-- Remove this function if not needed
-end
-
-function on_reload(self)
-	-- Add reload-handling code here
-	-- Learn more: https://defold.com/manuals/hot-reload/
-	-- Remove this function if not needed
 end

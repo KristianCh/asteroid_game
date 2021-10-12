@@ -7,10 +7,6 @@ images {
   sprite_trim_mode: SPRITE_TRIM_MODE_OFF
 }
 images {
-  image: "/assets/images/gui/store_bg.png"
-  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
-}
-images {
   image: "/assets/images/gui/target.png"
   sprite_trim_mode: SPRITE_TRIM_MODE_OFF
 }
@@ -24,6 +20,10 @@ images {
 }
 images {
   image: "/assets/images/gui/flag.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
+images {
+  image: "/assets/images/gui/class.png"
   sprite_trim_mode: SPRITE_TRIM_MODE_OFF
 }
 margin: 10

@@ -82,6 +82,7 @@ function update(self, dt)
 	if self.heading.x ~= self.heading.x then
 		self.heading = vmath.vector3(0, 1, 0)
 	end
+	--print(self.evasion * dt, self.heading, vec_to_target, vmath.slerp(self.evasion * dt, self.heading, vec_to_target))
 	local d_steer = vmath.cross(vmath.slerp(self.evasion * dt, self.heading, vec_to_target), self.heading).z * 2000
 	self.d_steer = vmath.lerp(self.evasion * dt, self.d_steer, d_steer)
 	
@@ -121,7 +122,7 @@ function on_message(self, message_id, message, sender)
 	if message_id == hash("contact_point_response") then
 		if message.other_group == hash("asteroid") and self.collision_timeout <= 0 then
 			self.collision_timeout = 0.5
-			local damage = 10 + (vmath.length(message.relative_velocity) * (1+message.other_mass/3)) / 35
+			local damage = 5 + (vmath.length(message.relative_velocity) * (1+message.other_mass/3)) / 35
 			damage = clamp(damage - self.armor, 0, damage)
 			self.health = self.health - damage
 			if self.health <= 0 then

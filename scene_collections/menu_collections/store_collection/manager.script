@@ -1,5 +1,5 @@
 require "modules.utils"
-require "modules.store_texts"
+require "modules.values.store_texts"
 
 local store_slots = {nil, nil, nil}
 local active_displays = {}
@@ -18,7 +18,7 @@ end
 local function ship_display_from_data(self, data, pos)
 	local props = {id = store_texts[data.type].id, cost = store_texts[data.type].cost}
 	local new = factory.create("#factory", pos, nil, props)
-	msg.post(new, "setup", {name = store_texts[data.type].name, text = store_texts[data.type].text})
+	msg.post(new, "setup", {name = store_texts[data.type].name, text = store_texts[data.type].text, class_text = store_texts[data.type].class_text})
 	msg.post(new, "update_stats", {
 		bought = true, level = data.level, sub_level = data.sub_level, is_flagship = data.is_flagship
 	})
@@ -50,7 +50,7 @@ local function generate_offers(self)
 		end
 		local new = factory.create("#factory", vmath.vector3(1620, 850-(270*(i-1)), 0), nil, {id = types[i].id, cost = types[i].cost})
 		store_slots[i] = new
-		msg.post(new, "setup", {name = types[i].name, text = types[i].text})
+		msg.post(new, "setup", {name = types[i].name, text = types[i].text, class_text = types[i].class_text})
 	end
 end
 

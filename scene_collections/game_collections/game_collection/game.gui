@@ -536,7 +536,7 @@ nodes {
   text: "Stage\n"
   "Complete"
   font: "ethnocentric"
-  id: "text"
+  id: "done_text"
   xanchor: XANCHOR_NONE
   yanchor: YANCHOR_NONE
   pivot: PIVOT_N

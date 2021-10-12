@@ -32,6 +32,7 @@ function on_message(self, message_id, message, sender)
 		gui.set_text(gui.get_node("credits"), "Credits: " .. message.credits)
 		gui.animate(gui.get_node("done_menu"), gui.PROP_POSITION, vmath.vector3(960, 600, 0), gui.EASING_INOUTQUINT, 1, 0, nil, gui.PLAYBACK_ONCE_FORWARD)
 		gui.animate(gui.get_node("pause"), gui.PROP_COLOR, vmath.vector4(0), gui.EASING_INOUTQUINT, 1, 0, nil, gui.PLAYBACK_ONCE_FORWARD)
+		gui.animate(gui.get_node("done_text"), gui.PROP_SCALE, vmath.vector3(0.425, 0.425, 0.425), gui.EASING_INOUTSINE, 1, 0, nil, gui.PLAYBACK_LOOP_PINGPONG)
 	end	
 end
 

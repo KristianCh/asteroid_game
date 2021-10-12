@@ -51,7 +51,7 @@ function battleship_message(self, message_id, message, sender)
 		if self.is_flagship then
 			msg.post("game:/manager", "apply_status_to_fleet", 
 			{
-				type = "property", property_name = "armor", value = 5, mix = "additive"
+				type = "property", property_name = "armor", value = 5, mix = "add"
 			})
 		end
 	end

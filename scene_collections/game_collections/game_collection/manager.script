@@ -95,7 +95,7 @@ function on_message(self, message_id, message, sender)
 		end
 		for k, v in pairs(active_class_bonuses) do
 			local bonus_value = 0
-			if class_bonuses[k].mix == "additive" then
+			if class_bonuses[k].mix == "add" then
 				bonus_value = v * class_bonuses[k].value_per_level
 			else
 				bonus_value = math.pow(class_bonuses[k].value_per_level, v)
@@ -112,7 +112,7 @@ function on_message(self, message_id, message, sender)
 		end
 		msg.post("#", "apply_status_to_fleet", 
 		{
-			type = "property", property_name = "armor", value = self.run_data.extra_armor, mix = "additive"
+			type = "property", property_name = "armor", value = self.run_data.extra_armor, mix = "add"
 		})
 	elseif message_id == hash("setup") then
 		self.run_data = copy_table(message.data)
@@ -173,7 +173,7 @@ function on_message(self, message_id, message, sender)
 			for k, v in pairs(self.ships) do
 				if message.class_mask == nil or message.class_mask == hash("all") or message.class_mask == go.get(v, "class_1") or message.class_mask == go.get(v, "class_2") or message.class_mask == go.get(v, "class_2") then
 					local current_value = go.get(v, message.property_name)
-					if message.mix == "additive" then
+					if message.mix == "add" then
 						go.set(v, message.property_name, current_value + message.value)
 					elseif message.mix == "multiply" then
 						go.set(v, message.property_name, current_value * message.value)
