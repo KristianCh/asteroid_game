@@ -1,7 +1,9 @@
 require "modules.utils"
+require "modules.asteroids.asteroid_score_rewards"
 
 go.property("enemy_count", 0)
 go.property("ship_count", 0)
+go.property("current_score", 0)
 
 local function url_to_hash(url)
 	local str =  hash_to_hex(url.socket or hash("")) .. hash_to_hex(url.path) .. hash_to_hex(url.fragment or hash(""))
@@ -28,7 +30,8 @@ function get_health_percentage_by_type(self, type)
 end
 
 function final(self)
-	pprint(self.fleet_data)
+	pprint(self.run_data)
+	local credit_mult = 0.5 * (1 + self.run_data.extra_credits / 100)
 	if self.run_data.difficulty == "normal" then
 
 	elseif self.run_data.difficulty == "hard" then
@@ -36,6 +39,7 @@ function final(self)
 			local health_p = get_health_percentage_by_type(self, v.type)
 			v.health = math.min(100, health_p + 50)
 		end
+		credit_mult = credit_mult * 1.25
 		msg.post("main:/manager", "save_fleet", {fleet = self.fleet_data})
 	else
 		for k, v in pairs(self.fleet_data) do
@@ -45,9 +49,12 @@ function final(self)
 				table.remove(self.fleet_data, k)
 			end
 		end
+		credit_mult = credit_mult * 1.35
 		msg.post("main:/manager", "save_fleet", {fleet = self.fleet_data})
-	end	
-	pprint(self.fleet_data)
+	end
+	local credit_gain = math.ceil(self.current_score * credit_mult)
+	print(self.current_score, credit_mult, credit_gain)
+	msg.post("main:/manager", "update_credits", {credits = self.run_data.credits + credit_gain})
 end
 
 function on_message(self, message_id, message, sender)
@@ -57,6 +64,7 @@ function on_message(self, message_id, message, sender)
 	elseif message_id == hash("enemy_destroyed") then
 		self.enemies[url_to_hash(sender)] = nil
 		self.enemy_count = self.enemy_count - 1
+		self.current_score = self.current_score + asteroid_score_rewards[go.get(sender, "type")].score_reward
 	elseif message_id == hash("ship_created") then
 		self.ships[url_to_hash(sender)] = sender
 		self.ship_count = self.ship_count + 1
