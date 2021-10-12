@@ -29,9 +29,17 @@ function get_health_percentage_by_type(self, type)
 	return 0
 end
 
-function final(self)
-	pprint(self.run_data)
+function calculate_credits(self)
 	local credit_mult = 0.5 * (1 + self.run_data.extra_credits / 100)
+	if self.run_data.difficulty == "hard" then
+		credit_mult = credit_mult * 1.25
+	elseif self.run_data.difficulty == "very_hard" then
+		credit_mult = credit_mult * 1.35
+	end
+	return math.ceil(self.current_score * credit_mult)
+end
+
+function final(self)
 	if self.run_data.difficulty == "normal" then
 
 	elseif self.run_data.difficulty == "hard" then
@@ -39,7 +47,6 @@ function final(self)
 			local health_p = get_health_percentage_by_type(self, v.type)
 			v.health = math.min(100, health_p + 50)
 		end
-		credit_mult = credit_mult * 1.25
 		msg.post("main:/manager", "save_fleet", {fleet = self.fleet_data})
 	else
 		for k, v in pairs(self.fleet_data) do
@@ -49,11 +56,9 @@ function final(self)
 				table.remove(self.fleet_data, k)
 			end
 		end
-		credit_mult = credit_mult * 1.35
 		msg.post("main:/manager", "save_fleet", {fleet = self.fleet_data})
 	end
-	local credit_gain = math.ceil(self.current_score * credit_mult)
-	print(self.current_score, credit_mult, credit_gain)
+	local credit_gain = calculate_credits(self)
 	msg.post("main:/manager", "update_credits", {credits = self.run_data.credits + credit_gain})
 end
 
@@ -150,7 +155,9 @@ function on_message(self, message_id, message, sender)
 					end
 				end
 			end
-		end	
+		end
+	elseif message_id == hash("stage_done") then
+		msg.post("/gui_container#game", "show_stage_done", {credits = calculate_credits(self)})
 	end
 end
 

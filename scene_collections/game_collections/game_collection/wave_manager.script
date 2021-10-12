@@ -1,3 +1,5 @@
+require "modules.stage_data"
+
 function spawn(self)
 	local width, height = 1920, 1017
 	local type = math.random(0, 1)
@@ -51,12 +53,13 @@ function update(self, dt)
 			end
 		elseif self.wave > self.waves and not self.finished then
 			self.finished = true
-			if self.stage >= 5 then
-				msg.post("main:/manager", "end_run", {success = false})
+			if self.stage >= stage_data.max_stage then
+				msg.post("main:/manager", "end_run", {success = true})
 				msg.post("main:/manager", "end_from_game")
 			else
-				msg.post("main:/manager", "advance_stage")
-				msg.post("main:/manager", "store_from_game")
+				msg.post("#manager", "stage_done")
+				--msg.post("main:/manager", "advance_stage")
+				--msg.post("main:/manager", "store_from_game")
 			end
 		end
 	end	
