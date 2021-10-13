@@ -10,6 +10,7 @@ function on_message(self, message_id, message, sender)
 		gui.set_position(gui.get_node("main"), message.pos)
 	elseif message_id == hash("set_texts") then
 		gui.set_text(gui.get_node("text"), message.text .. ": " .. message.num)
+		
 		richtext.create("<outline=black><size=0.2>" .. message.class_text .. "</size></outline>", "ethnocentric_bordered", 
 		{
 			position = vmath.vector3(0),
