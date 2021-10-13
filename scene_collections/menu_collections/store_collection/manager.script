@@ -1,8 +1,10 @@
 require "modules.utils"
+require "modules.class_eval"
 require "modules.values.store_texts"
 
 local store_slots = {nil, nil, nil}
 local active_displays = {}
+local active_class_displays = {}
 local max_bought = 4
 
 local function random_types() 
@@ -18,18 +20,28 @@ end
 local function ship_display_from_data(self, data, pos)
 	local props = {id = store_texts[data.type].id, cost = store_texts[data.type].cost}
 	local new = factory.create("#factory", pos, nil, props)
-	msg.post(new, "setup", {name = store_texts[data.type].name, text = store_texts[data.type].text, class_text = store_texts[data.type].class_text})
+	msg.post(new, "setup", {name = store_texts[data.type].name, text = store_texts[data.type].text, class_text = get_classes_text(store_texts[data.type].classes)})
 	msg.post(new, "update_stats", {
 		bought = true, level = data.level, sub_level = data.sub_level, is_flagship = data.is_flagship
 	})
 	table.insert(active_displays, new)
+
+	for k, v in pairs(store_texts[data.type].classes) do
+		self.active_class_nums[v] = self.active_class_nums[v] + 1
+	end
 end
 
-local function build_fleet_displays(self) 
+local function build_fleet_displays(self)
 	for i,v in ipairs(active_displays) do 
 		go.delete(v)
 	end
 	active_displays = {}
+	for i,v in ipairs(active_class_displays) do 
+		go.delete(v)
+	end
+	active_class_displays = {}
+	self.active_class_nums = {}
+	set_table_default(self.active_class_nums, 0)
 	local x = 1
 	for i,ship in ipairs(self.active_fleet) do 
 		local pos = vmath.vector3(200 + 400*((x-1)%3), 700 - 270*(math.floor(x/4)), 0)
@@ -40,6 +52,20 @@ local function build_fleet_displays(self)
 		fleet_size = "Fleet Size: " .. #active_displays .. "/" .. max_bought,
 		credits = "Credits: " .. self.current_credits
 	})
+	local x = 50
+	y = 0
+	for k, v in pairs(self.active_class_nums) do
+		local pos = vmath.vector3(x, 150 + y, 0)
+		x = x + (string.len(k) + 3) * 25
+		if x > 1000 then
+			x = 50
+			y = 100
+		end
+		local new = factory.create("#class_factory")
+		msg.post(new, "set_position", {pos = pos})
+		msg.post(new, "set_texts", {text = k, num = v, class_text = get_active_class_bonus_text(k, v)})
+		table.insert(active_class_displays, new)
+	end	
 end
 
 local function generate_offers(self)
@@ -50,27 +76,16 @@ local function generate_offers(self)
 		end
 		local new = factory.create("#factory", vmath.vector3(1620, 850-(270*(i-1)), 0), nil, {id = types[i].id, cost = types[i].cost})
 		store_slots[i] = new
-		msg.post(new, "setup", {name = types[i].name, text = types[i].text, class_text = types[i].class_text})
+		msg.post(new, "setup", {name = types[i].name, text = types[i].text, class_text = get_classes_text(types[i].classes)})
 	end
 end
 
 function init(self)
 	msg.post(".", "acquire_input_focus")
 	self.active_fleet = {}
+	self.active_class_nums = {}
 	self.current_credits = 0
 	generate_offers(self)
-end
-
-function final(self)
-	-- Add finalization code here
-	-- Learn more: https://defold.com/manuals/script/
-	-- Remove this function if not needed
-end
-
-function update(self, dt)
-	-- Add update code here
-	-- Learn more: https://defold.com/manuals/script/
-	-- Remove this function if not needed
 end
 
 function on_message(self, message_id, message, sender)
@@ -140,7 +155,10 @@ function on_message(self, message_id, message, sender)
 				v.is_flagship = false
 			end
 		end
-		build_fleet_displays(self)
+		for k, v in pairs(active_displays) do
+			msg.post(v, "update_flagship", {type = message.type})
+		end
+		--build_fleet_displays(self)
 		msg.post("main:/manager", "save_fleet", {fleet = self.active_fleet})
 	elseif message_id == hash("remove_ship") then
 		if table_size(self.active_fleet) > 1 then

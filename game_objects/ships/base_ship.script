@@ -2,6 +2,7 @@ require "modules.ships.laser_cutter"
 require "modules.ships.battleship"
 require "modules.ships.missile_cruiser"
 require "modules.utils"
+require "modules.subscriber_module"
 
 go.property("target_pos", vmath.vector3(960, 500, 0))
 go.property("heading", vmath.vector3(0, 1, 0))
@@ -47,9 +48,11 @@ function init(self)
 		end
 	end
 	msg.post("/manager", "ship_created")
+	init_subscriber_module(self)
 end
 
 function final(self)
+	notify_subscribers_of_destruction(self)
 	msg.post(self.stat_tracker, "set_cooldown", {cooldown = 0})
 	msg.post(self.stat_tracker, "set_health", {health = 0})
 	msg.post(self.stat_tracker, "death")
@@ -118,6 +121,7 @@ function update(self, dt)
 end
 
 function on_message(self, message_id, message, sender)
+	on_subscription_message(self, message_id, message, sender)
 	self.message_type(self, message_id, message, sender)
 	if message_id == hash("contact_point_response") then
 		if message.other_group == hash("asteroid") and self.collision_timeout <= 0 then

@@ -52,6 +52,8 @@ local function update_state(self)
 
 	if self.is_flagship then
 		gui.set_color(gui.get_node("flag"), vmath.vector4(1, 0, 1, 0.75))
+	else
+		gui.set_color(gui.get_node("flag"), vmath.vector4(1, 1, 1, 0.75))
 	end
 end
 
@@ -91,6 +93,9 @@ function on_message(self, message_id, message, sender)
 		self.bought = message.bought
 		self.level = message.level
 		self.sub_level = message.sub_level
+		self.is_flagship = message.is_flagship
+		update_state(self)
+	elseif message_id == hash("asdasd") then
 		self.is_flagship = message.is_flagship
 		update_state(self)
 	end	

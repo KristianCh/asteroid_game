@@ -13,6 +13,11 @@ function table_contains(table, element)
 	return false
 end
 
+function set_table_default(table, val)
+	local mt = {__index = function () return val end}
+	setmetatable(table, mt)
+end
+
 function copy_table(table)
 	local new = {}
 	for k,v in pairs(table) do

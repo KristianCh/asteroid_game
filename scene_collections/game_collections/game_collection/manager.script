@@ -1,4 +1,5 @@
 require "modules.utils"
+require "modules.class_eval"
 require "modules.values.class_bonuses"
 require "modules.values.asteroid_score_rewards"
 
@@ -94,16 +95,15 @@ function on_message(self, message_id, message, sender)
 			msg.post(v, "post_init_ready")
 		end
 		for k, v in pairs(active_class_bonuses) do
-			local bonus_value = 0
-			if class_bonuses[k].mix == "add" then
-				bonus_value = v * class_bonuses[k].value_per_level
-			else
-				bonus_value = math.pow(class_bonuses[k].value_per_level, v)
-			end
+			local bonus_vlaue = get_class_bonus(k, level)
 			if bonus_value > 0 then
 				for k_cm, cm in pairs(class_bonuses[k].class_masks) do
 					msg.post("#", "apply_status_to_fleet", 
 					{
+						type = "property", property_name = class_bonuses[k].affected_property, 
+						value = bonus_value, mix = class_bonuses[k].mix, class_mask = hash(cm)
+					})
+					pprint({
 						type = "property", property_name = class_bonuses[k].affected_property, 
 						value = bonus_value, mix = class_bonuses[k].mix, class_mask = hash(cm)
 					})

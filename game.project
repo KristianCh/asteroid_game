@@ -40,3 +40,6 @@ type = 2D
 default_texture_min_filter = nearest
 default_texture_mag_filter = nearest
 
+[collection]
+max_input_stack_entries = 48
+
