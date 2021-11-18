@@ -18,6 +18,7 @@ height = 1017
 fullscreen = 0
 vsync = 0
 high_dpi = 1
+samples = 4
 
 [script]
 shared_state = 1

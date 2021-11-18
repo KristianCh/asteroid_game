@@ -1,23 +1,25 @@
 local gooey = require "gooey.gooey"
 
-local function update_checkbox(checkbox, checkbox_id, value_id)
-	if checkbox.checked then
-		gui.play_flipbook(gui.get_node(checkbox_id), hash("checkbox_checked"))
+local function update_checkbox(self, checkbox, value, value_id)
+	if value then
+		gui.play_flipbook(gui.get_node(checkbox .. "_check"), hash("checkbox_checked"))
 	else
-		gui.play_flipbook(gui.get_node(checkbox_id), hash("checkbox_unchecked"))
+		gui.play_flipbook(gui.get_node(checkbox .. "_check"), hash("checkbox_unchecked"))
 	end
-	msg.post("main:/manager", "apply_setting", {id = value_id, value = checkbox.checked})
+	self.checkboxes[checkbox] = value
+	msg.post("main:/manager", "apply_setting", {id = value_id, value = value})
 end
 
 function init(self)
 	msg.post(".", "acquire_input_focus")
+	self.checkboxes = {}
 end
 
 function on_message(self, message_id, message, sender)
 	if message_id == hash("setup") then
-		update_checkbox(gooey.checkbox("fullscreen_check").set_checked(message.data.fullscreen), "fullscreen_check", "fullscreen")
-		update_checkbox(gooey.checkbox("crt_check").set_checked(message.data.crt_shader), "crt_check", "crt_shader")
-		update_checkbox(gooey.checkbox("pixel_check").set_checked(message.data.pixel_shader), "pixel_check", "pixel_shader")
+		update_checkbox(self, "fullscreen", message.data.fullscreen, "fullscreen")
+		update_checkbox(self, "crt", message.data.crt_shader, "crt_shader")
+		update_checkbox(self, "pixel", message.data.pixel_shader, "pixel_shader")
 	end	
 end
 
@@ -33,51 +35,54 @@ function on_input(self, action_id, action)
 		end
 	end)
 
-	gooey.checkbox("fullscreen", action_id, action, function() end, function(checkbox)
-		if checkbox.released_now then
-			if checkbox.checked_now then
+	gooey.button("fullscreen", action_id, action, function() end, function(button)
+		if button.released_now then
+			self.checkboxes["fullscreen"] = not self.checkboxes["fullscreen"]
+			if self.checkboxes["fullscreen"] then
 				gui.play_flipbook(gui.get_node("fullscreen_check"), hash("checkbox_checked"))
 			else
 				gui.play_flipbook(gui.get_node("fullscreen_check"), hash("checkbox_unchecked"))
 			end
-			msg.post("main:/manager", "apply_setting", {id = "fullscreen", value = checkbox.checked})
+			msg.post("main:/manager", "apply_setting", {id = "fullscreen", value = self.checkboxes["fullscreen"]})
 		end
-		if checkbox.over_now then 
-			gui.animate(checkbox.node, "scale", vmath.vector3(1.3), gui.EASING_OUTQUINT, 0.5)
-		elseif checkbox.out_now then
-			gui.animate(checkbox.node, "scale", vmath.vector3(1), gui.EASING_OUTQUINT, 0.5)
+		if button.over_now then 
+			gui.animate(button.node, "scale", vmath.vector3(1.3), gui.EASING_OUTQUINT, 0.5)
+		elseif button.out_now then
+			gui.animate(button.node, "scale", vmath.vector3(1), gui.EASING_OUTQUINT, 0.5)
 		end
 	end)
 
-	gooey.checkbox("crt", action_id, action, function() end, function(checkbox)
-		if checkbox.released_now then
-			if checkbox.checked_now then
+	gooey.button("crt", action_id, action, function() end, function(button)
+		if button.released_now then
+			self.checkboxes["crt"] = not self.checkboxes["crt"]
+			if self.checkboxes["crt"] then
 				gui.play_flipbook(gui.get_node("crt_check"), hash("checkbox_checked"))
 			else
 				gui.play_flipbook(gui.get_node("crt_check"), hash("checkbox_unchecked"))
 			end
-			msg.post("main:/manager", "apply_setting", {id = "crt_shader", value = checkbox.checked})
+			msg.post("main:/manager", "apply_setting", {id = "crt_shader", value = self.checkboxes["crt"]})
 		end
-		if checkbox.over_now then 
-			gui.animate(checkbox.node, "scale", vmath.vector3(1.3), gui.EASING_OUTQUINT, 0.5)
-		elseif checkbox.out_now then
-			gui.animate(checkbox.node, "scale", vmath.vector3(1), gui.EASING_OUTQUINT, 0.5)
+		if button.over_now then 
+			gui.animate(button.node, "scale", vmath.vector3(1.3), gui.EASING_OUTQUINT, 0.5)
+		elseif button.out_now then
+			gui.animate(button.node, "scale", vmath.vector3(1), gui.EASING_OUTQUINT, 0.5)
 		end
 	end)
 
-	gooey.checkbox("pixel", action_id, action, function() end, function(checkbox)
-		if checkbox.released_now then
-			if checkbox.checked_now then
+	gooey.button("pixel", action_id, action, function() end, function(button)
+		if button.released_now then
+			self.checkboxes["pixel"] = not self.checkboxes["pixel"]
+			if self.checkboxes["pixel"] then
 				gui.play_flipbook(gui.get_node("pixel_check"), hash("checkbox_checked"))
 			else
 				gui.play_flipbook(gui.get_node("pixel_check"), hash("checkbox_unchecked"))
 			end
-			msg.post("main:/manager", "apply_setting", {id = "pixel_shader", value = checkbox.checked})
+			msg.post("main:/manager", "apply_setting", {id = "pixel_shader", value = self.checkboxes["pixel"]})
 		end
-		if checkbox.over_now then 
-			gui.animate(checkbox.node, "scale", vmath.vector3(1.3), gui.EASING_OUTQUINT, 0.5)
-		elseif checkbox.out_now then
-			gui.animate(checkbox.node, "scale", vmath.vector3(1), gui.EASING_OUTQUINT, 0.5)
+		if button.over_now then 
+			gui.animate(button.node, "scale", vmath.vector3(1.3), gui.EASING_OUTQUINT, 0.5)
+		elseif button.out_now then
+			gui.animate(button.node, "scale", vmath.vector3(1), gui.EASING_OUTQUINT, 0.5)
 		end
 	end)
 end

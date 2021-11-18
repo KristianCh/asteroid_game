@@ -193,6 +193,7 @@ function update(self, dt)
 end
 
 function on_message(self, message_id, message, sender)
+	--im not yandere dev, theres just no switch
 	if message_id == hash("exit_game") then
 		msg.post("@system:", "exit", {code = 0})
 	elseif message_id == hash("proxy_loaded") then
