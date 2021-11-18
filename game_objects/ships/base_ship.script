@@ -85,6 +85,7 @@ function update(self, dt)
 	if self.heading.x ~= self.heading.x then
 		self.heading = vmath.vector3(0, 1, 0)
 	end
+	if vec_to_target.x ~= vec_to_target.x then print("asd") end
 	--print(self.evasion * dt, self.heading, vec_to_target, vmath.slerp(self.evasion * dt, self.heading, vec_to_target))
 	local d_steer = vmath.cross(vmath.slerp(self.evasion * dt, self.heading, vec_to_target), self.heading).z * 2000
 	self.d_steer = vmath.lerp(self.evasion * dt, self.d_steer, d_steer)

@@ -98,10 +98,11 @@ void main()
 	final_color = (final_color * (1 - gui_color.w) + gui_color * mult) * (1 + (mult-1)/2);
 
 	if (transition.x > 0) {
+		float t = time.x * 2.5;
 		final_color = mix(final_color * (1-transition.x), vec4(
-			cnoise(var_texcoord0.xy * 200 + vec2(sin(time.x), cos(time.x))), 
-			cnoise(var_texcoord0.xx * 200 + vec2(sin(time.x), cos(time.x))), 
-			cnoise(var_texcoord0.yy * 200 + vec2(sin(time.x), cos(time.x))), 
+			cnoise(var_texcoord0.xy * 200 + vec2(sin(t), cos(t))) * 1.5, 
+			cnoise(var_texcoord0.xx * 200 + vec2(sin(t), cos(t))) * 2, 
+			cnoise(var_texcoord0.yy * 200 + vec2(sin(t), cos(t))) * 1.5, 
 			2.5) / 2.5, transition.x);
 		}
 	

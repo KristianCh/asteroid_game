@@ -21,6 +21,7 @@ function final(self)
 end
 
 function update(self, dt)
+	msg.post("#gui", "set_position", {pos = go.get_position()})
 	local rot = vmath.quat_rotation_y(dt)
 	go.set_rotation(go.get_rotation("#model_" .. self.id) * rot, "#model_" .. self.id)
 end

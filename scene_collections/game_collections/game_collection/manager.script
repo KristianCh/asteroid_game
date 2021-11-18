@@ -95,15 +95,11 @@ function on_message(self, message_id, message, sender)
 			msg.post(v, "post_init_ready")
 		end
 		for k, v in pairs(active_class_bonuses) do
-			local bonus_vlaue = get_class_bonus(k, level)
+			local bonus_value = get_class_bonus(k, v)
 			if bonus_value > 0 then
 				for k_cm, cm in pairs(class_bonuses[k].class_masks) do
 					msg.post("#", "apply_status_to_fleet", 
 					{
-						type = "property", property_name = class_bonuses[k].affected_property, 
-						value = bonus_value, mix = class_bonuses[k].mix, class_mask = hash(cm)
-					})
-					pprint({
 						type = "property", property_name = class_bonuses[k].affected_property, 
 						value = bonus_value, mix = class_bonuses[k].mix, class_mask = hash(cm)
 					})
