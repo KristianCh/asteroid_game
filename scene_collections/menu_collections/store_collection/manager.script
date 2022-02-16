@@ -10,7 +10,7 @@ local max_bought = 4
 local function random_types() 
 	local out = {}
 	local source = copy_table(store_texts)
-	for i = #source, 2, -1 do
+	for i = #source, 3, -1 do
 		local j = math.random(i)
 		source[i], source[j] = source[j], source[i]
 	end

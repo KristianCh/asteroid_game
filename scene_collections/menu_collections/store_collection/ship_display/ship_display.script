@@ -1,15 +1,12 @@
 require "modules.values.store_texts"
 require "modules.values.class_bonuses"
+require "modules.model_switcher"
 
 go.property("id", 1)
 go.property("cost", 100)
 
 function init(self)
-	for i=1,3 do
-		if i ~= self.id then
-			msg.post("#model_" .. i, "disable")
-		end
-	end
+	model_switch(self.id, SHIP)
 	self.text = ""
 	self.class_text = ""
 	self.name = ""

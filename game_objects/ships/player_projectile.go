@@ -13,6 +13,36 @@ components {
     w: 1.0
   }
 }
+components {
+  id: "cannon_round"
+  component: "/assets/models/projectiles/cannon_round.model"
+  position {
+    x: 0.0
+    y: -5.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+}
+components {
+  id: "missile"
+  component: "/assets/models/projectiles/missile.model"
+  position {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+}
 embedded_components {
   id: "co"
   type: "collisionobject"
@@ -52,52 +82,6 @@ embedded_components {
   position {
     x: 0.0
     y: 0.0
-    z: 0.0
-  }
-  rotation {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-}
-embedded_components {
-  id: "model_2"
-  type: "model"
-  data: "mesh: \"/assets/models/projectiles/missile.dae\"\n"
-  "material: \"/render/materials/model.material\"\n"
-  "textures: \"/assets/images/palette.png\"\n"
-  "skeleton: \"/assets/models/projectiles/missile.dae\"\n"
-  "animations: \"/assets/models/projectiles/missile.dae\"\n"
-  "default_animation: \"\"\n"
-  "name: \"unnamed\"\n"
-  ""
-  position {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-  }
-  rotation {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-}
-embedded_components {
-  id: "model_1"
-  type: "model"
-  data: "mesh: \"/assets/models/projectiles/cannon_round.dae\"\n"
-  "material: \"/render/materials/model.material\"\n"
-  "textures: \"/assets/images/palette.png\"\n"
-  "skeleton: \"/assets/models/projectiles/cannon_round.dae\"\n"
-  "animations: \"/assets/models/projectiles/cannon_round.dae\"\n"
-  "default_animation: \"\"\n"
-  "name: \"unnamed\"\n"
-  ""
-  position {
-    x: 0.0
-    y: -5.0
     z: 0.0
   }
   rotation {

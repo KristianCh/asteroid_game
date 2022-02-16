@@ -1,3 +1,5 @@
+require "modules.model_switcher"
+
 go.property("type", 1)
 go.property("is_flagship", false)
 go.property("target_health", 0)
@@ -6,11 +8,7 @@ go.property("health", 0)
 go.property("cooldown", 0)
 
 function init(self)
-	for i=1,3 do
-		if i ~= self.type then
-			msg.post("#model_" .. i, "disable")
-		end
-	end
+	model_switch(self.type, SHIP)
 	go.set_scale(vmath.vector3(0.25))
 	msg.post("#ship_stat_tacker", "set_pos", {position = go.get_position()})
 	self.target_health = 1

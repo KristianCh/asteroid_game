@@ -1,7 +1,7 @@
 class_texts = {
 	["physical"] = {
 		"<color=0.7,1,0.5,1>Physical</color>: All <color=0.7,1,0.5,1>Physical</color> ships get <color=1,0.7,0.5,1>+1</color> armor",
-		"Armor "
+		"Armor for <color=0.7,1,0.5,1>Physical</color> "
 	},
 	["energy"] = {
 		"<color=0.7,1,0.5,1>Energy</color>: All ships get <color=1,0.7,0.5,1>5%</color> firing cooldown reduction",
@@ -40,5 +40,14 @@ store_texts = {
 		"<color=1,0.7,0.5,1>100/150/200</color> Health <color=1,0.7,0.5,1>5/10/15</color> Armor\n\n" ..
 		"Flagship Bonus: Ships get <color=1,0.7,0.5,1>+5</color> Armor",
 		classes = {"physical", "guided"}
+	},
+	{
+		id = 4,
+		cost = 120,
+		name = "Minelayer",
+		text = "Lays <color=1,0.7,0.5,1>2/3/4</color> mines every <color=1,0.7,0.5,1>4/3.5/3</color> seconds, dealing <color=1,0.7,0.5,1>60/100/140</color> damage\n"..
+		"<color=1,0.7,0.5,1>100/150/200</color> Health <color=1,0.7,0.5,1>5/10/15</color> Armor\n\n" ..
+		"Flagship Bonus: Ships get <color=1,0.7,0.5,1>+5</color> Armor",
+		classes = {"physical"}
 	}
 }

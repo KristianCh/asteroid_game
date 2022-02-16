@@ -41,6 +41,7 @@ local function missile_cruiser_target(self, target)
 			self.main_cooldown = self.main_cooldown_time * self.cooldown_mult
 			self.small_cooldown = 0.25
 			self.charges = self.charges_reload
+			model.play_anim("#missile_cruiser", "Sphere.003", go.PLAYBACK_ONCE_FORWARD)
 		end
 	end
 end

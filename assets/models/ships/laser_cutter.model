@@ -1,0 +1,7 @@
+mesh: "/assets/models/ships/daes/laser_cutter.dae"
+material: "/render/materials/model.material"
+textures: "/assets/images/palette.png"
+skeleton: "/assets/models/ships/daes/laser_cutter.dae"
+animations: "/assets/models/ships/daes/laser_cutter.dae"
+default_animation: ""
+name: "unnamed"

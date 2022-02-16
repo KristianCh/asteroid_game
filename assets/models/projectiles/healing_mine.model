@@ -1,0 +1,7 @@
+mesh: "/assets/models/projectiles/daes/healing_mine.dae"
+material: "/render/materials/model.material"
+textures: "/assets/images/palette.png"
+skeleton: "/assets/models/projectiles/daes/healing_mine.dae"
+animations: "/assets/models/projectiles/daes/healing_mine.dae"
+default_animation: ""
+name: "unnamed"

@@ -183,6 +183,7 @@ function on_message(self, message_id, message, sender)
 end
 
 function on_input(self, action_id, action)
+	-- Debug asteroid spawn
 	if action_id == hash("space") and action.released then
 		local width, height = 1920, 1017
 		if math.random() > 0.5 then

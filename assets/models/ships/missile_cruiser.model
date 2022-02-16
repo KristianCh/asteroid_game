@@ -1,0 +1,7 @@
+mesh: "/assets/models/ships/daes/missile_cruiser.dae"
+material: "/render/materials/model.material"
+textures: "/assets/images/palette.png"
+skeleton: "/assets/models/ships/daes/missile_cruiser.dae"
+animations: "/assets/models/ships/daes/missile_cruiser.dae"
+default_animation: ""
+name: "unnamed"

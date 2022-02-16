@@ -1,0 +1,33 @@
+require "modules.projectiles.mine"
+require "modules.model_switcher"
+
+go.property("heading", vmath.vector3(0, 0, 0))
+go.property("angular_velocities", vmath.vector3(0, 0, 0))
+go.property("speed", 100)
+go.property("acceleration", 5)
+go.property("value", 50)
+go.property("type", 1)
+
+function init(self)
+	self.init = mine_init
+	self.update = mine_update
+	self.on_message = mine_on_message
+	if self.type == 2 then
+	end
+	self.init(self)
+
+	model_switch(self.type, PLAYER_MINE)
+end
+
+function update(self, dt)
+	self.update(self, dt)
+
+	local pos = go.get_position()
+	if pos.x > 2320 or pos.x < -400 or pos.y > 1417 or pos.y < -400 then
+		go.delete()
+	end
+end
+
+function on_message(self, message_id, message, sender)
+	self.on_message(self, message_id, message, sender)
+end

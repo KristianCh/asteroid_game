@@ -28,6 +28,66 @@ components {
     w: 1.0
   }
 }
+components {
+  id: "battleship"
+  component: "/assets/models/ships/battleship.model"
+  position {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 1.0
+    z: 0.0
+    w: 6.123234E-17
+  }
+}
+components {
+  id: "laser_cutter"
+  component: "/assets/models/ships/laser_cutter.model"
+  position {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 1.0
+    z: 0.0
+    w: 6.123234E-17
+  }
+}
+components {
+  id: "missile_cruiser"
+  component: "/assets/models/ships/missile_cruiser.model"
+  position {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 1.0
+    z: 0.0
+    w: 6.123234E-17
+  }
+}
+components {
+  id: "minelayer"
+  component: "/assets/models/ships/minelayer.model"
+  position {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 1.0
+    z: 0.0
+    w: 6.123234E-17
+  }
+}
 embedded_components {
   id: "co_boid"
   type: "collisionobject"
@@ -106,6 +166,8 @@ embedded_components {
   "group: \"ship\"\n"
   "mask: \"asteroid\"\n"
   "mask: \"asteroid_projectile\"\n"
+  "mask: \"player_mine_range\"\n"
+  "mask: \"player_mine_collision\"\n"
   "embedded_collision_shape {\n"
   "  shapes {\n"
   "    shape_type: TYPE_BOX\n"
@@ -161,74 +223,5 @@ embedded_components {
     y: 0.0
     z: 0.0
     w: 1.0
-  }
-}
-embedded_components {
-  id: "model_1"
-  type: "model"
-  data: "mesh: \"/assets/models/ships/battleship.dae\"\n"
-  "material: \"/render/materials/model.material\"\n"
-  "textures: \"/assets/images/palette.png\"\n"
-  "skeleton: \"/assets/models/ships/battleship.dae\"\n"
-  "animations: \"/assets/models/ships/battleship.dae\"\n"
-  "default_animation: \"\"\n"
-  "name: \"unnamed\"\n"
-  ""
-  position {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-  }
-  rotation {
-    x: 0.0
-    y: 1.0
-    z: 0.0
-    w: 6.123234E-17
-  }
-}
-embedded_components {
-  id: "model_3"
-  type: "model"
-  data: "mesh: \"/assets/models/ships/battleship.dae\"\n"
-  "material: \"/render/materials/model.material\"\n"
-  "textures: \"/assets/images/palette.png\"\n"
-  "skeleton: \"/assets/models/ships/battleship.dae\"\n"
-  "animations: \"/assets/models/ships/battleship.dae\"\n"
-  "default_animation: \"\"\n"
-  "name: \"unnamed\"\n"
-  ""
-  position {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-  }
-  rotation {
-    x: 0.0
-    y: 1.0
-    z: 0.0
-    w: 6.123234E-17
-  }
-}
-embedded_components {
-  id: "model_2"
-  type: "model"
-  data: "mesh: \"/assets/models/ships/laser_cutter.dae\"\n"
-  "material: \"/render/materials/model.material\"\n"
-  "textures: \"/assets/images/palette.png\"\n"
-  "skeleton: \"/assets/models/ships/laser_cutter.dae\"\n"
-  "animations: \"/assets/models/ships/laser_cutter.dae\"\n"
-  "default_animation: \"\"\n"
-  "name: \"unnamed\"\n"
-  ""
-  position {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-  }
-  rotation {
-    x: 0.0
-    y: 1.0
-    z: 0.0
-    w: 6.123234E-17
   }
 }

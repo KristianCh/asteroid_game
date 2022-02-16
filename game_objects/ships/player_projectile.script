@@ -1,5 +1,6 @@
 require "modules.projectiles.missile"
 require "modules.projectiles.cannon"
+require "modules.model_switcher"
 
 go.property("heading", vmath.vector3(0, 1, 0))
 go.property("speed", 100)
@@ -23,11 +24,8 @@ function init(self)
 		self.on_message = missile_on_message
 	end
 	self.init(self)
-	for i=1,2 do
-		if i ~= self.type then
-			msg.post("#model_" .. i, "disable")
-		end
-	end
+
+	model_switch(self.type, PLAYER_PROJECTILE)
 end
 
 function final(self)
