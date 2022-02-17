@@ -1,4 +1,4 @@
-function mine_init(missile)
+function mine_init(self)
 	--msg.post("#sprite", "play_animation", {id = hash("cannon_round")})
 end
 

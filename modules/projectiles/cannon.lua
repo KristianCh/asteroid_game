@@ -1,4 +1,4 @@
-function cannon_init(missile)
+function cannon_init(self)
 	--msg.post("#sprite", "play_animation", {id = hash("cannon_round")})
 end
 

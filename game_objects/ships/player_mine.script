@@ -1,4 +1,5 @@
 require "modules.projectiles.mine"
+require "modules.projectiles.healing_mine"
 require "modules.model_switcher"
 
 go.property("heading", vmath.vector3(0, 0, 0))
@@ -13,6 +14,7 @@ function init(self)
 	self.update = mine_update
 	self.on_message = mine_on_message
 	if self.type == 2 then
+		self.on_message = healing_mine_on_message
 	end
 	self.init(self)
 

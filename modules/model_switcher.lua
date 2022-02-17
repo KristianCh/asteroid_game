@@ -2,12 +2,12 @@ SHIP = 1
 PLAYER_PROJECTILE = 2
 PLAYER_MINE = 3
 
-SHIP_NUMBER = 4
-PLAYER_PROJECTILE_NUMBER = 2
+SHIP_NUMBER = 5
+PLAYER_PROJECTILE_NUMBER = 3
 PLAYER_MINE_NUMBER = 2
 
-ship_modelnames = {"#battleship", "#laser_cutter", "#missile_cruiser", "#minelayer"}
-player_projectile_modelnames = {"#cannon_round", "#missile"}
+ship_modelnames = {"#battleship", "#laser_cutter", "#missile_cruiser", "#minelayer", "#healer_placeholder"}
+player_projectile_modelnames = {"#cannon_round", "#missile", "#healing_cannon_round"}
 player_mine_modelnames = {"#mine", "#healing_mine"}
 
 function model_switch(model_number, model_set)

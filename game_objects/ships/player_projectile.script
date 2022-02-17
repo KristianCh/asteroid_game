@@ -1,5 +1,6 @@
 require "modules.projectiles.missile"
 require "modules.projectiles.cannon"
+require "modules.projectiles.healing_cannon"
 require "modules.model_switcher"
 
 go.property("heading", vmath.vector3(0, 1, 0))
@@ -7,6 +8,7 @@ go.property("speed", 100)
 go.property("damage", 50)
 go.property("aim", 15)
 go.property("type", 1)
+go.property("level", 1)
 go.property("target", msg.url())
 
 function init(self)
@@ -18,10 +20,14 @@ function init(self)
 	self.on_message = cannon_on_message
 	self.d_steer = 0
 	self.rot = 0
+	
 	if self.type == 2 then
 		self.init = missile_init
 		self.update = missile_update
 		self.on_message = missile_on_message
+	elseif self.type == 3 then
+		self.init = healing_cannon_init
+		self.on_message = healing_cannon_on_message
 	end
 	self.init(self)
 

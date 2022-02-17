@@ -160,6 +160,9 @@ function on_message(self, message_id, message, sender)
 		self.screen_dimensions = message.screen_dimensions
 	elseif message_id == hash("damage_asteroid") then
 		process_damage(self, message.damage, message.type)
+		if self.health <= 0 then
+			msg.post(sender, "damage_was_fatal")
+		end
 	elseif message_id == hash("set_velocities") then
 		msg.post("#co" .. self.size, "enable")
 		go.set("#co" .. self.size, "linear_velocity", message.linear_velocity)
