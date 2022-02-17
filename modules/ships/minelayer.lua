@@ -8,6 +8,8 @@ function minelayer_init(self)
 	self.damage = 20 + self.level * 40
 	self.max_health = 100 + (self.level-1) * 50
 	self.health = self.max_health
+	self.speed = 200
+	self.evasion = 1.75
 	self.class_1 = hash("physical")
 
 	self.update_type = minelayer_update

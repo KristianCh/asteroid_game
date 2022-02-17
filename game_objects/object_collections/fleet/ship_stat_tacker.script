@@ -31,7 +31,7 @@ function on_message(self, message_id, message, sender)
 		self.target_cooldown = message.cooldown
 		if self.target_cooldown < 0 then self.target_cooldown = 0 end
 	elseif message_id == hash("death") then
-		go.set("#model_" .. self.type, "tint", vmath.vector4(0.4))
+		go.set(ship_modelnames[self.type], "tint", vmath.vector4(0.4))
 		self.alive = 0
 	end
 end

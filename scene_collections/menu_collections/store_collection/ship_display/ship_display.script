@@ -29,7 +29,7 @@ function on_message(self, message_id, message, sender)
 	elseif message_id == hash("set_flagship") then
 		msg.post("/manager#manager", "set_flagship", {type = self.id})
 	elseif message_id == hash("update_flagship") then
-		msg.post("#gui", "asdasd", {is_flagship = self.id == message.type})
+		msg.post("#gui", "update_flagship", {is_flagship = self.id == message.type})
 	elseif message_id == hash("remove_ship") then
 		msg.post("/manager#manager", "remove_ship", {type = self.id})
 	elseif message_id == hash("setup") then

@@ -8,6 +8,7 @@ function healer_placeholder_init(self)
 	self.damage = 20
 	self.max_health = 75 + (self.level-1) * 25
 	self.health = self.max_health
+	self.speed = 350
 	self.class_1 = hash("support")
 
 	self.update_type = healer_placeholder_update
