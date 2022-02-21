@@ -1,0 +1,24 @@
+local gooey = require "gooey.gooey"
+require "modules.utils"
+
+function init(self)
+	msg.post(".", "acquire_input_focus")
+	self.mpos_vec = vmath.vector3(0, 0, 0)
+end
+
+function update(self, dt)
+	gui.set_position(gui.get_node("cursor"), transform_mouse_input_coords_to_world_coords(self.mpos_vec) + vmath.vector3(-20, 20, 0))
+end
+
+function on_message(self, message_id, message, sender)
+	if message_id == hash("enable_cursor") then
+		gui.set_enabled(gui.get_node("cursor"), true)
+	elseif message_id == hash("disable_cursor") then
+		gui.set_enabled(gui.get_node("cursor"), false)
+	end
+end
+
+function on_input(self, action_id, action)
+	self.mpos_vec.x = action.x
+	self.mpos_vec.y = action.y
+end

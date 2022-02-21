@@ -60,6 +60,7 @@ local function new_game_from_main(self)
 end
 
 local function continue_game_from_main(self)
+	msg.post("#cursor", "disable_cursor")
 	msg.post("#main_menu_proxy", "disable")
 	msg.post("#main_menu_proxy", "final")
 	msg.post("#main_menu_proxy", "unload")
@@ -82,6 +83,7 @@ local function store_from_new(self)
 end
 
 local function game_from_store(self)
+	msg.post("#cursor", "disable_cursor")
 	msg.post("#store_proxy", "disable")
 	msg.post("#store_proxy", "final")
 	msg.post("#store_proxy", "unload")
@@ -91,6 +93,7 @@ local function game_from_store(self)
 end
 
 local function store_from_game(self)
+	msg.post("#cursor", "enable_cursor")
 	msg.post("#game_proxy", "disable")
 	msg.post("#game_proxy", "final")
 	msg.post("#game_proxy", "unload")
@@ -100,6 +103,7 @@ local function store_from_game(self)
 end
 
 local function end_from_game(self)
+	msg.post("#cursor", "enable_cursor")
 	msg.post("#game_proxy", "disable")
 	msg.post("#game_proxy", "final")
 	msg.post("#game_proxy", "unload")
@@ -281,9 +285,11 @@ function on_message(self, message_id, message, sender)
 		is_paused = is_paused ~= true
 		if is_paused then
 			msg.post("/borders#borders", "pause")
+			msg.post("#cursor", "enable_cursor")
 			go.animate("#main", "game_speed", go.PLAYBACK_ONCE_FORWARD, 0, go.EASING_INOUTQUAD, 1, 0, function(self) self.game_speed = 0 end)
 		else
 			msg.post("/borders#borders", "unpause")
+			msg.post("#cursor", "disable_cursor")
 			go.animate("#main", "game_speed", go.PLAYBACK_ONCE_FORWARD, 1, go.EASING_INOUTQUAD, 1, 0, function(self) self.game_speed = 1 end)
 		end	
 	elseif message_id == hash("save_fleet") then
