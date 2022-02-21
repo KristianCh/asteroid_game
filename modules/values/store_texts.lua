@@ -14,6 +14,10 @@ class_texts = {
 	["support"] = {
 		"<color=0.7,1,0.5,1>Support</color>: All <color=0.7,1,0.5,1>Physical</color> ships get <color=1,0.7,0.5,1>+5</color> max health",
 		"Max health for <color=0.7,1,0.5,1>Physical</color> "
+	},
+	["graviton"] = {
+		"<color=0.7,1,0.5,1>Graviton</color>: All <color=0.7,1,0.5,1>Physical</color> damage is increased by <color=1,0.7,0.5,1>+10%</color>",
+		"Physical damage increased by "
 	}
 }
 
@@ -62,5 +66,14 @@ store_texts = {
 		"<color=1,0.7,0.5,1>75/100/125</color> Health\n\n" ..
 		"Flagship Bonus: Ships get <color=1,0.7,0.5,1>+10%</color> Max health",
 		classes = {"support"}
+	},
+	{
+		id = 6,
+		cost = 200,
+		name = "Gravity Tether",
+		text = "Applies force on asteroids in range, slowing them down. Force is multiplied by level. Deals <color=1,0.7,0.5,1>5-15</color> damage, depending on distance to asteroid.\n"..
+		"<color=1,0.7,0.5,1>75/100/125</color> Health\n\n" ..
+		"Flagship Bonus: <color=1,0.7,0.5,1>1.75x</color> larger range",
+		classes = {"graviton", "energy"}
 	}
 }

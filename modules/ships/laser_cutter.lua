@@ -25,7 +25,7 @@ local function laser_cutter_target(self, target)
 		local target_pos = go.get_position() + self.target_offset
 		range_falloff = math.sqrt(1 - (vmath.length(go.get_position(target.enemy) - go.get_position()) / self.targeting_range))
 		msg.post(self.stat_tracker, "set_cooldown", {cooldown = range_falloff})
-		msg.post(target.enemy, "damage_asteroid", {damage = self.damage * target.dt * range_falloff})
+		msg.post(target.enemy, "damage_asteroid", {damage = self.damage * target.dt * range_falloff, type = "energy"})
 		local c = 1 * math.pow(range_falloff, 3)
 		msg.post("@render:", "draw_line", {start_point = go.get_position(), end_point = go.get_position() + self.target_offset, color = vmath.vector4(c*2, c/3, c/3, 1)})
 	end

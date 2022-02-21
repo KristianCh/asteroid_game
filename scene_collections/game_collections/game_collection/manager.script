@@ -7,6 +7,9 @@ go.property("enemy_count", 0)
 go.property("ship_count", 0)
 go.property("current_score", 0)
 
+go.property("physical_damage_mult", 1)
+go.property("energy_damage_mult", 1)
+
 local function url_to_hash(url)
 	local str =  hash_to_hex(url.socket or hash("")) .. hash_to_hex(url.path) .. hash_to_hex(url.fragment or hash(""))
 	return hash(str)
@@ -98,11 +101,15 @@ function on_message(self, message_id, message, sender)
 			local bonus_value = get_class_bonus(k, v)
 			if bonus_value > 0 then
 				for k_cm, cm in pairs(class_bonuses[k].class_masks) do
-					msg.post("#", "apply_status_to_fleet", 
-					{
-						type = "property", property_name = class_bonuses[k].affected_property, 
-						value = bonus_value, mix = class_bonuses[k].mix, class_mask = hash(cm)
-					})
+					if class_bonuses[k].target == "fleet" then
+						msg.post("#", "apply_status_to_fleet", 
+						{
+							type = "property", property_name = class_bonuses[k].affected_property, 
+							value = bonus_value, mix = class_bonuses[k].mix, class_mask = hash(cm)
+						})
+					elseif class_bonuses[k].target == "asteroid" then
+						
+					end
 				end
 			end
 		end
