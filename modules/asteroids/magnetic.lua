@@ -1,6 +1,9 @@
-function magnetic_init(self) 
+function magnetic_init(self)
 	go.set("mesh_container#mesh", "color", vmath.vector4(1, 0, 0, 1))
 	self.color = vmath.vector4(1, 0, 0, 1)
+	self.physical_damage_resistance = 0.8
+	self.explosive_damage_resistance = 0.8
+	self.energy_damage_resistance = 1.2
 	go.animate("mesh_container#mesh", "color", go.PLAYBACK_LOOP_PINGPONG, vmath.vector4(0, 0, 1, 1), go.EASING_INOUTSINE, 5)
 end
 

@@ -22,7 +22,7 @@ function mine_on_message(self, message_id, message, sender)
 
 			self.angular_velocities = self.angular_velocities + vmath.vector3(force_velocity.y, force_velocity.x, 0)
 		else
-			msg.post(message.other_id, "damage_asteroid", {damage = self.value, type = "physical"})
+			msg.post(message.other_id, "damage_asteroid", {damage = self.value, type = "explosive"})
 			go.delete()
 		end
 	end

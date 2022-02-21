@@ -34,7 +34,7 @@ end
 
 function missile_on_message(self, message_id, message, sender)
 	if message_id == hash("trigger_response") and message.enter then
-		msg.post(message.other_id, "damage_asteroid", {damage = self.damage, type = "physical"})
+		msg.post(message.other_id, "damage_asteroid", {damage = self.damage, type = "explosive"})
 		go.delete()
 	elseif message_id == hash("unsubscribe") then
 		self.target = nil

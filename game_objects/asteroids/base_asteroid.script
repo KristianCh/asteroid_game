@@ -9,6 +9,7 @@ go.property("max_health", 100)
 go.property("collision_timeout", 0.5)
 go.property("initial_slowdown", 1)
 go.property("physical_damage_resistance", 1)
+go.property("explosive_damage_resistance", 1)
 go.property("energy_damage_resistance", 1)
 go.property("type", 0)
 
@@ -139,13 +140,9 @@ function update(self, dt)
 end
 
 local function process_damage(self, damage, type)
-	if type == "physical" then
-		local mult = go.get("/manager#manager", "physical_damage_mult")
-		damage = damage * mult * self.physical_damage_resistance
-	elseif type == "energy" then
-		local mult = go.get("/manager#manager", "energy_damage_mult")
-		damage = damage * mult * self.energy_damage_resistance
-	end
+	local mult = go.get("/manager#manager", type .. "_damage_mult")
+	local resistance = go.get("#", type .. "_damage_resistance")
+	damage = damage * mult * resistance
 	self.health = self.health - damage
 	play_damage_pfx(self)
 	msg.post("#asteroid_gui", "set_health", {health = self.health, max_health = self.max_health})

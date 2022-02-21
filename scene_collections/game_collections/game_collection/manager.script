@@ -8,6 +8,7 @@ go.property("ship_count", 0)
 go.property("current_score", 0)
 
 go.property("physical_damage_mult", 1)
+go.property("explosive_damage_mult", 1)
 go.property("energy_damage_mult", 1)
 
 local function url_to_hash(url)
@@ -45,7 +46,6 @@ function calculate_credits(self)
 end
 
 function apply_status_to_manager(data, value) 
-	print(data.affected_property)
 	local current = go.get("#", data.affected_property)
 	if data.mix == "add" then
 		current = current + value
