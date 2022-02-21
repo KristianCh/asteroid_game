@@ -37,7 +37,16 @@ function clamp(x, min, max)
 	return x
 end
 
-function transform_mouse_input_coords_to_world_coords(mouse_input_coords) 
+function curve_remap_uv(curvature, uv)
+	uv = vmath.vector3(uv.x / 1920, uv.y / 1017, 0)
+	uv = uv * 2.0 - vmath.vector3(1.0)
+	offset = vmath.vector3(math.abs(uv.y) / curvature.x, math.abs(uv.x) / curvature.y, 0)
+	uv = uv + vmath.dot(uv, offset) * offset
+	uv = uv * 0.5 + vmath.vector3(0.5)
+	return vmath.vector3(uv.x * 1920, uv.y * 1017, 0);
+end
+
+function transform_mouse_input_coords_to_world_coords(mouse_input_coords)
 	x, y, w, h = defos.get_window_size()
 	local def_ratio = 1920/1017
 	local acc_ratio = w/h
@@ -47,9 +56,9 @@ function transform_mouse_input_coords_to_world_coords(mouse_input_coords)
 	if w >= h*def_ratio then
 		local dif = (1920 * x_scale) - 1920
 		local x_mapped = mouse_input_coords.x * x_scale
-		x_mapped = x_mapped - dif/1.95
+		x_mapped = x_mapped - dif/2
 		out.x = x_mapped
-		
+
 		--mouse_input_coords.x = mouse_input_coords.x * w/h
 	else
 		local dif = (1017 * y_scale) - 1017
@@ -59,3 +68,4 @@ function transform_mouse_input_coords_to_world_coords(mouse_input_coords)
 	end
 	return out
 end
+

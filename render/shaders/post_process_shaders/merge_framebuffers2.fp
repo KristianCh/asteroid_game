@@ -76,7 +76,6 @@ void main()
 	vec4 fade_color = texture(fade_original, var_texcoord0.xy);
 	if (fade_color.r < 0.05 && fade_color.g < 0.05 && fade_color.b < 0.05) fade_color = vec4(0, 0, 0, 1);
 	vec4 mesh_color = vec4(0);
-	vec4 mesh_color2 = vec4(0);
 	int index = 0;
 	int mag = 2;
 	for (int i = -2; i <= 2; i++) {
@@ -85,12 +84,11 @@ void main()
 			mesh_color += kernel[index++] * texture(mesh_original, var_texcoord0.xy + shift);
 		}
 	}
-	//mesh_color = texture(mesh_original, var_texcoord0.xy);
 	float alpha = 0;
 	if (mesh_color.x > 0 || mesh_color.y > 0 || mesh_color.z > 0 || mesh_color.w > 0) {
 		alpha = (mesh_color.x + mesh_color.y + mesh_color.z) / 4;
 	}
-	mesh_color = vec4(mesh_color.xyz, alpha); /*(mesh_color.x + mesh_color.y + mesh_color.z) / 4);*/
+	mesh_color = vec4(mesh_color.xyz, alpha);
 	
 	final_color = sprite_color * (1 + (mult-1)/2) * vec4(5*fade_color.x + 1, 5*fade_color.y + 1, 5*fade_color.z + 1, 1);
 	final_color = final_color * (1 - fade_color.w * 0.25) + vec4(fade_color.xyz, fade_color.w * 0.25) * 0.5;

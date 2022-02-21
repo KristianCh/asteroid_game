@@ -7,7 +7,7 @@ function init(self)
 end
 
 function update(self, dt)
-	gui.set_position(gui.get_node("cursor"), transform_mouse_input_coords_to_world_coords(self.mpos_vec) + vmath.vector3(-20, 20, 0))
+	gui.set_position(gui.get_node("cursor"), self.mpos_vec)
 end
 
 function on_message(self, message_id, message, sender)
