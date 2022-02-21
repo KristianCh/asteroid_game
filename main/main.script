@@ -170,6 +170,8 @@ function init(self)
 	window.set_listener(window_resized)
 	defos.set_maximized(true)
 
+	defos.set_cursor_visible(false)
+
 	msg.post("#main_menu_proxy", "load")
 	go.set("/borders#sprite", "tint", vmath.vector4(1, 1, 1, 0.4))
 	current_active_proxy = "#main_menu_proxy"	

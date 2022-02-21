@@ -1,7 +1,14 @@
 local gooey = require "gooey.gooey"
+require "modules.utils"
 
 function init(self)
 	msg.post(".", "acquire_input_focus")
+	self.mpos_vec = vmath.vector3(0, 0, 0)
+end
+
+function update(self, dt)
+	gui.set_position(gui.get_node("cursor"), transform_mouse_input_coords_to_world_coords(self.mpos_vec) + vmath.vector3(-20, 20, 0))
+	print(self.mpos_vec, transform_mouse_input_coords_to_world_coords(self.mpos_vec))
 end
 
 function on_message(self, message_id, message, sender)
@@ -13,6 +20,8 @@ function on_message(self, message_id, message, sender)
 end
 
 function on_input(self, action_id, action)
+	self.mpos_vec.x = action.x
+	self.mpos_vec.y = action.y
 	gooey.button("main", action_id, action, function(button)
 		msg.post("main:/manager", "return_to_main")
 		msg.post(".", "unpause")
