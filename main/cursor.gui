@@ -47,7 +47,7 @@ nodes {
   xanchor: XANCHOR_NONE
   yanchor: YANCHOR_NONE
   pivot: PIVOT_N
-  adjust_mode: ADJUST_MODE_ZOOM
+  adjust_mode: ADJUST_MODE_STRETCH
   layer: ""
   inherit_alpha: true
   slice9 {
