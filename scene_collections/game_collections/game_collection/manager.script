@@ -44,6 +44,17 @@ function calculate_credits(self)
 	return math.ceil(self.current_score * credit_mult)
 end
 
+function apply_status_to_manager(data, value) 
+	print(data.affected_property)
+	local current = go.get("#", data.affected_property)
+	if data.mix == "add" then
+		current = current + value
+	elseif data.mix == "multiply" then
+		current = current * value
+	end
+	go.set("#", data.affected_property, current)
+end
+
 function final(self)
 	if self.run_data.difficulty == "normal" then
 
@@ -108,7 +119,7 @@ function on_message(self, message_id, message, sender)
 							value = bonus_value, mix = class_bonuses[k].mix, class_mask = hash(cm)
 						})
 					elseif class_bonuses[k].target == "asteroid" then
-						
+						apply_status_to_manager(class_bonuses[k], bonus_value)
 					end
 				end
 			end

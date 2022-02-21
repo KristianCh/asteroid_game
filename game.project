@@ -44,3 +44,6 @@ default_texture_mag_filter = nearest
 [collection]
 max_input_stack_entries = 48
 
+[gui]
+max_particlefx_count = 128
+
