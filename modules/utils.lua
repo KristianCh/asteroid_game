@@ -1,5 +1,5 @@
 WIDTH = 1920
-HEIGHT = 1017
+HEIGHT = 1080
 
 function table_size(table)
 	local count = 0

@@ -14,7 +14,7 @@ use_accelerometer = 0
 
 [display]
 width = 1920
-height = 1017
+height = 1080
 fullscreen = 0
 vsync = 0
 high_dpi = 1

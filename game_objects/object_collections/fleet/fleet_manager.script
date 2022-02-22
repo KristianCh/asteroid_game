@@ -2,9 +2,6 @@ require "modules.utils"
 
 go.property("target_speed", 500)
 
-WIDTH = 1920
-HEIGHT = 1017
-
 function init(self)
 	msg.post(".", "acquire_input_focus")
 	self.vel = vmath.vector3()
