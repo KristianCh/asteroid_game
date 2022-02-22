@@ -39,6 +39,7 @@ function init(self)
 	self.d_steer = 0
 	self.collision_timeout = 0.5
 	self.follow_target = true
+	self.hold_position = false
 	self.init_type = battleship_init
 	if self.type == 2 then
 		self.init_type = laser_cutter_init
@@ -86,7 +87,7 @@ function update(self, dt)
 		pos.y = 0
 	end
 	
-	self.target_pos = go.get_position("/fleet/target_position")
+	if not self.hold_position then self.target_pos = go.get_position("/fleet/target_position") end
 	local dist_to_target = vmath.length(self.target_pos - pos)
 	local vec_to_target = vmath.normalize(self.target_pos - pos)
 	if dist_to_target == 0 then
@@ -101,6 +102,8 @@ function update(self, dt)
 		self.heading = vmath.normalize(vmath.slerp(self.evasion * dt, self.heading, vec_to_target))
 	else
 		d_steer = 0
+	end
+	if not self.follow_target or self.hold_position then
 		raycast_targets = { hash("ship_cast"), hash("asteroid") }
 	end
 	
@@ -161,7 +164,20 @@ function on_input(self, action_id, action)
 	if action_id == hash("mouse_left") then
 		if action.pressed then
 			self.follow_target = false
+			self.hold_position = false
 		elseif action.released then
+			self.follow_target = true
+			self.hold_position = false
+		end
+	elseif action_id == hash("mouse_right") then
+		if action.pressed then
+			self.hold_position = true
+			self.follow_target = true
+			self.target_pos = go.get_position() + vmath.normalize(vmath.cross(self.heading, vmath.vector3(0, 0, 1))) * sign(self.d_steer)
+			self.target_pos.z = 0
+			print(self.target_pos)
+		elseif action.released then
+			self.hold_position = false
 			self.follow_target = true
 		end
 	end
