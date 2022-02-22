@@ -1,3 +1,5 @@
+require "modules.utils"
+
 local applied_force = false
 
 function init(self)
@@ -8,8 +10,7 @@ function update(self, dt)
 	if not applied_force then
 		for i = 1,5 do 
 			local url = "/asteroid" .. i .. "/base_asteroid"
-			local width, height = 1920, 1017
-			local velocity = vmath.vector3(0, math.random(-height, height), 0)
+			local velocity = vmath.vector3(0, math.random(-HEIGHT, HEIGHT), 0)
 			msg.post(url .. "#co3", "apply_force", {force = velocity * 30, 
 			position = go.get_position(url .. "#co3") + vmath.vector3(math.random(-20, 20), math.random(-20, 20), 0)})
 			msg.post(url .. "#asteroid_gui", "disable_asteroid_gui")

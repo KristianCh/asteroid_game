@@ -1,7 +1,7 @@
 function gravity_tether_init(self) 
 	self.evasion = 2
 	self.damage = 50 + 25 * self.level * self.level
-	self.slowdown = 10 * self.level
+	self.slowdown = 70 - self.level * 10
 	self.dt = 1/60
 	self.speed = 300
 	self.max_health = 75 + (self.level-1) * 25
@@ -33,10 +33,12 @@ function gravity_tether_message(self, message_id, message, sender)
 		range_falloff = math.max(0, range_falloff)
 		
 		msg.post("@render:", "draw_line", {start_point = go.get_position(), end_point = asteroid_position, color = vmath.vector4(0.5, 0.5, 1, 1)*range_falloff})
-		msg.post(asteroid_co_url, "apply_force", {
-			force = -linear_velocity * force_mult, 
-			position = asteroid_position
-		})
+		if vmath.length(linear_velocity) > self.slowdown then
+			msg.post(asteroid_co_url, "apply_force", {
+				force = -linear_velocity * force_mult, 
+				position = asteroid_position
+			})
+		end
 		msg.post(asteroid_url, "damage_asteroid", {damage = 10 * self.dt * (range_falloff + 0.5), type = "energy"})
 	end
 end

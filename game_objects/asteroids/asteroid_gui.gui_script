@@ -1,14 +1,16 @@
+require "modules.utils"
+
 local function clamp_to_screen(self)
 	x = self.pos.x
 	y = self.pos.y
-	if x > 1910 then 
-		x = 1910
+	if x > WIDTH-10 then 
+		x = WIDTH-10
 	elseif x < 10 then 
 		x = 10 
 	end
 	
-	if y > 997 then 
-		y = 997
+	if y > HEIGHT-20 then 
+		y = HEIGHT-20
 	elseif y < 20 then 
 		y = 20 
 	end
@@ -16,7 +18,7 @@ local function clamp_to_screen(self)
 end
 
 local function is_off_screen(self)
-	return (self.pos.x > 1950 or self.pos.x < -30 or self.pos.y > 1047 or self.pos.y < -30)
+	return (self.pos.x > (WIDTH+30) or self.pos.x < -30 or self.pos.y > (HEIGHT+30) or self.pos.y < -30)
 end
 
 function init(self)

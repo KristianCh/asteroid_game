@@ -1,3 +1,5 @@
+require "modules.utils"
+
 go.property("velocity", vmath.vector3(150, 0, 0))
 
 function init(self)
@@ -13,7 +15,7 @@ function final(self)
 end
 
 function update(self, dt)
-	local max_x, max_y = 1920, 1017
+	local max_x, max_y = WIDTH, HEIGHT
 	local pos = go.get_position()
 
 	if pos.x > max_x + 50 then

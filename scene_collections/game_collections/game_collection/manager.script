@@ -203,23 +203,22 @@ end
 function on_input(self, action_id, action)
 	-- Debug asteroid spawn
 	if action_id == hash("space") and action.released then
-		local width, height = 1920, 1017
 		if math.random() > 0.5 then
 			local lr = math.random(0, 1)
-			local p = vmath.vector3(-100 + (width+200) * lr, math.random(-100, height+100), 0)
+			local p = vmath.vector3(-100 + (WIDTH+200) * lr, math.random(-100, HEIGHT+100), 0)
 			local props = {}
 			props[hash("/base_asteroid")] = {initial_slowdown = 2}
 			local ids = collectionfactory.create("#asteroid_collection_factory", p, nil, props)
-			local velocity = vmath.vector3(0, math.random(-height, height), 0)
+			local velocity = vmath.vector3(0, math.random(-HEIGHT, HEIGHT), 0)
 			local url = msg.url(nil, ids[hash("/base_asteroid")], "co3")
 			msg.post(url, "apply_force", {force = velocity * 30, position = p + vmath.vector3(math.random(-20, 20), math.random(-20, 20), 0)})
 		else 
 			local ud = math.random(0, 1)
-			local p = vmath.vector3(math.random(-100, width+100), -100 + (height+200) * ud, 0)
+			local p = vmath.vector3(math.random(-100, WIDTH+100), -100 + (HEIGHT+200) * ud, 0)
 			local props = {}
 			props[hash("/base_asteroid")] = {initial_slowdown = 2}
 			local ids = collectionfactory.create("#asteroid_collection_factory", p, nil, props)
-			local velocity = vmath.vector3(0, math.random(-height, height), 0)
+			local velocity = vmath.vector3(0, math.random(-HEIGHT, HEIGHT), 0)
 			local url = msg.url(nil, ids[hash("/base_asteroid")], "co3")
 			msg.post(url, "apply_force", {force = velocity * 30, position = p + vmath.vector3(math.random(-20, 20), math.random(-20, 20), 0)})
 		end

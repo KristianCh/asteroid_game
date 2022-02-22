@@ -1,3 +1,6 @@
+WIDTH = 1920
+HEIGHT = 1017
+
 function table_size(table)
 	local count = 0
 	for _ in pairs(table) do count = count + 1 end

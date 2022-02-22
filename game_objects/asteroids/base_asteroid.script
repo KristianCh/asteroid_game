@@ -1,5 +1,6 @@
 require "modules.asteroids.magnetic"
 require "modules.subscriber_module"
+require "modules.utils"
 
 go.property("size", 3)
 go.property("color", vmath.vector4(1, 1, 1, 1))
@@ -69,7 +70,7 @@ function init(self)
 	self.health = 100 * self.size
 	self.max_health = 100 * self.size
 	self.damage_pfx_gate = 0
-	self.screen_dimensions = vmath.vector3(1920, 1017, 0)
+	self.screen_dimensions = vmath.vector3(WIDTH, HEIGHT, 0)
 	msg.post("#asteroid_gui", "set_scale", {scale = vmath.vector3(self.size / 2.5)})
 
 	msg.post("#co1", "disable")

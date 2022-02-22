@@ -1,10 +1,11 @@
 local gooey = require "gooey.gooey"
 local richtext = require "richtext.richtext"
+require "modules.utils"
 
 local function get_align()
 	if gui.get_position(gui.get_node("main")).x < 320 then
 		return richtext.ALIGN_LEFT
-	elseif gui.get_position(gui.get_node("main")).x > 1600 then
+	elseif gui.get_position(gui.get_node("main")).x > (WIDTH-320) then
 		return richtext.ALIGN_RIGHT
 	end
 	return richtext.ALIGN_CENTER
@@ -13,7 +14,7 @@ end
 local function get_pos()
 	if gui.get_position(gui.get_node("main")).x < 320 then
 		return vmath.vector3(-100, 0, 0)
-	elseif gui.get_position(gui.get_node("main")).x > 1600 then
+	elseif gui.get_position(gui.get_node("main")).x > (WIDTH-320) then
 		return vmath.vector3(100, 0, 0)
 	end
 	return vmath.vector3(0)

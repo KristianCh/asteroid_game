@@ -7,9 +7,9 @@ end
 
 function on_message(self, message_id, message, sender)
 	if message_id == hash("pause") then
-		gui.animate(gui.get_node("pause_menu"), gui.PROP_POSITION, vmath.vector3(960, 750, 0), gui.EASING_INOUTQUINT, 1, 0, toggle_pause, gui.PLAYBACK_ONCE_FORWARD)
+		gui.animate(gui.get_node("pause_menu"), gui.PROP_POSITION, vmath.vector3(WIDTH/2, HEIGHT*0.75, 0), gui.EASING_INOUTQUINT, 1, 0, toggle_pause, gui.PLAYBACK_ONCE_FORWARD)
 	elseif message_id == hash("unpause") then
-		gui.animate(gui.get_node("pause_menu"), gui.PROP_POSITION, vmath.vector3(960, 1500, 0), gui.EASING_INOUTQUINT, 1, 0, nil, gui.PLAYBACK_ONCE_FORWARD)
+		gui.animate(gui.get_node("pause_menu"), gui.PROP_POSITION, vmath.vector3(WIDTH/2, HEIGHT*1.5, 0), gui.EASING_INOUTQUINT, 1, 0, nil, gui.PLAYBACK_ONCE_FORWARD)
 	end
 end
 
