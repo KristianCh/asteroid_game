@@ -186,6 +186,7 @@ function init(self)
 end
 
 function update(self, dt)
+	print("fps: ", 1 / dt, dt)
 	start_time = start_time + dt
 	msg.post("@render:", "set_time", {start_time})
 	msg.post("@render:", "set_transition", {self.transition})

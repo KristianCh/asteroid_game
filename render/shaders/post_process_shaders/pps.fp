@@ -64,6 +64,19 @@ void main()
 	if (options.y == 1) {
 		color = getPixelatedColor(coords);
 	}
+
+	/*float t = 	
+	0.05*sin(time.x+var_texcoord0.x*10) +
+	0.05*sin(10+time.x+var_texcoord0.x*20) +
+	0.025*sin(20+time.x*2+var_texcoord0.x*30) +
+	0.025*sin(+time.x+var_texcoord0.x*20);
+	if (var_texcoord0.y > 0.5 + t*0.25) {
+		color = vec4(0, 87.0/255.0, 183.0/255.0, 1);
+	}
+	else {
+		color = vec4(1, 215.0/255.0, 0, 1);
+	}*/
+	
 	if (options.x == 1) {
 		color = getCrtColor(coords, color);
 	}
