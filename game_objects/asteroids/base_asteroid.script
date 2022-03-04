@@ -174,6 +174,14 @@ function on_message(self, message_id, message, sender)
 		msg.post("#co" .. self.size, "enable")
 		go.set("#co" .. self.size, "linear_velocity", message.linear_velocity)
 		go.set("#co" .. self.size, "angular_velocity", message.angular_velocity)
+	elseif message_id == hash("graviton_effect") then
+		local linear_velocity = go.get(message.co, "linear_velocity")
+		if vmath.length(linear_velocity) > message.slowdown then
+			msg.post(message.co, "apply_force", {
+				force = -linear_velocity * message.force_mult, 
+				position = go.get_position()
+			})
+		end
 	end
 	self.type_message_handling(self, message_id, message, sender)
 end

@@ -1,3 +1,3 @@
 stage_data = {
-	max_stage = 6
+	max_stage = 20
 }

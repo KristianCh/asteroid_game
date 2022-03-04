@@ -147,6 +147,29 @@ function on_message(self, message_id, message, sender)
 		else 
 			msg.post(sender, "target_enemy_response", {found = false})
 		end
+	elseif message_id == hash("target_k_closest_enemies") then
+		if self.enemy_count > 0 then 
+			local enemies = {}
+			local found = false
+			for key, v in pairs(self.enemies) do
+				local distance = vmath.length(go.get_position(v) - message.pos)
+				if #enemies < message.k and distance < message.range then
+					table.insert(enemies, {v, distance})
+					found = true
+				elseif distance < message.range then
+					max_key = 1
+					for ms_key, ms_v in pairs(enemies) do
+						if ms_v[2] > enemies[max_key][2] then
+							max_key = ms_key
+						end
+					end
+					enemies[max_key] = {v, distance}
+				end
+			end
+			msg.post(sender, "target_enemy_response", {found = found, enemies = enemies, dt = message.dt})
+		else 
+			msg.post(sender, "target_enemy_response", {found = false})
+		end
 	elseif message_id == hash("target_closest_ship") then
 		if self.ship_count > 0 then 
 			local shortest_distance = 100000000

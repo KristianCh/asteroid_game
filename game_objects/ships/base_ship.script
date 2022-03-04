@@ -39,7 +39,7 @@ function init(self)
 	self.d_steer = 0
 	self.collision_timeout = 0.5
 	self.follow_target = true
-	self.show_raytrace = false
+	self.show_raycast = false
 	self.init_type = battleship_init
 	if self.type == 2 then
 		self.init_type = laser_cutter_init
@@ -118,7 +118,7 @@ function update(self, dt)
 		local target = pos + vmath.vector3(math.cos(math.rad(i*30+angle+90+15)), math.sin(math.rad(i*30+angle+90+15)), 0) * self.visibility_range
 		local result = physics.raycast(pos, target, raycast_targets)
 		if result ~= nil then
-			if self.show_raytrace then
+			if self.show_raycast then
 				msg.post("@render:", "draw_line", {start_point = pos, end_point = result.position, color = vmath.vector4(0, 1, 0, 1)})
 			end
 			local dist = (self.visibility_range-vmath.length(pos - result.position))/self.visibility_range
@@ -126,7 +126,7 @@ function update(self, dt)
 			self.heading = vmath.normalize(vmath.slerp(self.evasion * dt * dist, 
 							self.heading, vmath.normalize(pos - result.position)))
 		else
-			if self.show_raytrace then
+			if self.show_raycast then
 				msg.post("@render:", "draw_line", {start_point = pos, end_point = target, color = vmath.vector4(1, 0, 0, 1)})
 
 			end
@@ -182,7 +182,7 @@ function on_input(self, action_id, action)
 			self.follow_target = true
 		end
 	elseif action_id == hash("r") and action.released then
-		self.show_raytrace = not self.show_raytrace
+		self.show_raycast = not self.show_raycast
 	end
 end
 
