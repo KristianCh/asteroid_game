@@ -53,6 +53,10 @@ function healer_placeholder_message(self, message_id, message, sender)
 			{
 				type = "property", property_name = "max_health", value = 1.10, mix = "multiply"
 			})
+			msg.post("game:/manager", "apply_status_to_fleet", 
+			{
+				type = "property", property_name = "health", value = 1.10, mix = "multiply"
+			})
 		end
 	end
 end
