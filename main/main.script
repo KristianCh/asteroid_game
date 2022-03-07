@@ -6,7 +6,7 @@ local default_active_fleet = require "data.active_fleet"
 local default_user_settings = require "data.config.user_settings"
 require "modules.utils"
 
-go.property("screen_dimensions", vmath.vector3(WIDTH, HEIGHT, 0))
+go.property("screen_dimensions", vmath.vector3(1920, 1080, 0))
 go.property("transition", vmath.vector4(0, 1, 0, 0))
 go.property("game_speed", 1)
 
@@ -186,7 +186,7 @@ function init(self)
 end
 
 function update(self, dt)
-	print("fps: ", 1 / dt, dt)
+	--print("fps: ", 1 / dt, dt)
 	start_time = start_time + dt
 	msg.post("@render:", "set_time", {start_time})
 	msg.post("@render:", "set_transition", {self.transition})
