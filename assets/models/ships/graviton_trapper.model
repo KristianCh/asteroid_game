@@ -1,0 +1,7 @@
+mesh: "/assets/models/ships/daes/gravity_lance.dae"
+material: "/render/materials/model.material"
+textures: "/assets/images/palette.png"
+skeleton: "/assets/models/ships/daes/gravity_lance.dae"
+animations: "/assets/models/ships/daes/gravity_lance.dae"
+default_animation: ""
+name: "unnamed"

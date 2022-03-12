@@ -1,10 +1,13 @@
 require "modules.asteroids.magnetic"
 require "modules.subscriber_module"
 require "modules.utils"
+require "modules.list_queue"
 
 go.property("size", 3)
 go.property("color", vmath.vector4(1, 1, 1, 1))
 go.property("velocity", vmath.vector3(0, 0, 0))
+go.property("average_current_velocity", vmath.vector3(0, 0, 0))
+go.property("current_velocities", vmath.vector3(0, 0, 0))
 go.property("health", 100)
 go.property("max_health", 100)
 go.property("collision_timeout", 0.5)
@@ -71,6 +74,8 @@ function init(self)
 	self.max_health = 100 * self.size
 	self.damage_pfx_gate = 0
 	self.screen_dimensions = vmath.vector3(WIDTH, HEIGHT, 0)
+	self.velocities_queue = List.new()
+	self.velocity_queue_size = 0
 	msg.post("#asteroid_gui", "set_scale", {scale = vmath.vector3(self.size / 2.5)})
 
 	msg.post("#co1", "disable")
@@ -107,6 +112,16 @@ function update(self, dt)
 	end
 
 	self.velocity = go.get("#co" .. self.size, "linear_velocity")
+	List.pushright(self.velocities_queue, self.velocity)
+	self.current_velocities = self.current_velocities + self.velocity
+	self.velocity_queue_size = self.velocity_queue_size + 1
+	if self.velocity_queue_size > 1 / dt then 
+		local oldest_velocity = List.popleft(self.velocities_queue)
+		self.velocity_queue_size = self.velocity_queue_size - 1
+		self.current_velocities = self.current_velocities - oldest_velocity
+	end
+	self.average_current_velocity = self.current_velocities / self.velocity_queue_size
+	
 	local angular_velocity = go.get("#co" .. self.size, "angular_velocity")
 	local rot = go.get_rotation("mesh_container")
 	rot = rot * vmath.quat_rotation_x(math.sin(angular_velocity.z)*dt) * vmath.quat_rotation_y(math.cos(angular_velocity.z)*dt)

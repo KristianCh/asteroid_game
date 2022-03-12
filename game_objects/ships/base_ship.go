@@ -118,6 +118,21 @@ components {
     w: 6.123234E-17
   }
 }
+components {
+  id: "graviton_trapper"
+  component: "/assets/models/ships/graviton_trapper.model"
+  position {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 1.0
+    z: 0.0
+    w: 6.123234E-17
+  }
+}
 embedded_components {
   id: "co_boid"
   type: "collisionobject"

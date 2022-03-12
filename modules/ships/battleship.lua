@@ -32,7 +32,7 @@ local function battleship_target(self, target)
 	if target.found then
 		self.charges = self.charges - 1
 		self.small_cooldown = 0.25
-		local vec_to_target = vmath.normalize(go.get_position(target.enemy) - go.get_position() + go.get(target.enemy, "velocity") * (vmath.length(go.get_position(target.enemy) - go.get_position()) / self.projectile_speed))
+		local vec_to_target = vmath.normalize(go.get_position(target.enemy) - go.get_position() + go.get(target.enemy, "average_current_velocity") * (vmath.length(go.get_position(target.enemy) - go.get_position()) / self.projectile_speed))
 		factory.create("/manager#player_projectile_factory", go.get_position(), nil, {speed = self.projectile_speed, heading = vec_to_target, damage = self.damage}, vmath.vector3(0.5))
 		if self.charges == 0 then
 			self.main_cooldown = self.main_cooldown_time * self.cooldown_mult

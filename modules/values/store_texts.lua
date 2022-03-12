@@ -75,5 +75,14 @@ store_texts = {
 		"<color=1,0.7,0.5,1>75/100/125</color> Health\n\n" ..
 		"Flagship Bonus: <color=1,0.7,0.5,1>1.75x</color> larger range",
 		classes = {"graviton", "energy"}
+	},
+	{
+		id = 7,
+		cost = 200,
+		name = "Graviton Trapper",
+		text = "Creates an AOE which pulls in nearby asteroids for <color=1,0.7,0.5,1>5/7.5/10</color> seconds every <color=1,0.7,0.5,1>12</color> seconds at the position of a random asteroid.\n"..
+		"<color=1,0.7,0.5,1>75/100/125</color> Health\n\n" ..
+		"Flagship Bonus: <color=1,0.7,0.5,1>1.75x</color> larger range",
+		classes = {"graviton", "energy"}
 	}
 }

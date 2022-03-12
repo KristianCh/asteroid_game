@@ -1,5 +1,5 @@
 name: "sprite"
-tags: "model"
+tags: "trail"
 vertex_program: "/builtins/materials/sprite.vp"
 fragment_program: "/builtins/materials/sprite.fp"
 vertex_space: VERTEX_SPACE_WORLD

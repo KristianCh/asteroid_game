@@ -1,0 +1,36 @@
+require "modules.projectiles.graviton_trapper_aoe"
+
+go.property("damage", 50)
+go.property("type", 1)
+go.property("level", 1)
+go.property("range", 160)
+go.property("duration", 5)
+
+function init(self)
+	self.init = graviton_trapper_aoe_init
+	self.update = graviton_trapper_aoe_update
+	self.on_message = graviton_trapper_aoe_message
+
+	self.range = self.range * go.get_scale().x
+	self.started_fade = false
+
+	self.init(self)
+end
+
+function update(self, dt)
+	self.update(self, dt)
+	self.duration = self.duration - dt
+
+	if self.duration <= 1 and not self.started_fade then
+		self.started_fade = true
+		go.animate("#sprite", "tint.w", go.PLAYBACK_ONCE_FORWARD, 0, go.EASING_INBOUNCE, self.duration)
+	end
+	
+	if self.duration <= 0 then
+		go.delete()
+	end
+end
+
+function on_message(self, message_id, message, sender)
+	self.on_message(self, message_id, message, sender)
+end
