@@ -8,6 +8,7 @@ go.property("speed", 100)
 go.property("acceleration", 5)
 go.property("value", 50)
 go.property("type", 1)
+go.property("parent", nil)
 
 function init(self)
 	self.init = mine_init
@@ -19,6 +20,12 @@ function init(self)
 	self.init(self)
 
 	model_switch(self.type, PLAYER_MINE)
+end
+
+function final(self) 
+	if self.parent ~= nil then
+		msg.post(self.parent, "mine_destroyed")
+	end
 end
 
 function update(self, dt)

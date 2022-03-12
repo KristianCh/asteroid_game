@@ -182,6 +182,8 @@ function on_message(self, message_id, message, sender)
 				position = go.get_position()
 			})
 		end
+	elseif message_id == hash("apply_force") then
+		msg.post("#co" .. self.size, "apply_force", message)
 	end
 	self.type_message_handling(self, message_id, message, sender)
 end
