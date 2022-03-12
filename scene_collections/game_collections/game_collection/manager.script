@@ -136,6 +136,18 @@ function on_message(self, message_id, message, sender)
 			table.insert(enemies, v)
 		end
 		msg.post(sender, "target_enemy_response", {found = #enemies>0, enemies = enemies, dt = message.dt})
+	elseif message_id == hash("target_random_enemy") then
+		keyset = {}
+		local found = false
+		for k, v in pairs(self.enemies) do
+			found = true
+			table.insert(keyset, k)
+		end
+		if found then
+			msg.post(sender, "target_enemy_response", {found = found, enemy = self.enemies[keyset[math.random(#keyset)]], dt = message.dt})
+		else
+			msg.post(sender, "target_enemy_response", {found = found, enemy = nil, dt = message.dt})
+		end
 	elseif message_id == hash("target_closest_enemy") then
 		if self.enemy_count > 0 then 
 			local shortest_distance = 100000000
