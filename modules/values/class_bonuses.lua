@@ -22,6 +22,11 @@ class_bonuses = {
 	[hash("graviton")] = 
 	{
 		affected_property = "physical_damage_mult", value_per_level = 0.1, class_masks = {"asteroid"}, 
-		mix = "add", display = "percentage_inc", target = "asteroid"
+		mix = "add", display = "percentage_inc", target = "manager"
+	},
+	[hash("nuker")] = 
+	{
+		affected_property = "aoe_range_mult", value_per_level = 0.05, class_masks = {"aoe"}, 
+		mix = "add", display = "percentage_inc", target = "manager"
 	}
 }

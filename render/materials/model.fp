@@ -11,7 +11,7 @@ void main()
     // Pre-multiply alpha since all runtime textures already are
     vec4 tint_pm = vec4(tint.xyz * tint.w, tint.w);
     vec4 color = texture2D(tex0, var_texcoord0.xy) * tint_pm;
-    color.w = 1;
+    color.w = 1.0;
 
     // Diffuse light calculations
     vec3 ambient_light = vec3(0.4);

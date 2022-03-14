@@ -18,6 +18,10 @@ class_texts = {
 	["graviton"] = {
 		"<color=0.7,1,0.5,1>Graviton</color>: All <color=0.7,1,0.5,1>Physical</color> damage is increased by <color=1,0.7,0.5,1>+10%</color>",
 		"<color=0.7,1,0.5,1>Physical</color> damage increased by "
+	},
+	["nuker"] = {
+		"<color=0.7,1,0.5,1>Nuker</color>: <color=0.7,1,0.5,1>AOE range</color> is increased by <color=1,0.7,0.5,1>+5%</color>",
+		"<color=0.7,1,0.5,1>AOE range</color> range increased by "
 	}
 }
 
@@ -80,9 +84,18 @@ store_texts = {
 		id = 7,
 		cost = 200,
 		name = "Graviton Trapper",
-		text = "Creates an AOE which pulls in nearby asteroids for <color=1,0.7,0.5,1>5/7.5/10</color> seconds every <color=1,0.7,0.5,1>12</color> seconds at the position of a random asteroid.\n"..
+		text = "Creates an AOE with a radius of <color=1,0.7,0.5,1>160</color> meters which pulls in nearby asteroids for <color=1,0.7,0.5,1>5/7.5/10</color> seconds every <color=1,0.7,0.5,1>12</color> seconds at the position of a random asteroid.\n"..
 		"<color=1,0.7,0.5,1>75/100/125</color> Health\n\n" ..
 		"Flagship Bonus: Improve asteroid impact resistance by <color=1,0.7,0.5,1>10%</color>",
 		classes = {"graviton"}
+	},
+	{
+		id = 8,
+		cost = 200,
+		name = "Energy Nuker",
+		text = "Creates an AOE with a radius of <color=1,0.7,0.5,1>160/240/320</color> meters dealing <color=1,0.7,0.5,1>100/150/200</color> damage/s for <color=1,0.7,0.5,1>5/7/9</color> seconds every <color=1,0.7,0.5,1>12</color> seconds at the position of the closest asteroid.\n"..
+		"<color=1,0.7,0.5,1>75/100/125</color> Health\n\n" ..
+		"Flagship Bonus: Increase all <color=0.7,1,0.5,1>Energy</color> damage by <color=1,0.7,0.5,1>25%</color>",
+		classes = {"energy", "nuker"}
 	}
 }

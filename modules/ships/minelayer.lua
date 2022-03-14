@@ -29,7 +29,7 @@ function minelayer_update(self, dt)
 		self.charges = self.charges - 1
 		self.small_cooldown = 0.25
 		if self.current_mines < self.max_mines then
-			local mine = factory.create("/manager#player_mine_factory", go.get_position(), nil, {
+			factory.create("/manager#player_mine_factory", go.get_position(), nil, {
 				heading = self.heading, value = self.damage, angular_velocities = vmath.vector3(self.heading.y, self.heading.x, 0) * 2,
 				parent = go.get_id()
 			}, vmath.vector3(0.5))

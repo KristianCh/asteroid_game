@@ -5,6 +5,7 @@ require "modules.ships.minelayer"
 require "modules.ships.healer_placeholder"
 require "modules.ships.gravity_tether"
 require "modules.ships.graviton_trapper"
+require "modules.ships.energy_nuker"
 require "modules.utils"
 require "modules.model_switcher"
 
@@ -54,6 +55,8 @@ function init(self)
 		self.init_type = gravity_tether_init
 	elseif self.type == 7 then
 		self.init_type = graviton_trapper_init
+	elseif self.type == 8 then
+		self.init_type = energy_nuker_init
 	end
 	self.init_type(self)
 	self.health = self.max_health * (self.health_percentage/100)
@@ -73,7 +76,7 @@ end
 
 function update(self, dt)
 	self.collision_timeout = self.collision_timeout - dt
-	local max_x, max_y = 1920, 1017
+	local max_x, max_y = WIDTH, HEIGHT
 	local pos = go.get_position()
 	
 	if pos.x > max_x then
@@ -88,7 +91,7 @@ function update(self, dt)
 		pos.y = 0
 	end
 	
-	if not self.hold_position then self.target_pos = go.get_position("/fleet/target_position") end
+	self.target_pos = go.get_position("/fleet/target_position")
 	local dist_to_target = vmath.length(self.target_pos - pos)
 	local vec_to_target = vmath.normalize(self.target_pos - pos)
 	if dist_to_target == 0 then

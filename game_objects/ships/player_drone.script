@@ -1,0 +1,64 @@
+require "modules.utils"
+require "modules.drones.attack_drone"
+
+go.property("heading", vmath.vector3(0, 1, 0))
+go.property("target_position", vmath.vector3(HEIGHT / 2, WIDTH / 2, 2))
+go.property("speed", 300)
+go.property("visibility_range", 150)
+go.property("evasion", 2)
+go.property("mothership_url", nil)
+go.property("type", 1)
+
+function init(self)
+	self.init_type = attack_drone_init
+
+	self.init_type(self)
+end
+
+function final(self)
+	if self.mothership_url == self.mothership_url then
+		msg.post(self.mothership_url, "drone_destroyed")
+	end
+end
+
+function update(self, dt)
+	msg.post(self.mothership_url, "request_target")
+	
+	local pos = go.get_position()
+	local angle = math.deg(math.atan2(self.heading.y, self.heading.x)) - 90
+	local rot_z = vmath.quat_rotation_z(math.rad(angle))
+	go.set_rotation(rot_z)
+	
+	local raycast_targets = { hash("ship_cast"), hash("asteroid") }
+	for i=-2,1 do
+		local target = pos + vmath.vector3(math.cos(math.rad(i*30+angle+90+15)), math.sin(math.rad(i*30+angle+90+15)), 0) * self.visibility_range
+		local result = physics.raycast(pos, target, raycast_targets)
+		if result ~= nil then
+			local dist = (self.visibility_range-vmath.length(pos - result.position))/self.visibility_range
+			if dist > 1 then dist = 1 end
+			self.heading = vmath.normalize(vmath.slerp(self.evasion * dt * dist, 
+			self.heading, vmath.normalize(pos - result.position)))
+		end
+	end
+	
+	pos = pos + self.heading * self.speed * dt
+	go.set_position(pos)
+	
+	self.update_type(self, dt)
+end
+
+function on_message(self, message_id, message, sender)
+	self.message_type(self, message_id, message, sender)
+
+	if message_id == hash("contact_point_response") then
+		if message.other_group == hash("asteroid") or message.other_group == hash("asteroid_projectile") then
+			go.delete()
+		end
+	elseif message_id == hash("self_destruct") then
+		self.mothership_url = nil
+		go.delete()
+	end	
+end
+
+
+

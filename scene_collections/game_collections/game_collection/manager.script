@@ -10,6 +10,7 @@ go.property("current_score", 0)
 go.property("physical_damage_mult", 1)
 go.property("explosive_damage_mult", 1)
 go.property("energy_damage_mult", 1)
+go.property("aoe_range_mult", 1)
 
 local function url_to_hash(url)
 	local str =  hash_to_hex(url.socket or hash("")) .. hash_to_hex(url.path) .. hash_to_hex(url.fragment or hash(""))
@@ -118,7 +119,7 @@ function on_message(self, message_id, message, sender)
 							type = "property", property_name = class_bonuses[k].affected_property, 
 							value = bonus_value, mix = class_bonuses[k].mix, class_mask = hash(cm)
 						})
-					elseif class_bonuses[k].target == "asteroid" then
+					elseif class_bonuses[k].target == "manager" then
 						apply_status_to_manager(class_bonuses[k], bonus_value)
 					end
 				end
@@ -236,6 +237,14 @@ function on_message(self, message_id, message, sender)
 				end
 			end
 		end
+	elseif message_id == hash("create_player_projectile") then
+		factory.create("#player_projectile_factory", message.position, nil, message.properties, message.scale)
+	elseif message_id == hash("create_player_mine") then
+		factory.create("#player_mine_factory", message.position, nil, message.properties, message.scale)
+	elseif message_id == hash("create_player_aoe") then
+		factory.create("#player_aoe_factory", message.position, nil, message.properties, message.scale * self.aoe_range_mult)		
+	elseif message_id == hash("apply_status_to_manager") then
+		apply_status_to_manager(message, message.value)
 	elseif message_id == hash("stage_done") then
 		msg.post("/gui_container#game", "show_stage_done", {credits = calculate_credits(self)})
 	end
