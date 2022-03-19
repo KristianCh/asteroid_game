@@ -89,8 +89,8 @@ components {
   }
 }
 components {
-  id: "healer_placeholder"
-  component: "/assets/models/ships/healer_placeholder.model"
+  id: "mine_healer"
+  component: "/assets/models/ships/mine_healer.model"
   position {
     x: 0.0
     y: 0.0
@@ -136,6 +136,21 @@ components {
 components {
   id: "energy_nuker"
   component: "/assets/models/ships/energy_nuker.model"
+  position {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 1.0
+    z: 0.0
+    w: 6.123234E-17
+  }
+}
+components {
+  id: "ram"
+  component: "/assets/models/ships/ram.model"
   position {
     x: 0.0
     y: 0.0

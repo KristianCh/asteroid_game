@@ -65,7 +65,7 @@ store_texts = {
 	{
 		id = 5,
 		cost = 200,
-		name = "Healer",
+		name = "Mine Healer",
 		text = "Fires burst of projectiles every <color=1,0.7,0.5,1>4/3.5/3</color> seconds, dealing <color=1,0.7,0.5,1>20</color> <color=0.7,1,0.5,1>Physical</color> damage each. Projectiles have a <color=1,0.7,0.5,1>10/20/30 %</color> chance to spawn a healing mine, which heals <color=1,0.7,0.5,1>10/15/20</color> health\n"..
 		"<color=1,0.7,0.5,1>75/100/125</color> Health\n\n" ..
 		"Flagship Bonus: Ships get <color=1,0.7,0.5,1>+10%</color> Max health",
@@ -97,5 +97,15 @@ store_texts = {
 		"<color=1,0.7,0.5,1>75/100/125</color> Health\n\n" ..
 		"Flagship Bonus: Increase all <color=0.7,1,0.5,1>Energy</color> damage by <color=1,0.7,0.5,1>25%</color>",
 		classes = {"energy", "nuker"}
+	},
+	{
+		id = 9,
+		cost = 150,
+		name = "Rammer",
+		text = "On collision with an asteroid from the front, creates an AOE explosion with a range of <color=1,0.7,0.5,1>120/160/200</color> meters dealing <color=1,0.7,0.5,1>100/150/200</color> damage, increased by relative speed.\n"..
+		"<color=1,0.7,0.5,1>150/250/350</color> Health\n" ..
+		"<color=1,0.7,0.5,1>30/40/50</color> Armor\n\n" ..
+		"Flagship Bonus: Ships get <color=1,0.7,0.5,1>+10</color> Armor",
+		classes = {"physical"}
 	}
 }

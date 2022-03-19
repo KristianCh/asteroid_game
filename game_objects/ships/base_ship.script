@@ -2,10 +2,11 @@ require "modules.ships.laser_cutter"
 require "modules.ships.battleship"
 require "modules.ships.missile_cruiser"
 require "modules.ships.minelayer"
-require "modules.ships.healer_placeholder"
+require "modules.ships.mine_healer"
 require "modules.ships.gravity_tether"
 require "modules.ships.graviton_trapper"
 require "modules.ships.energy_nuker"
+require "modules.ships.ram"
 require "modules.utils"
 require "modules.model_switcher"
 
@@ -50,13 +51,15 @@ function init(self)
 	elseif self.type == 4 then
 		self.init_type = minelayer_init
 	elseif self.type == 5 then
-		self.init_type = healer_placeholder_init
+		self.init_type = mine_healer_init
 	elseif self.type == 6 then
 		self.init_type = gravity_tether_init
 	elseif self.type == 7 then
 		self.init_type = graviton_trapper_init
 	elseif self.type == 8 then
 		self.init_type = energy_nuker_init
+	elseif self.type == 9 then
+		self.init_type = ram_init
 	end
 	self.init_type(self)
 	self.health = self.max_health * (self.health_percentage/100)

@@ -1,7 +1,8 @@
 function gravity_tether_init(self) 
 	self.evasion = 2
 	self.damage = 50 + 25 * self.level * self.level
-	self.slowdown = 70 - self.level * 10
+	self.slowdown = 60 - self.level * 20
+	self.force_mult = 300 * self.level
 	self.dt = 1/60
 	self.speed = 300
 	self.range = 300
@@ -35,7 +36,6 @@ local function gravity_tether_target(self, target)
 		local distance = v[2]
 		local asteroid_size = go.get(asteroid_url, "size")
 		local asteroid_position = go.get_position(asteroid_url)
-		local force_mult = 2 * self.level
 
 		local range_falloff = (self.range - distance) / self.range
 		range_falloff = math.max(0, range_falloff)
@@ -44,7 +44,7 @@ local function gravity_tether_target(self, target)
 		msg.post(asteroid_url, "graviton_effect", {
 			slowdown = self.slowdown,
 			co = "#co" .. asteroid_size,
-			force_mult = force_mult * target.dt
+			force_mult = self.force_mult * target.dt
 		})
 		msg.post(asteroid_url, "damage_asteroid", {damage = 10 * target.dt * (range_falloff + 0.5), type = "energy"})
 	end

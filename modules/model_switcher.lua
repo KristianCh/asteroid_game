@@ -2,13 +2,13 @@ SHIP = 1
 PLAYER_PROJECTILE = 2
 PLAYER_MINE = 3
 
-SHIP_NUMBER = 8
+SHIP_NUMBER = 9
 PLAYER_PROJECTILE_NUMBER = 3
 PLAYER_MINE_NUMBER = 2
 
 ship_modelnames = {
-	"#battleship", "#laser_cutter", "#missile_cruiser", "#minelayer", "#healer_placeholder", 
-	"#gravity_tether", "#graviton_trapper", "#energy_nuker"
+	"#battleship", "#laser_cutter", "#missile_cruiser", "#minelayer", "#mine_healer", 
+	"#gravity_tether", "#graviton_trapper", "#energy_nuker", "#ram"
 }
 player_projectile_modelnames = {"#cannon_round", "#missile", "#healing_cannon_round"}
 player_mine_modelnames = {"#mine", "#healing_mine"}

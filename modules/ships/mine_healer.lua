@@ -1,4 +1,4 @@
-function healer_placeholder_init(self) 
+function mine_healer_init(self) 
 	self.main_cooldown_time = 4 - (self.level-1) / 2
 	self.main_cooldown = self.main_cooldown_time
 	self.small_cooldown = 0.05
@@ -11,11 +11,11 @@ function healer_placeholder_init(self)
 	self.speed = 350
 	self.class_1 = hash("support")
 
-	self.update_type = healer_placeholder_update
-	self.message_type = healer_placeholder_message
+	self.update_type = mine_healer_update
+	self.message_type = mine_healer_message
 end
 
-function healer_placeholder_update(self, dt)
+function mine_healer_update(self, dt)
 	if self.main_cooldown > 0 then 
 		self.main_cooldown = self.main_cooldown - dt
 	end
@@ -28,7 +28,7 @@ function healer_placeholder_update(self, dt)
 	msg.post(self.stat_tracker, "set_cooldown", {cooldown = 1 - self.main_cooldown / self.main_cooldown_time * self.cooldown_mult})
 end
 
-local function healer_placeholder_target(self, target) 
+local function mine_healer_target(self, target) 
 	if target.found then
 		self.charges = self.charges - 1
 		self.small_cooldown = 0.05
@@ -42,10 +42,10 @@ local function healer_placeholder_target(self, target)
 	end
 end
 
-function healer_placeholder_message(self, message_id, message, sender) 
+function mine_healer_message(self, message_id, message, sender) 
 	if message_id == hash("target_enemy_response") then
 		if message.found then
-			healer_placeholder_target(self, message)
+			mine_healer_target(self, message)
 		end
 	elseif message_id == hash("post_init_ready") then
 		if self.is_flagship then

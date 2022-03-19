@@ -17,7 +17,7 @@ embedded_components {
   id: "sprite"
   type: "sprite"
   data: "tile_set: \"/assets/images/projectiles/projectiles.atlas\"\n"
-  "default_animation: \"square_aoe\"\n"
+  "default_animation: \"circular_aoe\"\n"
   "material: \"/builtins/materials/sprite.material\"\n"
   "blend_mode: BLEND_MODE_ALPHA\n"
   ""
