@@ -6,7 +6,7 @@ go.property("target_position", vmath.vector3(WIDTH / 2, HEIGHT / 2, 0))
 go.property("speed", 300)
 go.property("visibility_range", 150)
 go.property("evasion", 2)
-go.property("mothership_url", nil)
+go.property("mothership_type", "fleet_carrier")
 go.property("type", 1)
 
 function init(self)
@@ -17,17 +17,11 @@ function init(self)
 end
 
 function final(self)
-	if self.mothership_url ~= nil then
-		msg.post(self.mothership_url, "drone_destroyed")
-	end
+	msg.post("/manager", "alert_special_ship", {type = self.mothership_type})
 end
 
 function update(self, dt)
 	self.update_type(self, dt)
-	
-	if self.mothership_url ~= nil then
-		msg.post(self.mothership_url, "request_target")
-	end
 	
 	local pos = go.get_position()
 	local angle = math.deg(math.atan2(self.heading.y, self.heading.x)) - 90
@@ -59,10 +53,7 @@ function on_message(self, message_id, message, sender)
 		if message.other_group == hash("asteroid") or message.other_group == hash("asteroid_projectile") then
 			go.delete()
 		end
-	elseif message_id == hash("set_mothership") then
-		self.mothership_url = message.mothership_url
 	elseif message_id == hash("self_destruct") then
-		self.mothership_url = nil
 		go.delete()
 	end	
 end

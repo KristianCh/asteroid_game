@@ -22,6 +22,7 @@ function init(self)
 	self.enemies = {}
 	self.enemy_count = 0
 	self.ships = {}
+	self.special_ship_urls = {}
 	self.ship_count = 0
 	self.run_data = {}
 	self.fleet_data = {}
@@ -242,12 +243,21 @@ function on_message(self, message_id, message, sender)
 	elseif message_id == hash("create_player_mine") then
 		factory.create("#player_mine_factory", message.position, nil, message.properties, message.scale)
 	elseif message_id == hash("create_player_drone") then
-		local drone = factory.create("#player_drone_factory", message.position, nil, message.properties, message.scale)
-		msg.post(drone, "set_mothership", {mothership_url = sender})
+		factory.create("#player_drone_factory", message.position, nil, message.properties, message.scale)
 	elseif message_id == hash("create_player_aoe") then
 		factory.create("#player_aoe_factory", message.position, message.rotation, message.properties, message.scale * self.aoe_range_mult)		
 	elseif message_id == hash("apply_status_to_manager") then
 		apply_status_to_manager(message, message.value)
+	elseif message_id == hash("add_special_ship_url") then
+		self.special_ship_urls[message.type] = sender
+	elseif message_id == hash("remove_special_ship_url") then
+		self.special_ship_urls[message.type] = nil
+	elseif message_id == hash("get_special_ship_url") then
+		msg.post(sender, "return_special_ship_url", {url = self.special_ship_urls[message.type]})
+	elseif message_id == hash("alert_special_ship") then
+		if self.special_ship_urls[message.type] ~= nil then
+			msg.post(self.special_ship_urls[message.type], "alert_special_ship", message)
+		end
 	elseif message_id == hash("stage_done") then
 		msg.post("/gui_container#game", "show_stage_done", {credits = calculate_credits(self)})
 	end

@@ -47,6 +47,7 @@ function init(self)
 	self.follow_target = true
 	self.show_raycast = false
 	self.init_type = battleship_init
+	self.final_type = function(self) end
 	if self.type == 2 then
 		self.init_type = laser_cutter_init
 	elseif self.type == 3 then
@@ -76,6 +77,7 @@ function init(self)
 end
 
 function final(self)
+	self.final_type(self)
 	msg.post(self.stat_tracker, "set_cooldown", {cooldown = 0})
 	msg.post(self.stat_tracker, "set_health", {health = 0})
 	msg.post(self.stat_tracker, "death")

@@ -12,19 +12,34 @@ function fleet_carrier_init(self)
 	self.class_1 = hash("physical")
 	self.class_1 = hash("carrier")
 
+	self.current_target = nil
+
 	self.update_type = fleet_carrier_update
 	self.message_type = fleet_carrier_message
+
+	msg.post("/manager", "add_special_ship_url", {type = "fleet_carrier"})
+end
+
+function fleet_carrier_final(self)
+	msg.post("/manager", "remove_special_ship_url", {type = "fleet_carrier"})
 end
 
 function fleet_carrier_update(self, dt)
+	self.current_target = nil
+	msg.post("/manager", "target_closest_enemy", {pos = go.get_position(), range = self.drone_range, dt = dt})
+	
 	if self.cooldown > 0 then 
 		self.cooldown = self.cooldown - dt
+	end
+
+	if self.health <= 0 then
+		msg.post("/manager", "remove_special_ship_url", {type = "fleet_carrier"})
 	end
 	
 	if self.cooldown <= 0 and self.current_drones < self.max_drones + self.drone_bonus then
 		msg.post("/manager", "create_player_drone", {
 			position = go.get_position(), 
-			properties = {heading = -self.heading, damage = self.drone_damage, mothership_url = go.get_id()}, 
+			properties = {heading = -self.heading, damage = self.drone_damage}, 
 			scale = vmath.vector3(0.1)
 		})
 		self.current_drones = self.current_drones + 1
@@ -33,16 +48,23 @@ function fleet_carrier_update(self, dt)
 	msg.post(self.stat_tracker, "set_cooldown", {cooldown = 1 - self.cooldown / self.cooldown_time * self.cooldown_mult})
 end
 
-local function fleet_carrier_target(self, target) 
+local function fleet_carrier_target(self, target)
 	msg.post(target.dt, "recieve_target", target)
 end
 
 function fleet_carrier_message(self, message_id, message, sender) 
 	if message_id == hash("target_enemy_response") then
-		msg.post(message.dt, "recieve_target", message)
+		if message.found then
+			self.current_target = message.enemy
+		end
 	elseif message_id == hash("request_target") then
-		msg.post("/manager", "target_closest_enemy", {pos = go.get_position(), range = self.drone_range, dt = sender})
-	elseif message_id == hash("drone_destroyed") then
+		local tp = go.get_position()
+		local found = self.current_target ~= nil
+		if found then
+			tp = go.get_position(self.current_target)
+		end
+		msg.post(sender, "recieve_target", {found = found, enemy = self.current_target, message.dt, target_position = tp})
+	elseif message_id == hash("alert_special_ship") then
 		self.cooldown = self.cooldown_time
 		self.current_drones = self.current_drones - 1
 	elseif message_id == hash("post_init_ready") then
