@@ -18,6 +18,7 @@ local debug = false
 local start_time = 0
 local is_paused = false
 local easing = vmath.vector({ 0, 0.4, 0.2, 0.2, 0.5, 1 })
+local end_display_data = {}
 
 local function load_saved_data(filename, default)
 	local file = sys.get_save_file("asteroid_game", filename)
@@ -224,6 +225,8 @@ function on_message(self, message_id, message, sender)
 		elseif current_active_proxy == "#store_proxy" then
 			msg.post("store:/manager#manager", "init_run_data", active_run_data)
 			msg.post("store:/manager#manager", "init_fleet", active_fleet)
+		elseif current_active_proxy == "#end_screen_proxy" then
+			msg.post("end_screen:/gui_container#end_screen", "display_data", end_display_data)
 		end
 	elseif message_id == hash("proxy_unloaded") then
 	elseif message_id == hash("new_game_from_main") then
@@ -280,6 +283,7 @@ function on_message(self, message_id, message, sender)
 	elseif message_id == hash("end_run") then
 		save_saved_data("active_run_data", default_active_run_data)
 		save_saved_data("active_fleet", default_active_fleet)
+		end_display_data = message
 		active_fleet = copy_table(default_active_fleet)
 		active_run_data = copy_table(default_active_run_data)
 	elseif message_id == hash("toggle_game_pause") then

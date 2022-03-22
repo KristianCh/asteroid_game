@@ -58,8 +58,6 @@ function update(self, dt)
 				msg.post("main:/manager", "end_from_game")
 			else
 				msg.post("#manager", "stage_done")
-				--msg.post("main:/manager", "advance_stage")
-				--msg.post("main:/manager", "store_from_game")
 			end
 		end
 	end	

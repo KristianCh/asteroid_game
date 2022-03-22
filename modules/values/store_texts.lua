@@ -22,6 +22,10 @@ class_texts = {
 	["nuker"] = {
 		"<color=0.7,1,0.5,1>Nuker</color>: <color=0.7,1,0.5,1>AOE range</color> is increased by <color=1,0.7,0.5,1>+5%</color>",
 		"<color=0.7,1,0.5,1>AOE range</color> range increased by "
+	},
+	["carrier"] = {
+		"<color=0.7,1,0.5,1>Carrier</color>: <color=0.7,1,0.5,1>Drone range</color> is increased by <color=1,0.7,0.5,1>+10%</color>",
+		"<color=0.7,1,0.5,1>Drone range</color> range increased by "
 	}
 }
 
@@ -107,5 +111,15 @@ store_texts = {
 		"<color=1,0.7,0.5,1>30/40/50</color> Armor\n\n" ..
 		"Flagship Bonus: Ships get <color=1,0.7,0.5,1>+10</color> Armor",
 		classes = {"physical"}
+	},
+	{
+		id = 10,
+		cost = 200,
+		name = "Fleet Carrier",
+		text = "Spawns <color=1,0.7,0.5,1>3/4/5</color> drones which fire cannon rounds at the closest asteroid within 500 meters of the Fleet Carrier every <color=1,0.7,0.5,1>1</color> second, dealing <color=1,0.7,0.5,1>15/20/25</color> damage.\n"..
+		"<color=1,0.7,0.5,1>100/150/200</color> Health\n" ..
+		"<color=1,0.7,0.5,1>5/10/15</color> Armor\n\n" ..
+		"Flagship Bonus: <color=0.7,1,0.5,1>Carrier</color> ships get <color=1,0.7,0.5,1>+1</color> Max active drones",
+		classes = {"physical", "carrier"}
 	}
 }

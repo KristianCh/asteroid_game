@@ -2,7 +2,7 @@ require "modules.utils"
 require "modules.drones.attack_drone"
 
 go.property("heading", vmath.vector3(0, 1, 0))
-go.property("target_position", vmath.vector3(HEIGHT / 2, WIDTH / 2, 2))
+go.property("target_position", vmath.vector3(WIDTH / 2, HEIGHT / 2, 0))
 go.property("speed", 300)
 go.property("visibility_range", 150)
 go.property("evasion", 2)
@@ -11,25 +11,30 @@ go.property("type", 1)
 
 function init(self)
 	self.init_type = attack_drone_init
+	self.target_position = vmath.vector3(WIDTH / 2, HEIGHT / 2, 0)
 
 	self.init_type(self)
 end
 
 function final(self)
-	if self.mothership_url == self.mothership_url then
+	if self.mothership_url ~= nil then
 		msg.post(self.mothership_url, "drone_destroyed")
 	end
 end
 
 function update(self, dt)
-	msg.post(self.mothership_url, "request_target")
+	self.update_type(self, dt)
+	
+	if self.mothership_url ~= nil then
+		msg.post(self.mothership_url, "request_target")
+	end
 	
 	local pos = go.get_position()
 	local angle = math.deg(math.atan2(self.heading.y, self.heading.x)) - 90
 	local rot_z = vmath.quat_rotation_z(math.rad(angle))
 	go.set_rotation(rot_z)
 	
-	local raycast_targets = { hash("ship_cast"), hash("asteroid") }
+	local raycast_targets = { hash("ship_cast"), hash("asteroid"), hash("player_drone") }
 	for i=-2,1 do
 		local target = pos + vmath.vector3(math.cos(math.rad(i*30+angle+90+15)), math.sin(math.rad(i*30+angle+90+15)), 0) * self.visibility_range
 		local result = physics.raycast(pos, target, raycast_targets)
@@ -54,6 +59,8 @@ function on_message(self, message_id, message, sender)
 		if message.other_group == hash("asteroid") or message.other_group == hash("asteroid_projectile") then
 			go.delete()
 		end
+	elseif message_id == hash("set_mothership") then
+		self.mothership_url = message.mothership_url
 	elseif message_id == hash("self_destruct") then
 		self.mothership_url = nil
 		go.delete()

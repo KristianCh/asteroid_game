@@ -28,5 +28,10 @@ class_bonuses = {
 	{
 		affected_property = "aoe_range_mult", value_per_level = 0.05, class_masks = {"aoe"}, 
 		mix = "add", display = "percentage_inc", target = "manager"
+	},
+	[hash("carrier")] = 
+	{
+		affected_property = "drone_range", value_per_level = 1.1, class_masks = {"carrier"}, 
+		mix = "multiply", display = "percentage-1_inc", target = "fleet"
 	}
 }

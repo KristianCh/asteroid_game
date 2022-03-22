@@ -51,3 +51,6 @@ max_particlefx_count = 128
 max_emitter_count = 128
 max_count = 128
 
+[model]
+max_count = 256
+

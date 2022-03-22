@@ -164,7 +164,7 @@ function on_message(self, message_id, message, sender)
 			end
 			msg.post(sender, "target_enemy_response", {found = found, enemy = enemy_url, dt = message.dt})
 		else 
-			msg.post(sender, "target_enemy_response", {found = false})
+			msg.post(sender, "target_enemy_response", {found = false, dt = message.dt})
 		end
 	elseif message_id == hash("target_k_closest_enemies") then
 		if self.enemy_count > 0 then 
@@ -241,6 +241,9 @@ function on_message(self, message_id, message, sender)
 		factory.create("#player_projectile_factory", message.position, nil, message.properties, message.scale)
 	elseif message_id == hash("create_player_mine") then
 		factory.create("#player_mine_factory", message.position, nil, message.properties, message.scale)
+	elseif message_id == hash("create_player_drone") then
+		local drone = factory.create("#player_drone_factory", message.position, nil, message.properties, message.scale)
+		msg.post(drone, "set_mothership", {mothership_url = sender})
 	elseif message_id == hash("create_player_aoe") then
 		factory.create("#player_aoe_factory", message.position, message.rotation, message.properties, message.scale * self.aoe_range_mult)		
 	elseif message_id == hash("apply_status_to_manager") then
