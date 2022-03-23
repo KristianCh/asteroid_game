@@ -3,16 +3,17 @@ require "modules.drones.attack_drone"
 require "modules.drones.kamikaze_drone"
 
 go.property("heading", vmath.vector3(0, 1, 0))
-go.property("target_position", vmath.vector3(WIDTH / 2, HEIGHT / 2, 0))
+go.property("target_position", vmath.vector3(960, 540, 0))
 go.property("speed", 300)
 go.property("visibility_range", 150)
 go.property("evasion", 2)
 go.property("damage", 10)
 go.property("aoe_range", 1)
-go.property("mothership_type", "fleet_carrier")
+--go.property("mothership_type", "fleet_carrier")
 go.property("type", 1)
 
 function init(self)
+	self.mothership_type = "fleet_carrier"
 	self.init_type = attack_drone_init
 	if self.type == 2 then
 		self.init_type = kamikaze_drone_init

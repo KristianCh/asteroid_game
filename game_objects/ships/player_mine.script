@@ -8,7 +8,7 @@ go.property("speed", 100)
 go.property("acceleration", 5)
 go.property("value", 50)
 go.property("type", 1)
-go.property("parent", nil)
+go.property("parent", msg.url())
 
 function init(self)
 	self.init = mine_init
