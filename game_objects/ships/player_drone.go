@@ -15,7 +15,7 @@ components {
 }
 components {
   id: "model"
-  component: "/assets/models/ships/laser_cutter.model"
+  component: "/assets/models/ships/player_drone.model"
   position {
     x: 0.0
     y: 0.0

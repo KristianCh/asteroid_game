@@ -126,7 +126,7 @@ store_texts = {
 		id = 11,
 		cost = 200,
 		name = "Kamikaze Carrier",
-		text = "Spawns up to <color=1,0.7,0.5,1>3/4/5</color> drones which fly at the closest asteroid within 500 meters of the Kamikaze Carrier, creating an explosion dealing <color=1,0.7,0.5,1>80/120/160</color> damage within <color=1,0.7,0.5,1>80/100/120</color> meters.\n"..
+		text = "Spawns up to <color=1,0.7,0.5,1>4/6/7</color> drones which fly at the closest asteroid within 500 meters of the Kamikaze Carrier, creating an explosion dealing <color=1,0.7,0.5,1>80/120/160</color> damage within <color=1,0.7,0.5,1>80/100/120</color> meters.\n"..
 		"<color=1,0.7,0.5,1>100/150/200</color> Health\n" ..
 		"<color=1,0.7,0.5,1>5/10/15</color> Armor\n\n" ..
 		"Flagship Bonus: <color=0.7,1,0.5,1>Carrier</color> ships get <color=1,0.7,0.5,1>+1</color> Max active drones",

@@ -1,12 +1,12 @@
 function kamikaze_carrier_init(self) 
 	self.armor = 5 * self.level
-	self.cooldown_time = 1
+	self.cooldown_time = 0.5
 	self.cooldown = self.cooldown_time
 	self.drone_damage = 40 + 40 * self.level
 	self.current_drones = 0
 	self.drone_range = 500
 	self.drone_aoe_range = 0.5 + (self.level-1) * 0.125
-	self.max_drones = 2 + self.level
+	self.max_drones = 3 + self.level
 
 	self.max_health = 100 + (self.level-1) * 50
 	self.health = self.max_health

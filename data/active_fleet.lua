@@ -1,6 +1,6 @@
 local fleet = {
 	{
-		type = 11,
+		type = 1,
 		level = 1,
 		sub_level = 1,
 		health = 100,
