@@ -1,17 +1,24 @@
 require "modules.utils"
 require "modules.drones.attack_drone"
+require "modules.drones.kamikaze_drone"
 
 go.property("heading", vmath.vector3(0, 1, 0))
 go.property("target_position", vmath.vector3(WIDTH / 2, HEIGHT / 2, 0))
 go.property("speed", 300)
 go.property("visibility_range", 150)
 go.property("evasion", 2)
+go.property("damage", 10)
+go.property("aoe_range", 1)
 go.property("mothership_type", "fleet_carrier")
 go.property("type", 1)
 
 function init(self)
 	self.init_type = attack_drone_init
+	if self.type == 2 then
+		self.init_type = kamikaze_drone_init
+	end
 	self.target_position = vmath.vector3(WIDTH / 2, HEIGHT / 2, 0)
+	self.raycast_targets = { hash("ship_cast"), hash("asteroid"), hash("player_drone") }
 
 	self.init_type(self)
 end
@@ -28,10 +35,9 @@ function update(self, dt)
 	local rot_z = vmath.quat_rotation_z(math.rad(angle))
 	go.set_rotation(rot_z)
 	
-	local raycast_targets = { hash("ship_cast"), hash("asteroid"), hash("player_drone") }
 	for i=-2,1 do
 		local target = pos + vmath.vector3(math.cos(math.rad(i*30+angle+90+15)), math.sin(math.rad(i*30+angle+90+15)), 0) * self.visibility_range
-		local result = physics.raycast(pos, target, raycast_targets)
+		local result = physics.raycast(pos, target, self.raycast_targets)
 		if result ~= nil then
 			local dist = (self.visibility_range-vmath.length(pos - result.position))/self.visibility_range
 			if dist > 1 then dist = 1 end

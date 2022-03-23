@@ -7,8 +7,7 @@ function attack_drone_init(self)
 
 	self.cooldown = 1
 	self.cooldown_time = 1
-
-	self.damage = 10
+	
 	self.projectile_speed = 750
 
 	self.mothership_type = "fleet_carrier"
