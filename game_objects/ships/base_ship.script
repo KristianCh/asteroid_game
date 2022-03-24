@@ -161,6 +161,15 @@ function update(self, dt)
 	self.update_type(self, dt)
 end
 
+function process_damage(self, damage) 
+	damage = clamp(damage - self.armor, 0, damage)
+	self.health = self.health - damage
+	if self.health <= 0 then
+		msg.post("main:/manager#camera_controller", "camera_shake", {time = 1, intensity = 50})
+		particlefx.play("#ship_pfx", emitter_state_change)	
+	end
+end
+
 function on_message(self, message_id, message, sender)
 	on_subscription_message(self, message_id, message, sender)
 	self.message_type(self, message_id, message, sender)
@@ -170,23 +179,13 @@ function on_message(self, message_id, message, sender)
 			self.collision_timeout = 0.5
 			local damage = 5 + (vmath.length(message.relative_velocity) * (1+message.other_mass/3)) / 35
 			damage = damage * self.impact_resistance
-			damage = clamp(damage - self.armor, 0, damage)
-			self.health = self.health - damage
-			if self.health <= 0 then
-				msg.post("main:/manager#camera_controller", "camera_shake", {time = 1, intensity = 50})
-				particlefx.play("#ship_pfx", emitter_state_change)	
-			end
+			process_damage(self, damage)
 			msg.post("main:/manager#camera_controller", "bonk_camera", {pos = message.normal * damage})
 		end
 	elseif message_id == hash("heal") then
 		self.health = math.min(self.health + message.value, self.max_health)
 	elseif message_id == hash("damage") then
-		local damage = clamp(message.damage - self.armor, 0, message.damage)
-		self.health = self.health - damage
-		if self.health <= 0 then
-			msg.post("main:/manager#camera_controller", "camera_shake", {time = 1, intensity = 50})
-			particlefx.play("#ship_pfx", emitter_state_change)	
-		end
+		process_damage(self, message.damage)
 	end
 end
 
