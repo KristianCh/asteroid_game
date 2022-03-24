@@ -44,7 +44,7 @@ function update(self, dt)
 	self.update(self, dt)
 
 	local pos = go.get_position()
-	if pos.x > 2320 or pos.x < -400 or pos.y > 1417 or pos.y < -400 then
+	if pos.x > 2320 or pos.x < -400 or pos.y > 1480 or pos.y < -400 then
 		go.delete()
 	end
 end

@@ -1,40 +1,35 @@
 require "modules.utils"
 
-go.property("velocity", vmath.vector3(150, 0, 0))
+go.property("heading", vmath.vector3(0, 1, 0))
+go.property("speed", 100)
+go.property("damage", 10)
 
 function init(self)
-	-- Add initialization code here
-	-- Learn more: https://defold.com/manuals/script/
-	-- Remove this function if not needed
-end
-
-function final(self)
-	-- Add finalization code here
-	-- Learn more: https://defold.com/manuals/script/
-	-- Remove this function if not needed
+	local angle = math.deg(math.atan2(self.heading.y, self.heading.x)) - 90
+	local rot_z = vmath.quat_rotation_z(math.rad(angle))
+	go.set_rotation(rot_z)
 end
 
 function update(self, dt)
 	local max_x, max_y = WIDTH, HEIGHT
 	local pos = go.get_position()
 
-	if pos.x > max_x + 50 then
-		go.delete()
-	elseif pos.x < -50 then
-		go.delete()
-	end
-
-	if pos.y > max_y + 50 then
-		go.delete()
-	elseif pos.y < -50 then
+	local pos = go.get_position()
+	if pos.x > 2320 or pos.x < -400 or pos.y > 1480 or pos.y < -400 then
 		go.delete()
 	end
-	pos = pos + self.velocity * dt
+	
+	pos = pos + self.heading * self.speed * dt
 	go.set_position(pos)
 end
 
 function on_message(self, message_id, message, sender)
-	-- Add message-handling code here
-	-- Learn more: https://defold.com/manuals/message-passing/
-	-- Remove this function if not needed
+	if message_id == hash("trigger_response") then
+		if message.other_group == hash("ship") then
+			msg.post(message.other_id, "damage", {damage = self.damage})
+		else
+			
+		end
+		go.delete()
+	end
 end

@@ -180,6 +180,13 @@ function on_message(self, message_id, message, sender)
 		end
 	elseif message_id == hash("heal") then
 		self.health = math.min(self.health + message.value, self.max_health)
+	elseif message_id == hash("damage") then
+		local damage = clamp(message.damage - self.armor, 0, message.damage)
+		self.health = self.health - damage
+		if self.health <= 0 then
+			msg.post("main:/manager#camera_controller", "camera_shake", {time = 1, intensity = 50})
+			particlefx.play("#ship_pfx", emitter_state_change)	
+		end
 	end
 end
 

@@ -9,7 +9,6 @@ go.property("visibility_range", 150)
 go.property("evasion", 2)
 go.property("damage", 10)
 go.property("aoe_range", 1)
---go.property("mothership_type", "fleet_carrier")
 go.property("type", 1)
 
 function init(self)
@@ -56,7 +55,7 @@ end
 function on_message(self, message_id, message, sender)
 	self.message_type(self, message_id, message, sender)
 
-	if message_id == hash("contact_point_response") then
+	if message_id == hash("collision_response") then
 		if message.other_group == hash("asteroid") or message.other_group == hash("asteroid_projectile") then
 			go.delete()
 		end

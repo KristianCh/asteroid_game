@@ -5,6 +5,7 @@ local run_data = {
 	extra_spawn_rate = 0,
 	extra_credits = 0,
 	extra_toughness = 0,
-	extra_armor = 0
+	extra_armor = 0,
+	defeated = {}
 }
 return run_data

@@ -1,6 +1,11 @@
 WIDTH = 1920
 HEIGHT = 1080
 
+function is_in_game_world(pos) 
+	res = pos.x > WIDTH or pos.x < 0 or pos.y > HEIGHT or pos.y < 0
+	return not res
+end
+
 function table_size(table)
 	local count = 0
 	for _ in pairs(table) do count = count + 1 end

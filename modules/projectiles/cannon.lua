@@ -9,7 +9,8 @@ function cannon_update(self, dt)
 	self.rot = self.rot + dt * 2500
 	local rot_z = vmath.quat_rotation_y(math.rad(self.rot * dt))
 	local current_rot = go.get_rotation()
-	go.set_rotation(current_rot * rot_z)
+	--go.set_rotation(current_rot * rot_z)
+	go.set_rotation(rot_z)
 end
 
 function cannon_on_message(self, message_id, message, sender)

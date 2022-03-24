@@ -38,6 +38,7 @@ embedded_components {
   "restitution: 0.5\n"
   "group: \"player_drone\"\n"
   "mask: \"asteroid\"\n"
+  "mask: \"asteroid_projectile\"\n"
   "embedded_collision_shape {\n"
   "  shapes {\n"
   "    shape_type: TYPE_BOX\n"
