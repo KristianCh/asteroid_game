@@ -2,7 +2,7 @@ require "modules.values.stage_data"
 require "modules.utils"
 
 function spawn(self)
-	local type = math.random(0, 2)
+	local type = math.random(0, 3)
 	local props = {}
 	props[hash("/base_asteroid")] = {initial_slowdown = 2, type = type}
 	if math.random() > 0.5 then

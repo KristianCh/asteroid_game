@@ -1,5 +1,6 @@
 require "modules.asteroids.magnetic"
 require "modules.asteroids.firing"
+require "modules.asteroids.sniper"
 require "modules.subscriber_module"
 require "modules.utils"
 require "modules.list_queue"
@@ -102,6 +103,10 @@ function init(self)
 		self.type_init = firing_init
 		self.type_update = firing_update
 		self.type_message_handling = firing_message_handling
+	elseif self.type == 3 then
+		self.type_init = sniper_init
+		self.type_update = sniper_update
+		self.type_message_handling = sniper_message_handling
 	end
 	self.type_init(self)
 
