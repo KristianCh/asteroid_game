@@ -44,9 +44,13 @@ function firing_message_handling(self, message_id, message, sender)
 				self.heading = go.get("#co" .. self.size, "linear_velocity")
 				msg.post("#co" .. self.size, "disable")
 				msg.post("#co" .. self.size .. "_kinematic", "enable")
+
+				go.set("mesh_container#mesh", "color", vmath.vector4(1, 0, 0, 1))
+				self.color = vmath.vector4(1, 0, 0, 1)
+				go.animate("mesh_container#mesh", "color", go.PLAYBACK_ONCE_BACKWARD, vmath.vector4(1, 0.333, 0.333, 1), go.EASING_OUTSINE, 0.5)
 			elseif self.cooldown <= 0 then
 				self.cooldown = self.cooldown_time
-				factory.create("/manager#asteroid_projectile_factory", go.get_position() + vmath.normalize(vec_to_ship) * self.size * 50, nil, {speed = 750, heading = vmath.normalize(vec_to_ship), damage = 25}, vmath.vector3(0.5))
+				factory.create("/manager#asteroid_projectile_factory", go.get_position() + vmath.normalize(vec_to_ship) * self.size * 50, nil, {speed = 750, heading = vmath.normalize(vec_to_ship), damage = 7.5 * self.size}, vmath.vector3(0.5))
 			end
 		end
 	end
