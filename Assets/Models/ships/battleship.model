@@ -1,7 +1,0 @@
-mesh: "/assets/models/ships/daes/battleship.dae"
-material: "/render/materials/model.material"
-textures: "/assets/images/palette.png"
-skeleton: "/assets/models/ships/daes/battleship.dae"
-animations: "/assets/models/ships/daes/battleship.dae"
-default_animation: ""
-name: "unnamed"
