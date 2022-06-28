@@ -54,7 +54,8 @@ public class AsteroidPrefabManager : MonoBehaviour
 
     public static MagneticAsteroid InstantiateMagneticAsteroid(MagneticAsteroid ParentAsteroid)
     {
-        MagneticAsteroid NewAsteroid = Instantiate(Instance.MagneticAsteroidPrefab, ParentAsteroid.transform.position, ParentAsteroid.transform.rotation);
+        Vector3 positionOffset = new Vector3(Random.Range(-0.5f, -0.5f), Random.Range(-0.5f, -0.5f), 0f) * (ParentAsteroid.Size - 1f) / 3f;
+        MagneticAsteroid NewAsteroid = Instantiate(Instance.MagneticAsteroidPrefab, ParentAsteroid.transform.position + positionOffset, ParentAsteroid.transform.rotation);
         NewAsteroid.Size = ParentAsteroid.Size - 1;
         NewAsteroid.asteroidRigidbody.velocity = ParentAsteroid.asteroidRigidbody.velocity;
         NewAsteroid.asteroidRigidbody.angularVelocity = ParentAsteroid.asteroidRigidbody.angularVelocity;

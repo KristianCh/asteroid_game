@@ -7,8 +7,6 @@ public class MagneticAsteroid : BaseAsteroid
     public float Magnetism = 300;
     public Color ColorA;
     public Color ColorB;
-
-    private Renderer m_Renderer;
     private float ColorTime = 0f;
 
 
@@ -16,7 +14,6 @@ public class MagneticAsteroid : BaseAsteroid
     public override void Start()
     {
         base.Start();
-        m_Renderer = this.GetComponent<Renderer>();
     }
 
     // Update is called once per frame

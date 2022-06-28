@@ -83,7 +83,17 @@ public class WaveManager : MonoBehaviour
     {
         Vector3 position = GenerateAsteroidPosition();
         Vector3 offset = new Vector3(Random.Range(-0.5f, 0.5f), Random.Range(-0.5f, 0.5f), Random.Range(-0.5f, 0.5f));
-        BaseAsteroid newAsteroid = AsteroidPrefabManager.InstantiateBaseAsteroid(3, position, Quaternion.identity);
+        BaseAsteroid newAsteroid = null;
+        
+        if (Random.Range(0f, 1f) > 0.5f)
+        {
+            AsteroidPrefabManager.InstantiateBaseAsteroid(3, position, Quaternion.identity);
+        }
+        else
+        {
+            AsteroidPrefabManager.InstantiateMagneticAsteroid(3, position, Quaternion.identity);
+        }
+        
         newAsteroid.asteroidRigidbody.AddForceAtPosition(offset * 100, position + offset);
     }
 
