@@ -8,6 +8,8 @@ public class Fleet : MonoBehaviour
 
     public List<BaseShip> ShipList = new List<BaseShip>();
 
+    private Vector3 CameraOffset = Vector3.zero;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -18,14 +20,18 @@ public class Fleet : MonoBehaviour
     void Update()
     {
         Vector3 FleetCenter = Vector3.zero;
-        foreach (BaseShip ship in ShipList)
+        if (ShipList.Count > 0)
         {
-            FleetCenter += ship.transform.position;
+            foreach (BaseShip ship in ShipList)
+            {
+                FleetCenter += ship.transform.position;
+            }
+            FleetCenter /= Mathf.Min(1, ShipList.Count);
+            CameraOffset = FleetCenter * (2.75f / (FleetCenter.magnitude + 0.001f));
+            CameraOffset.z = 0;
+            Debug.Log(CameraOffset);
         }
-        FleetCenter /= Mathf.Min(1, ShipList.Count);
-        Vector3 CameraOffset = FleetCenter * (2.75f / (FleetCenter.magnitude + 0.001f));
-        CameraOffset.z = -10;
-        Camera.main.transform.position = Vector3.Lerp(Camera.main.transform.position, CameraOffset, Time.deltaTime * 0.5f);
+        transform.position = Vector3.Lerp(transform.position, CameraOffset, Time.deltaTime * 0.5f); ;
     }
 
     public BaseShip GetClosestShip(Vector3 position)

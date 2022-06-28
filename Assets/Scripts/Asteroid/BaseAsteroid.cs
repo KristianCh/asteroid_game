@@ -30,7 +30,10 @@ public class BaseAsteroid : MonoBehaviour
     // Start is called before the first frame update
     public virtual void Start()
     {
-        WaveManager.Instance.ActiveAsteroids.Add(this);
+        if (WaveManager.Instance != null)
+        {
+            WaveManager.Instance.ActiveAsteroids.Add(this);
+        }
 
         BaseMaxHealth = 100 * (Size / 3.0f);
         Health = BaseMaxHealth;
@@ -205,7 +208,6 @@ public class BaseAsteroid : MonoBehaviour
 
         float angle = Mathf.Atan2(markerPosition.y, markerPosition.x) * Mathf.Rad2Deg - 90;
         float scaleFactor = Mathf.Min(2.0f, (ScreenSpacePos - markerPosition).magnitude / 500.0f);
-        Debug.Log(scaleFactor);
 
         markerTransform.eulerAngles = new Vector3(0, 0, angle);
         markerTransform.localScale = new Vector3(scaleFactor, scaleFactor, scaleFactor);

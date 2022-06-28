@@ -30,6 +30,10 @@ public class MagneticAsteroid : BaseAsteroid
     {
         base.CalculateMovement();
 
+        if (Fleet.Instance == null)
+        {
+            return;
+        }
         BaseShip closestShip = Fleet.Instance.GetClosestShip(transform.position);
         if (closestShip != null)
         {

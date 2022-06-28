@@ -73,7 +73,11 @@ public class BaseShip : MonoBehaviour
     {
         // Get mouse position
         TargetPosition = Input.mousePosition;
-        TargetPosition = Camera.main.ScreenToWorldPoint(TargetPosition);
+
+        TargetPosition.x = (TargetPosition.x / 960 - 1) * Camera.main.orthographicSize * Camera.main.aspect;
+        TargetPosition.y = (TargetPosition.y / 540 - 1) * Camera.main.orthographicSize;
+        TargetPosition += Camera.main.transform.position;
+        TargetPosition.z = 0;
 
         TargetPosition.x = Mathf.Clamp(TargetPosition.x, -Camera.main.orthographicSize * Camera.main.aspect, Camera.main.orthographicSize * Camera.main.aspect);
         TargetPosition.y = Mathf.Clamp(TargetPosition.y, -Camera.main.orthographicSize, Camera.main.orthographicSize);
