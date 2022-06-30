@@ -8,16 +8,6 @@ public class MissileCruiser : BaseShip
     public override void Start()
     {
         base.Start();
-
-        MaxHealth = 100;
-        Health = MaxHealth;
-        Armor = 5;
-        Speed = 5;
-        ProjectileSpeed = 5;
-        ProjectileTracking = 3;
-
-        SubAttackCountBase = 3;
-        SubAttackCount = SubAttackCountBase;
     }
 
     // Update is called once per frame

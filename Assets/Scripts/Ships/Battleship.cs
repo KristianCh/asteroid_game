@@ -8,15 +8,7 @@ public class Battleship : BaseShip
     public override void Start()
     {
         base.Start();
-
-        MaxHealth = 120;
-        Health = MaxHealth;
-        Armor = 10;
-        Speed = 4;
-
-        SubAttackCountBase = 5;
-        SubAttackCount = SubAttackCountBase;
-}
+    }
 
     // Update is called once per frame
     public override void Update()

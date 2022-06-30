@@ -23,7 +23,7 @@ public class WaveManager : MonoBehaviour
     public Animator WaveTextAnimator;
 
     // Start is called before the first frame update
-    void Start()
+    public virtual void Start()
     {
         Instance = this;
         MaxWave = 2 + Stage / 5;
@@ -33,7 +33,7 @@ public class WaveManager : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    public virtual void Update()
     {
         if (!IsWaveOn)
         {

@@ -35,7 +35,7 @@ public class BaseAsteroid : MonoBehaviour
             WaveManager.Instance.ActiveAsteroids.Add(this);
         }
 
-        BaseMaxHealth = 100 * (Size / 3.0f);
+        BaseMaxHealth = BaseMaxHealth * (Size / 3.0f);
         Health = BaseMaxHealth;
 
         CenterOffset = Random.Range(0, 6);

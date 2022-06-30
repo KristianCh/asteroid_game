@@ -133,7 +133,7 @@ MonoBehaviour:
   IsFlagship: 0
   Health: 100
   MaxHealth: 100
-  Armor: 0
+  Armor: 5
   Speed: 5
   TurnSpeed: 3
   VisibilityRange: 1
@@ -147,13 +147,12 @@ MonoBehaviour:
   BaseDamage: 10
   DamageMultiplier: 1
   DamageModifier: 0
-  ProjectileSpeed: 10
+  ProjectileSpeed: 5
   ProjectileTracking: 3
   MainCooldownTriggered: 0
-  SubAttackCountBase: 1
-  SubAttackCount: 1
+  SubAttackCountBase: 3
+  SubAttackCount: 3
   LayerMask: 256
-  TargetPosition: {x: 0, y: 0, z: 0}
   Heading: {x: 0, y: 1, z: 0}
   Classes: []
 --- !u!1 &595422311763841696

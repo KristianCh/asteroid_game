@@ -36,7 +36,6 @@ public class BaseShip : MonoBehaviour
     public int SubAttackCount = 1;
     public int LayerMask = 1 << 8;
 
-    public Vector3 TargetPosition = Vector3.zero;
     public Vector3 Heading = new Vector3(0, 1, 0);
 
     public List<string> Classes = new List<string>();
@@ -71,22 +70,9 @@ public class BaseShip : MonoBehaviour
 
     public virtual void CalculateMovement()
     {
-        // Get mouse position
-        TargetPosition = Input.mousePosition;
-
-        TargetPosition.x = (TargetPosition.x / 960 - 1) * Camera.main.orthographicSize * Camera.main.aspect;
-        TargetPosition.y = (TargetPosition.y / 540 - 1) * Camera.main.orthographicSize;
-        TargetPosition += Camera.main.transform.position;
-        TargetPosition.z = 0;
-
-        TargetPosition.x = Mathf.Clamp(TargetPosition.x, -Camera.main.orthographicSize * Camera.main.aspect, Camera.main.orthographicSize * Camera.main.aspect);
-        TargetPosition.y = Mathf.Clamp(TargetPosition.y, -Camera.main.orthographicSize, Camera.main.orthographicSize);
-        TargetPosition.z = 0;
-
-
         // Save old heading, slerp to target
         Vector3 oldHeading = Heading;
-        Heading = Vector3.Slerp(Heading, (TargetPosition - transform.position).normalized, TurnSpeed * Time.deltaTime).normalized;
+        Heading = Vector3.Slerp(Heading, (Fleet.Instance.TargetPosition - transform.position).normalized, TurnSpeed * Time.deltaTime).normalized;
 
         // Perform collision avoidance raycasts
         for (int i = -2; i <= 1; i++)

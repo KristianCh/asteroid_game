@@ -400,10 +400,10 @@ MonoBehaviour:
   HealthBar: {fileID: 7015108254396005595}
   CooldownBar: {fileID: 1742996170703171013}
   IsFlagship: 0
-  Health: 100
-  MaxHealth: 100
-  Armor: 0
-  Speed: 5
+  Health: 120
+  MaxHealth: 120
+  Armor: 10
+  Speed: 4
   TurnSpeed: 3
   VisibilityRange: 1
   TargetingRange: 100
@@ -419,10 +419,9 @@ MonoBehaviour:
   ProjectileSpeed: 10
   ProjectileTracking: 0
   MainCooldownTriggered: 0
-  SubAttackCountBase: 1
-  SubAttackCount: 1
+  SubAttackCountBase: 4
+  SubAttackCount: 4
   LayerMask: 256
-  TargetPosition: {x: 0, y: 0, z: 0}
   Heading: {x: 0, y: 1, z: 0}
   Classes: []
 --- !u!1 &8888091658754638868
