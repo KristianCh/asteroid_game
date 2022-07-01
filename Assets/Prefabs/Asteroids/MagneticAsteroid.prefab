@@ -63,7 +63,7 @@ MonoBehaviour:
   OutOfVisionMarker: {fileID: 3141872294891105529}
   m_Renderer: {fileID: 3387205420667952824}
   ScreenCanvas: {fileID: 2040261779491473761}
-  Magnetism: 300
+  Magnetism: 500
   ColorA: {r: 1, g: 0.25, b: 0.25, a: 0.5019608}
   ColorB: {r: 0.25, g: 0.82874024, b: 1, a: 0.5019608}
 --- !u!114 &9088858057412483092

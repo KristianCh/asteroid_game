@@ -103,8 +103,8 @@ public class WaveManager : MonoBehaviour
         float xRange = Camera.main.orthographicSize * Camera.main.aspect * 1.5f;
         float yRange = Camera.main.orthographicSize * 1.5f;
 
-        bool axis = Random.Range(-1, 1) > 0 ? true : false;
-        int mult = Random.Range(-1, 1) > 0 ? 1 : -1;
+        bool axis = Random.Range(-1f, 1f) > 0 ? true : false;
+        int mult = Random.Range(-1f, 1f) > 0 ? 1 : -1;
 
         if (axis)
         {

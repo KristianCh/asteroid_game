@@ -26,6 +26,7 @@ public class BaseAsteroid : MonoBehaviour
 
     private float CenterOffset = 0;
     private float DeathTime = 1;
+    private float OutOfScreenSpeedMax = 5;
 
     // Start is called before the first frame update
     public virtual void Start()
@@ -114,10 +115,10 @@ public class BaseAsteroid : MonoBehaviour
         if (
                 (Mathf.Abs(transform.position.x) > Camera.main.orthographicSize * Camera.main.aspect ||
                 Mathf.Abs(transform.position.y) > Camera.main.orthographicSize) &&
-                asteroidRigidbody.velocity.magnitude > 7
+                asteroidRigidbody.velocity.magnitude > OutOfScreenSpeedMax
             )
         {
-            asteroidRigidbody.AddForce(-asteroidRigidbody.velocity.normalized * Time.deltaTime);
+            asteroidRigidbody.AddForce(-asteroidRigidbody.velocity.normalized * Time.deltaTime * 2f * (transform.position.magnitude));
         }
     }
 
@@ -132,7 +133,7 @@ public class BaseAsteroid : MonoBehaviour
             Health = 0;
             if (Size > 1)
             {
-                for (int i = 0; i < Size; i++)
+                for (int i = 0; i < Random.Range(1, 3); i++)
                 {
                     GenerateChild();
                 }

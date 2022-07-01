@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MagneticAsteroid : BaseAsteroid
 {
-    public float Magnetism = 300;
+    public float Magnetism = 500;
     public Color ColorA;
     public Color ColorB;
     private float ColorTime = 0f;
