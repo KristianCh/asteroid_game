@@ -4,9 +4,12 @@ using UnityEngine;
 
 public class MagneticAsteroid : BaseAsteroid
 {
+    // Strength of magnetic force
     public float Magnetism = 500;
+    // Colors to use
     public Color ColorA;
     public Color ColorB;
+    // Time to base color of
     private float ColorTime = 0f;
 
 
@@ -21,11 +24,13 @@ public class MagneticAsteroid : BaseAsteroid
     {
         base.Update();
 
+        // Update asteroid color
         ColorTime += Time.deltaTime * 2;
         Color c = Color.Lerp(ColorA, ColorB, Mathf.Cos(ColorTime) * 0.5f + 0.5f);
         m_Renderer.material.SetColor("_Color", c);
     }
 
+    // Base asteroid movement + adding force towards closest ship
     public override void CalculateMovement()
     {
         base.CalculateMovement();
@@ -42,6 +47,7 @@ public class MagneticAsteroid : BaseAsteroid
         }
     }
 
+    // Generate magnetic asteroid instead
     public override BaseAsteroid GenerateChild()
     {
         return AsteroidPrefabManager.InstantiateMagneticAsteroid(this);

@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class AsteroidPrefabManager : MonoBehaviour
 {
+    // Asteroid prefabs
     public BaseAsteroid BaseAsteroidPrefab;
     public MagneticAsteroid MagneticAsteroidPrefab;
 
+    // Instance of prefab manager
     public static AsteroidPrefabManager Instance;
 
     // Start is called before the first frame update
@@ -15,12 +17,7 @@ public class AsteroidPrefabManager : MonoBehaviour
         Instance = this;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
+    // Applies a small initial force to asteroid
     private static void ApplyInitialForce(BaseAsteroid Asteroid)
     {
         Vector3 Force = new Vector3(Random.Range(-1, 1), Random.Range(-1, 1), Random.Range(-1, 1)) * 10;
@@ -28,6 +25,7 @@ public class AsteroidPrefabManager : MonoBehaviour
         Asteroid.asteroidRigidbody.AddForceAtPosition(Force, Asteroid.transform.position + Offset);
     }
 
+    // Instantiate a new base asteroid based on the input asteroid
     public static BaseAsteroid InstantiateBaseAsteroid(BaseAsteroid ParentAsteroid)
     {
         BaseAsteroid NewAsteroid = Instantiate(Instance.BaseAsteroidPrefab, ParentAsteroid.transform.position, ParentAsteroid.transform.rotation);
@@ -41,6 +39,7 @@ public class AsteroidPrefabManager : MonoBehaviour
         return NewAsteroid;
     }
 
+    // Instantiate a new base asteroid with given values
     public static BaseAsteroid InstantiateBaseAsteroid(int Size, Vector3 Position, Quaternion Rotation)
     {
         BaseAsteroid NewAsteroid = Instantiate(Instance.BaseAsteroidPrefab, Position, Rotation);
@@ -52,6 +51,7 @@ public class AsteroidPrefabManager : MonoBehaviour
         return NewAsteroid;
     }
 
+    // Instantiate a new magnetic asteroid based on the input asteroid
     public static MagneticAsteroid InstantiateMagneticAsteroid(MagneticAsteroid ParentAsteroid)
     {
         Vector3 positionOffset = new Vector3(Random.Range(-0.5f, -0.5f), Random.Range(-0.5f, -0.5f), 0f) * (ParentAsteroid.Size - 1f) / 3f;
@@ -66,6 +66,7 @@ public class AsteroidPrefabManager : MonoBehaviour
         return NewAsteroid;
     }
 
+    // Instantiate a new magnetic asteroid with given values
     public static MagneticAsteroid InstantiateMagneticAsteroid(int Size, Vector3 Position, Quaternion Rotation)
     {
         MagneticAsteroid NewAsteroid = Instantiate(Instance.MagneticAsteroidPrefab, Position, Rotation);
