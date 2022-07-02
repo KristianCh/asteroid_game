@@ -97,6 +97,7 @@ public class BaseAsteroid : MonoBehaviour
          */
 
         WaveManager.Instance.ActiveAsteroids.Remove(this);
+        OutOfVisionMarker.enabled = false;
 
         IsDead = true;
         Health = 0;
@@ -191,11 +192,12 @@ public class BaseAsteroid : MonoBehaviour
         // End if asteroid is in cameras vision and set the markers color appropriately
         if (isInNegXRange && isInPosXRange && isInNegYRange && isInPosYRange)
         {
-            OutOfVisionMarker.color = new Color(0, 0, 0, 0);
+            OutOfVisionMarker.enabled = false;
             return;
         }
         else
         {
+            OutOfVisionMarker.enabled = true;
             OutOfVisionMarker.color = m_Renderer.material.color;
         }
 

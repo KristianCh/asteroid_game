@@ -34,7 +34,7 @@ public class MainMenuManager : MonoBehaviour
 
     public void NewRun()
     {
-        SceneManager.LoadScene("Game", LoadSceneMode.Single);
+        SceneManager.LoadScene("DifficultySelect", LoadSceneMode.Single);
     }
 
     public void QuitGame()

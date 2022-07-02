@@ -409,7 +409,7 @@ MonoBehaviour:
   TargetingRange: 100
   Level: 1
   SubLevel: 1
-  AttackCooldown: 5
+  AttackCooldown: 3
   SubAttackCooldown: 0.2
   AttackCooldownTimer: 5
   SubAttackCooldownTimer: 0.2
