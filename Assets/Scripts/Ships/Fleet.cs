@@ -22,8 +22,8 @@ public class Fleet : MonoBehaviour
     {
         TargetPosition = Input.mousePosition;
 
-        TargetPosition.x = (TargetPosition.x / 960 - 1) * Camera.main.orthographicSize * Camera.main.aspect;
-        TargetPosition.y = (TargetPosition.y / 540 - 1) * Camera.main.orthographicSize;
+        TargetPosition.x = (TargetPosition.x / (Screen.width / 2) - 1) * Camera.main.orthographicSize * Camera.main.aspect;
+        TargetPosition.y = (TargetPosition.y / (Screen.height / 2) - 1) * Camera.main.orthographicSize;
         TargetPosition += Camera.main.transform.position;
         TargetPosition.z = 0;
 

@@ -204,40 +204,43 @@ public class BaseAsteroid : MonoBehaviour
         // Initialize marker position and calculate screen space coords of asteroid
         Vector2 markerPosition = new Vector2(0, 0);
         Vector2 ScreenSpacePos = new Vector2(
-                (transform.position.x - Camera.main.transform.position.x) / (Camera.main.orthographicSize * Camera.main.aspect) * 960,
-                (transform.position.y - Camera.main.transform.position.y) / Camera.main.orthographicSize * 540
+                (transform.position.x - Camera.main.transform.position.x) / (Camera.main.orthographicSize * Camera.main.aspect) * (Screen.width / 2),
+                (transform.position.y - Camera.main.transform.position.y) / Camera.main.orthographicSize * (Screen.height / 2)
             );
 
         // Set X position of marker
+        float screenX = (Screen.width / 2);
+        float screenY = (Screen.height / 2);
+        float borderW = Screen.height / 1080 * 20;
         if (!isInNegXRange)
         {
-            markerPosition.x = -Camera.main.orthographicSize * Camera.main.aspect / (Camera.main.orthographicSize * Camera.main.aspect) * 960 + 20;
+            markerPosition.x = -Camera.main.orthographicSize * Camera.main.aspect / (Camera.main.orthographicSize * Camera.main.aspect) * screenX + borderW;
         }
         if (!isInPosXRange)
         {
-            markerPosition.x = Camera.main.orthographicSize * Camera.main.aspect / (Camera.main.orthographicSize * Camera.main.aspect) * 960 - 20;
+            markerPosition.x = Camera.main.orthographicSize * Camera.main.aspect / (Camera.main.orthographicSize * Camera.main.aspect) * screenX - borderW;
         }
         if (isInNegXRange && isInPosXRange)
         {
             markerPosition.x = ScreenSpacePos.x;
-            markerPosition.x = Mathf.Max(-940, markerPosition.x);
-            markerPosition.x = Mathf.Min(940, markerPosition.x);
+            markerPosition.x = Mathf.Max(-(screenX - borderW), markerPosition.x);
+            markerPosition.x = Mathf.Min(screenX - borderW, markerPosition.x);
         }
 
         // Set Y position of marker
         if (!isInNegYRange)
         {
-            markerPosition.y = -Camera.main.orthographicSize / Camera.main.orthographicSize * 540 + 20;
+            markerPosition.y = -Camera.main.orthographicSize / Camera.main.orthographicSize * screenY + borderW;
         }
         if (!isInPosYRange)
         {
-            markerPosition.y = Camera.main.orthographicSize / Camera.main.orthographicSize * 540 - 20;
+            markerPosition.y = Camera.main.orthographicSize / Camera.main.orthographicSize * screenY - borderW;
         }
         if (isInNegYRange && isInPosYRange)
         {
             markerPosition.y = ScreenSpacePos.y;
-            markerPosition.y = Mathf.Max(-520, markerPosition.y);
-            markerPosition.y = Mathf.Min(520, markerPosition.y);
+            markerPosition.y = Mathf.Max(-(screenY - borderW), markerPosition.y);
+            markerPosition.y = Mathf.Min(screenY - borderW, markerPosition.y);
         }
 
         // Apply marker position

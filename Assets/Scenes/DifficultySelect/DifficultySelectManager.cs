@@ -21,7 +21,7 @@ public class DifficultySelectManager : MonoBehaviour
 
     public void StartGame()
     {
-        SceneManager.LoadScene("Game", LoadSceneMode.Single);
+        SceneManager.LoadScene("Store", LoadSceneMode.Single);
     }
 
     public void SelectDifficultyNormal()
