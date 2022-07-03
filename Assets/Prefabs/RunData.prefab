@@ -57,6 +57,6 @@ MonoBehaviour:
     SubLevel: 0
     IsFlagShip: 1
   Modules: []
-  Stage: 9
+  Stage: 0
   Credits: 1500
   Difficulty: 0

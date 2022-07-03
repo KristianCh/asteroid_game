@@ -27,7 +27,7 @@ public class StoreManager : MonoBehaviour
                 ShipDisplay sd = GameObject.Find("ShipDisplay" + i.ToString()).GetComponent<ShipDisplay>();
                 if (i >= ActiveRunData.FleetLimit)
                 {
-                    sd.gameObject.SetActive(false);
+                    sd.SDP.SetActive(false);
                 }
                 else
                 {
