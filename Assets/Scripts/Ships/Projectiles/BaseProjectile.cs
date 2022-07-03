@@ -79,7 +79,7 @@ public class BaseProjectile : MonoBehaviour
 
         if (asteroid != null)
         {
-            asteroid.Damage(Damage, DamageType.Kinetic);
+            asteroid.Damage(Damage, DamageType.Kinetic, collision.contacts[0].point);
         }
 
         ExecuteHitEventEffects(HitEffects, collision);

@@ -133,7 +133,7 @@ public class BaseAsteroid : MonoBehaviour
 
         // Calculate and apply damage dealt to asteroid
         float damage = Mathf.Pow(1 + collision.relativeVelocity.magnitude, 2) * MassMult;
-        Damage(damage, DamageType.Kinetic);
+        Damage(damage, DamageType.Kinetic, contact.point, collision.gameObject.layer != LayerMask.NameToLayer("ShipProjectile"));
     }
 
     // Calculates forces applied to asteroid each frame
@@ -157,7 +157,7 @@ public class BaseAsteroid : MonoBehaviour
     }
 
     // Apply damage to asteroid
-    public virtual void Damage(float damage, DamageType damageType)
+    public virtual void Damage(float damage, DamageType damageType, Vector3 position, bool showDamageIndicator = true)
     {
         /*
          * Todo : Take resistances and weaknesses into account
@@ -169,6 +169,7 @@ public class BaseAsteroid : MonoBehaviour
         {
             Death();
         }
+        if (showDamageIndicator) AsteroidPrefabManager.CreateDamageIndicator(Mathf.Ceil(damage), position);
         HealthBar.fillAmount = Health / BaseMaxHealth;
     }
 
@@ -192,12 +193,11 @@ public class BaseAsteroid : MonoBehaviour
         // End if asteroid is in cameras vision and set the markers color appropriately
         if (isInNegXRange && isInPosXRange && isInNegYRange && isInPosYRange)
         {
-            OutOfVisionMarker.enabled = false;
+            OutOfVisionMarker.color = new Color(0, 0, 0, 0);
             return;
         }
         else
         {
-            OutOfVisionMarker.enabled = true;
             OutOfVisionMarker.color = m_Renderer.material.color;
         }
 
@@ -209,9 +209,9 @@ public class BaseAsteroid : MonoBehaviour
             );
 
         // Set X position of marker
-        float screenX = (Screen.width / 2);
-        float screenY = (Screen.height / 2);
-        float borderW = Screen.height / 1080 * 20;
+        float screenX = 960; //(Screen.width / 2);
+        float screenY = 540; //(Screen.height / 2);
+        float borderW = 20; //Screen.height / 1080 * 20;
         if (!isInNegXRange)
         {
             markerPosition.x = -Camera.main.orthographicSize * Camera.main.aspect / (Camera.main.orthographicSize * Camera.main.aspect) * screenX + borderW;

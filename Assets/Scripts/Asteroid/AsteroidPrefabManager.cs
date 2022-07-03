@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class AsteroidPrefabManager : MonoBehaviour
 {
+    public DamageIndicator DamageIndicatorPrefab;
     // Asteroid prefabs
     public BaseAsteroid BaseAsteroidPrefab;
     public MagneticAsteroid MagneticAsteroidPrefab;
@@ -15,6 +16,12 @@ public class AsteroidPrefabManager : MonoBehaviour
     void Start()
     {
         Instance = this;
+    }
+
+    public static void CreateDamageIndicator(float damage, Vector3 position)
+    {
+        DamageIndicator dmg = Instantiate(Instance.DamageIndicatorPrefab, position, Quaternion.identity);
+        dmg.SetText(damage.ToString());
     }
 
     // Applies a small initial force to asteroid

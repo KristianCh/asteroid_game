@@ -24,7 +24,7 @@ public class Explosion : BaseAoe
         BaseAsteroid asteroid = collider.gameObject.GetComponent(typeof(BaseAsteroid)) as BaseAsteroid;
         if (asteroid != null)
         {
-            asteroid.Damage(Damage, DamageType.Explosive);
+            asteroid.Damage(Damage, DamageType.Explosive, asteroid.transform.position);
         }
 
         collider.attachedRigidbody.AddForceAtPosition((asteroid.transform.position - transform.position).normalized * Force, asteroid.transform.position);
