@@ -25,6 +25,6 @@ public class Battleship : BaseShip
 
         Vector3 intercept = GetAsteroidInterceptVector(transform.position, target, ProjectileSpeed);
 
-        BaseProjectile newProjectile = ShipPrefabManager.InstantiateCannonRound(BaseDamage * DamageMultiplier + DamageModifier, ProjectileSpeed, ProjectileTracking, intercept, target, transform.position);
+        BaseProjectile newProjectile = ShipPrefabManager.InstantiateCannonRound(Damage, ProjectileSpeed, ProjectileTracking, intercept, target, transform.position);
     }
 }

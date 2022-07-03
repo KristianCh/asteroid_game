@@ -10,7 +10,12 @@ public class MainMenuManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //Screen.SetResolution(1920, 1080, true);
+        // Destroy active run data
+        RunData rd = (RunData)FindObjectOfType(typeof(RunData));
+        if (rd != null)
+        {
+            Destroy(rd.gameObject);
+        }
     }
 
     // Update is called once per frame
@@ -32,11 +37,13 @@ public class MainMenuManager : MonoBehaviour
         }
     }
 
+    // Go to difficulty select
     public void NewRun()
     {
         SceneManager.LoadScene("DifficultySelect", LoadSceneMode.Single);
     }
 
+    // Quit game
     public void QuitGame()
     {
         Application.Quit();

@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 public class DifficultySelectManager : MonoBehaviour
 {
     public GameDifficulty SelectedDifficulty = GameDifficulty.Normal;
+    public RunData RunDataPrefab;
 
     void Start()
     {
@@ -21,6 +22,8 @@ public class DifficultySelectManager : MonoBehaviour
 
     public void StartGame()
     {
+        RunData rd = Instantiate(RunDataPrefab, new Vector3(0, 0, 0), Quaternion.identity).GetComponent<RunData>();
+        rd.Difficulty = SelectedDifficulty;
         SceneManager.LoadScene("Store", LoadSceneMode.Single);
     }
 

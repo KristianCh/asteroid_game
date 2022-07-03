@@ -523,7 +523,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1297388983}
   - component: {fileID: 1297388985}
-  - component: {fileID: 1297388984}
   m_Layer: 0
   m_Name: RaycastCamera
   m_TagString: Untagged
@@ -545,14 +544,6 @@ Transform:
   m_Father: {fileID: 1606551726}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!81 &1297388984
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1297388982}
-  m_Enabled: 1
 --- !u!20 &1297388985
 Camera:
   m_ObjectHideFlags: 0

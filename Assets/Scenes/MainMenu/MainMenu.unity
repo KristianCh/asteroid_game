@@ -2013,7 +2013,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1482836407}
   - component: {fileID: 1482836405}
-  - component: {fileID: 1482836406}
   m_Layer: 0
   m_Name: RaycastCamera
   m_TagString: Untagged
@@ -2064,14 +2063,6 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!81 &1482836406
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1482836404}
-  m_Enabled: 1
 --- !u!4 &1482836407
 Transform:
   m_ObjectHideFlags: 0

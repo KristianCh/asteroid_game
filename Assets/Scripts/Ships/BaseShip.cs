@@ -25,11 +25,16 @@ public class BaseShip : MonoBehaviour
     public float SubAttackCooldown = 0.2f;
     public float AttackCooldownTimer = 5;
     public float SubAttackCooldownTimer = 0.2f;
-    public float BaseDamage = 10;
-    public float DamageMultiplier = 1;
-    public float DamageModifier = 0;
+    public float Damage = 10;
     public float ProjectileSpeed = 10;
     public float ProjectileTracking = 0;
+
+    public float BaseHealthPerLevel => MaxHealth + Level * 20;
+    public float ArmorPerLevel => Armor;
+    public float SpeedPerLevel => Speed;
+    public float TurnSpeedPerLevel => TurnSpeed;
+    public float AttackCooldownPerLevel => AttackCooldown - Level * 0.5f;
+    public float DamagePerLevel => Damage + Level * 10;
 
     public bool MainCooldownTriggered = false;
     public int SubAttackCountBase = 1;
@@ -38,7 +43,7 @@ public class BaseShip : MonoBehaviour
 
     public Vector3 Heading = new Vector3(0, 1, 0);
 
-    public List<string> Classes = new List<string>();
+    public List<ShipClass> Classes = new List<ShipClass>();
     public List<StatusEffect> AppliedStatusEffects = new List<StatusEffect>();
 
     private bool SetFleet = false;
@@ -155,7 +160,7 @@ public class BaseShip : MonoBehaviour
         }
     }
 
-    public virtual void Damage(float damage)
+    public virtual void ProcessDamage(float damage)
     {
         damage = Mathf.Max(damage - Armor);
         Health -= Mathf.Max(0, damage);
@@ -198,5 +203,15 @@ public class BaseShip : MonoBehaviour
             ).normalized;
 
         return InterceptVector;
+    }
+
+    public virtual string GetStoreTitle()
+    {
+        return "";
+    }
+
+    public virtual string GetStoreDescription()
+    {
+        return "";
     }
 }

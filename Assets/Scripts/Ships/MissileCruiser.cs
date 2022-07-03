@@ -25,6 +25,6 @@ public class MissileCruiser : BaseShip
 
         Vector3 intercept = GetAsteroidInterceptVector(transform.position, target, ProjectileSpeed);
 
-        ShipPrefabManager.InstantiateMissile(BaseDamage * DamageMultiplier + DamageModifier, ProjectileSpeed, ProjectileTracking, intercept, target, transform.position);
+        ShipPrefabManager.InstantiateMissile(Damage, ProjectileSpeed, ProjectileTracking, intercept, target, transform.position);
     }
 }
