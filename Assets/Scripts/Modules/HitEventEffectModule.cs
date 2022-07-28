@@ -1,4 +1,4 @@
-using Ships.Projectiles.HitEventEffects;
+using Combat.Ships.Projectiles.HitEventEffects;
 
 namespace Modules
 {

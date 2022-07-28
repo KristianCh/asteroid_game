@@ -1,46 +1,47 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using TMPro;
+using UnityEngine;
 
-public class TitleText : MonoBehaviour
+namespace Scenes.MainMenu
 {
-    public float Intensity = 1.0f;
-
-    private float m_Time = 0;
-    private TMP_Text textMesh;
-    private Mesh mesh;
-    private Vector3[] vertices;
-
-    // Start is called before the first frame update
-    void Start()
+    public class TitleText : MonoBehaviour
     {
-        textMesh = GetComponent<TMP_Text>();
-    }
+        public float Intensity = 1.0f;
 
-    // Update is called once per frame
-    void Update()
-    {
-        textMesh.ForceMeshUpdate();
-        mesh = textMesh.mesh;
-        vertices = mesh.vertices;
+        private float m_Time = 0;
+        private TMP_Text textMesh;
+        private Mesh mesh;
+        private Vector3[] vertices;
 
-        for (int i = 0; i < vertices.Length; i++)
+        // Start is called before the first frame update
+        public void Start()
         {
-            vertices[i] = vertices[i] + GetTransformOffset(vertices[i] - transform.position);
+            textMesh = GetComponent<TMP_Text>();
         }
 
-        m_Time += Time.deltaTime;
-        m_Time += Time.deltaTime;
+        // Update is called once per frame
+        public void Update()
+        {
+            textMesh.ForceMeshUpdate();
+            mesh = textMesh.mesh;
+            vertices = mesh.vertices;
 
-        mesh.vertices = vertices;
-        textMesh.canvasRenderer.SetMesh(mesh);
-    }
+            for (var i = 0; i < vertices.Length; i++)
+            {
+                vertices[i] = vertices[i] + GetTransformOffset(vertices[i] - transform.position);
+            }
 
-    private Vector3 GetTransformOffset(Vector3 pos)
-    {
-        Vector3 offset = new Vector3(pos.y * Intensity * Mathf.Sign(-pos.x) * Mathf.Abs(pos.x / 450), Mathf.Sin(m_Time * 0.5f) * 50, 0);
-        offset += new Vector3(Random.Range(-2f, 2f), Random.Range(-2f, 2f), 0);
-        return offset;
+            m_Time += Time.deltaTime;
+            m_Time += Time.deltaTime;
+
+            mesh.vertices = vertices;
+            textMesh.canvasRenderer.SetMesh(mesh);
+        }
+
+        private Vector3 GetTransformOffset(Vector3 pos)
+        {
+            var offset = new Vector3(pos.y * Intensity * Mathf.Sign(-pos.x) * Mathf.Abs(pos.x / 450), Mathf.Sin(m_Time * 0.5f) * 50, 0);
+            offset += new Vector3(Random.Range(-2f, 2f), Random.Range(-2f, 2f), 0);
+            return offset;
+        }
     }
 }

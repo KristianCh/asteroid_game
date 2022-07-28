@@ -1,51 +1,55 @@
-using System.Collections;
-using System.Collections.Generic;
-using Ships;
+using Combat.Ships;
+using Data;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
-public class ClassDisplay : MonoBehaviour, IPointerEnterHandler
+namespace Scenes.Store
 {
-    public InfoTab m_InfoTab;
-    public ClassStoreEntryScriptableObject ClassStoreEntryValues;
-
-    private string ClassName = "***";
-    private string ClassDescription = "***";
-
-    // Start is called before the first frame update
-    void Start()
+    public class ClassDisplay : MonoBehaviour, IPointerEnterHandler
     {
-        m_InfoTab = GameObject.Find("InfoTab").GetComponent(typeof(InfoTab)) as InfoTab;
-    }
+        [SerializeField]
+        public InfoTab m_InfoTab;
+        [SerializeField]
+        public ClassStoreEntryData ClassStoreEntryValues;
 
-    public void Setup(ShipClass shipClass)
-    {
-        Image i = GetComponent<Image>();
-        
-        Sprite s = (Sprite)Resources.Load<Sprite>("Images/ClassIcons/" + shipClass.ToString());
-        i.sprite = s;
+        private string ClassName = "ClassName";
+        private string ClassDescription = "ClassDescription";
 
-        ClassStoreEntryValues = (ClassStoreEntryScriptableObject)Resources.Load<ClassStoreEntryScriptableObject>("ScriptableObjects/ClassStoreEntries/" + shipClass.ToString());
-        if (ClassStoreEntryValues != null)
+        // Start is called before the first frame update
+        void Start()
         {
-            i.sprite = ClassStoreEntryValues.m_Sprite;
+            m_InfoTab = GameObject.Find("InfoTab").GetComponent(typeof(InfoTab)) as InfoTab;
         }
-    }
 
-    public void OnPointerEnter(PointerEventData eventData)
-    {
-        if (m_InfoTab != null)
+        public void Setup(ShipClass shipClass)
         {
+            var i = GetComponent<Image>();
+        
+            var s = (Sprite)Resources.Load<Sprite>($"Images/ClassIcons/{shipClass.ToString()}");
+            i.sprite = s;
+
+            ClassStoreEntryValues = (ClassStoreEntryData)Resources.Load<ClassStoreEntryData>("Data/ClassStoreEntries/" + shipClass.ToString());
             if (ClassStoreEntryValues != null)
             {
-                m_InfoTab.SetTitle("Class: " + ClassStoreEntryValues.Name);
-                m_InfoTab.SetDescription(ClassStoreEntryValues.Description);
+                i.sprite = ClassStoreEntryValues.m_Sprite;
             }
-            else
+        }
+
+        public void OnPointerEnter(PointerEventData eventData)
+        {
+            if (m_InfoTab != null)
             {
-                m_InfoTab.SetTitle("Class: " + ClassName);
-                m_InfoTab.SetDescription(ClassDescription);
+                if (ClassStoreEntryValues != null)
+                {
+                    m_InfoTab.SetTitle("Class: " + ClassStoreEntryValues.Name);
+                    m_InfoTab.SetDescription(ClassStoreEntryValues.Description);
+                }
+                else
+                {
+                    m_InfoTab.SetTitle("Class: " + ClassName);
+                    m_InfoTab.SetDescription(ClassDescription);
+                }
             }
         }
     }

@@ -1,5 +1,5 @@
 using System.Collections;
-using Ships;
+using Combat.Ships;
 
 public abstract class StatusEffect
 {

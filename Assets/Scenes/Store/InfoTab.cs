@@ -1,28 +1,29 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using TMPro;
+using UnityEngine;
 
-public class InfoTab : MonoBehaviour
+namespace Scenes.Store
 {
-    public static InfoTab Instance;
-
-    public TMP_Text Title;
-    public TMP_Text Description;
-
-    // Start is called before the first frame update
-    void Start()
+    public class InfoTab : MonoBehaviour
     {
-        Instance = this;
-    }
+        public static InfoTab Instance;
 
-    public void SetTitle(string title)
-    {
-        Title.text = title;
-    }
+        public TMP_Text Title;
+        public TMP_Text Description;
 
-    public void SetDescription(string description)
-    {
-        Description.text = description;
+        // Start is called before the first frame update
+        void Start()
+        {
+            Instance = this;
+        }
+
+        public void SetTitle(string title)
+        {
+            Title.text = title;
+        }
+
+        public void SetDescription(string description)
+        {
+            Description.text = description;
+        }
     }
 }

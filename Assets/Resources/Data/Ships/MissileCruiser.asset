@@ -1,0 +1,52 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51ce4eb8dc372b044bfdb932199d65ae, type: 3}
+  m_Name: MissileCruiser
+  m_EditorClassIdentifier: 
+  Type: MissileCruiser
+  Name: Missile Cruiser
+  Description: "Fires <color=#805a4040>1/2/3</color> guided missiles every <color=#805a4040>5/4/3</color>
+    seconds, creating an explosion on impact dealing <color=#805a4040>40/60/80</color>
+    <color=#40805a40>Explosive</color> damage/s\n\r<color=#805a4040>100/125/150</color>
+    Health\n<color=#805a4040>0/5/10</color> Armor\n\nFlagship Bonus: Ships get <color=#805a4040>+5</color>
+    Armor"
+  Cost: 150
+  MaxHealth:
+  - 100
+  - 125
+  - 150
+  Armor:
+  - 0
+  - 5
+  - 10
+  Speed: 6
+  TurnSpeed: 3
+  VisibilityRange: 1
+  TargetingRange: 100
+  Level: 0
+  SubLevel: 0
+  AttackCooldown:
+  - 5
+  - 4
+  - 3
+  SubAttackCooldown: 0.1
+  SubAttackCount: 010000000200000003000000
+  Damage:
+  - 40
+  - 60
+  - 80
+  ProjectileSpeed: 5
+  ProjectileTracking: 3
+  LayerMask: 256
+  Classes: 0000000002000000
+  SpawnOnAttackPrefab: {fileID: 2293332528134535739, guid: b704f122d85562f41acdfed40c2efab0, type: 3}
+  m_Mesh: {fileID: 4711208715938537054, guid: 1406d37af5f0722439ee2a8ead1f5d91, type: 3}

@@ -1,53 +1,54 @@
-using System.Collections;
-using System.Collections.Generic;
-using Asteroid;
+using Combat.Asteroid;
 using Run;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class MainMenuManager : MonoBehaviour
+namespace Scenes.MainMenu
 {
-    private bool AppliedInitialImpulse = false;
-
-    // Start is called before the first frame update
-    void Start()
+    public class MainMenuManager : MonoBehaviour
     {
-        // Destroy active run data
-        RunData rd = (RunData)FindObjectOfType(typeof(RunData));
-        if (rd != null)
-        {
-            Destroy(rd.gameObject);
-        }
-    }
+        private bool AppliedInitialImpulse = false;
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (!AppliedInitialImpulse)
+        // Start is called before the first frame update
+        public void Start()
         {
-            BaseAsteroid[] asteroids = FindObjectsOfType<BaseAsteroid>();
-            foreach (BaseAsteroid asteroid in asteroids)
+            // Destroy active run data
+            var rd = (RunData)FindObjectOfType(typeof(RunData));
+            if (rd != null)
             {
-                Rigidbody rb = asteroid.GetComponent(typeof(Rigidbody)) as Rigidbody;
-                if (rb != null)
-                {
-                    rb.AddForceAtPosition(new Vector3(Random.Range(-400, 400), Random.Range(-400, 400), 0),
-                        asteroid.transform.position + new Vector3(Random.Range(-0.2f, 0.2f), Random.Range(-0.2f, 0.2f), Random.Range(-0.2f, 0.2f)));
-                }
+                Destroy(rd.gameObject);
             }
-            AppliedInitialImpulse = true;
         }
-    }
 
-    // Go to difficulty select
-    public void NewRun()
-    {
-        SceneManager.LoadScene("DifficultySelect", LoadSceneMode.Single);
-    }
+        // Update is called once per frame
+        public void Update()
+        {
+            if (!AppliedInitialImpulse)
+            {
+                var asteroids = FindObjectsOfType<BaseAsteroid>();
+                foreach (var asteroid in asteroids)
+                {
+                    var rb = asteroid.GetComponent(typeof(Rigidbody)) as Rigidbody;
+                    if (rb != null)
+                    {
+                        rb.AddForceAtPosition(new Vector3(Random.Range(-400, 400), Random.Range(-400, 400), 0),
+                            asteroid.transform.position + new Vector3(Random.Range(-0.2f, 0.2f), Random.Range(-0.2f, 0.2f), Random.Range(-0.2f, 0.2f)));
+                    }
+                }
+                AppliedInitialImpulse = true;
+            }
+        }
 
-    // Quit game
-    public void QuitGame()
-    {
-        Application.Quit();
+        // Go to difficulty select
+        public void NewRun()
+        {
+            SceneManager.LoadScene("DifficultySelect", LoadSceneMode.Single);
+        }
+
+        // Quit game
+        public void QuitGame()
+        {
+            Application.Quit();
+        }
     }
 }

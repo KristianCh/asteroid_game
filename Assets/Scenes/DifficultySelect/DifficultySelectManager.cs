@@ -1,45 +1,46 @@
-using System.Collections;
-using System.Collections.Generic;
 using Run;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
-public class DifficultySelectManager : MonoBehaviour
+namespace Scenes.DifficultySelect
 {
-    public GameDifficulty SelectedDifficulty = GameDifficulty.Normal;
-    public RunData RunDataPrefab;
-
-    void Start()
+    public class DifficultySelectManager : MonoBehaviour
     {
-        Button normalButton = GameObject.Find("Normal").GetComponent<Button>();
-        normalButton.Select();
-    }
+        public GameDifficulty SelectedDifficulty = GameDifficulty.Normal;
+        public RunData RunDataPrefab;
 
-    public void BackToMainMenu()
-    {
-        SceneManager.LoadScene("MainMenu", LoadSceneMode.Single);
-    }
+        void Start()
+        {
+            Button normalButton = GameObject.Find("Normal").GetComponent<Button>();
+            normalButton.Select();
+        }
 
-    public void StartGame()
-    {
-        RunData rd = Instantiate(RunDataPrefab, new Vector3(0, 0, 0), Quaternion.identity).GetComponent<RunData>();
-        rd.Difficulty = SelectedDifficulty;
-        SceneManager.LoadScene("Store", LoadSceneMode.Single);
-    }
+        public void BackToMainMenu()
+        {
+            SceneManager.LoadScene("MainMenu", LoadSceneMode.Single);
+        }
 
-    public void SelectDifficultyNormal()
-    {
-        SelectedDifficulty = GameDifficulty.Normal;
-    }
+        public void StartGame()
+        {
+            RunData rd = Instantiate(RunDataPrefab, new Vector3(0, 0, 0), Quaternion.identity).GetComponent<RunData>();
+            rd.Difficulty = SelectedDifficulty;
+            SceneManager.LoadScene("Store", LoadSceneMode.Single);
+        }
 
-    public void SelectDifficultyHard()
-    {
-        SelectedDifficulty = GameDifficulty.Hard;
-    }
+        public void SelectDifficultyNormal()
+        {
+            SelectedDifficulty = GameDifficulty.Normal;
+        }
 
-    public void SelectDifficultyVeryHard()
-    {
-        SelectedDifficulty = GameDifficulty.VeryHard;
+        public void SelectDifficultyHard()
+        {
+            SelectedDifficulty = GameDifficulty.Hard;
+        }
+
+        public void SelectDifficultyVeryHard()
+        {
+            SelectedDifficulty = GameDifficulty.VeryHard;
+        }
     }
 }

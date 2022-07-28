@@ -91,7 +91,7 @@ Shader "Environment/ScreenEffects"
 			{
 				float2 curvature = float2(4, 4);
 				float2 coords = curveRemapUV(curvature, IN.uv);
-				float4 color = tex2D(_MainTex, pixelRemapUV(coords));
+				float4 color = tex2D(_MainTex, coords);
 
 				color = getCrtColor(coords, color);
 				fixed4 fragColor = color;

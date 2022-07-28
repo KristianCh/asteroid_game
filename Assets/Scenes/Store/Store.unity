@@ -1654,7 +1654,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShipModel: {fileID: 99265978}
-  ShipStoreEntryValues: {fileID: 0}
+  ShipDataValues: {fileID: 0}
   Title: {fileID: 1670045883}
   ClassDisplayPrefab: {fileID: 1561246376507017604, guid: 745aecd9e0c28654fbc8eb184a4cbbb5, type: 3}
   ClassDisplays: []
@@ -1967,7 +1967,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShipModel: {fileID: 2118173966}
-  ShipStoreEntryValues: {fileID: 0}
+  ShipDataValues: {fileID: 0}
   Title: {fileID: 734054145}
   ClassDisplayPrefab: {fileID: 1561246376507017604, guid: 745aecd9e0c28654fbc8eb184a4cbbb5, type: 3}
   ClassDisplays: []
@@ -2368,6 +2368,17 @@ MonoBehaviour:
   ActiveRunData: {fileID: 0}
   ActiveFleetCount: {fileID: 61279281}
   Credits: {fileID: 1348249840}
+  ShipDisplays:
+  - {fileID: 874557554}
+  - {fileID: 1997811369}
+  - {fileID: 1666230739}
+  - {fileID: 1280883549}
+  - {fileID: 2026094428}
+  - {fileID: 496053569}
+  StoreDisplays:
+  - {fileID: 959798919}
+  - {fileID: 1266736860}
+  - {fileID: 427340343}
 --- !u!4 &558769466
 Transform:
   m_ObjectHideFlags: 0
@@ -3051,7 +3062,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShipModel: {fileID: 1503797357}
-  ShipStoreEntryValues: {fileID: 0}
+  ShipDataValues: {fileID: 0}
   Title: {fileID: 98112573}
   ClassDisplayPrefab: {fileID: 1561246376507017604, guid: 745aecd9e0c28654fbc8eb184a4cbbb5, type: 3}
   ClassDisplays: []
@@ -3344,7 +3355,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShipModel: {fileID: 945890798}
-  ShipStoreEntryValues: {fileID: 0}
+  ShipDataValues: {fileID: 0}
   Title: {fileID: 1998024041}
   ClassDisplayPrefab: {fileID: 1561246376507017604, guid: 745aecd9e0c28654fbc8eb184a4cbbb5, type: 3}
   ClassDisplays: []
@@ -3789,8 +3800,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278190080
-  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
+    rgba: 4281545523
+  m_fontColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -4737,7 +4748,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShipModel: {fileID: 1303421214}
-  ShipStoreEntryValues: {fileID: 0}
+  ShipDataValues: {fileID: 0}
   Title: {fileID: 580324591}
   ClassDisplayPrefab: {fileID: 1561246376507017604, guid: 745aecd9e0c28654fbc8eb184a4cbbb5, type: 3}
   ClassDisplays: []
@@ -4804,7 +4815,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShipModel: {fileID: 629331031}
-  ShipStoreEntryValues: {fileID: 0}
+  ShipDataValues: {fileID: 0}
   Title: {fileID: 1418243112}
   ClassDisplayPrefab: {fileID: 1561246376507017604, guid: 745aecd9e0c28654fbc8eb184a4cbbb5, type: 3}
   ClassDisplays: []
@@ -5641,7 +5652,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShipModel: {fileID: 1712483321}
-  ShipStoreEntryValues: {fileID: 0}
+  ShipDataValues: {fileID: 0}
   Title: {fileID: 410286012}
   ClassDisplayPrefab: {fileID: 1561246376507017604, guid: 745aecd9e0c28654fbc8eb184a4cbbb5, type: 3}
   ClassDisplays: []
@@ -6663,7 +6674,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShipModel: {fileID: 86822784}
-  ShipStoreEntryValues: {fileID: 0}
+  ShipDataValues: {fileID: 0}
   Title: {fileID: 526050343}
   ClassDisplayPrefab: {fileID: 1561246376507017604, guid: 745aecd9e0c28654fbc8eb184a4cbbb5, type: 3}
   ClassDisplays: []
@@ -6894,7 +6905,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShipModel: {fileID: 1136862779}
-  ShipStoreEntryValues: {fileID: 0}
+  ShipDataValues: {fileID: 0}
   Title: {fileID: 1196361557}
   ClassDisplayPrefab: {fileID: 1561246376507017604, guid: 745aecd9e0c28654fbc8eb184a4cbbb5, type: 3}
   ClassDisplays: []

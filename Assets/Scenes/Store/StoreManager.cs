@@ -1,63 +1,65 @@
-using System.Collections;
 using System.Collections.Generic;
 using Run;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using TMPro;
 
-public class StoreManager : MonoBehaviour
+namespace Scenes.Store
 {
-    public RunData ActiveRunData;
-    public TMP_Text ActiveFleetCount;
-    public TMP_Text Credits;
-
-    public 
-
-    // Start is called before the first frame update
-    void Start()
+    public class StoreManager : MonoBehaviour
     {
-        ActiveRunData = (RunData)FindObjectOfType(typeof(RunData));
+        [SerializeField]
+        public RunData ActiveRunData;
+        [SerializeField]
+        public TMP_Text ActiveFleetCount;
+        [SerializeField]
+        public TMP_Text Credits;
 
-        if (ActiveRunData != null)
+        [SerializeField] 
+        public List<ShipDisplay> ShipDisplays = new List<ShipDisplay>();
+        [SerializeField] 
+        public List<ShipDisplay> StoreDisplays = new List<ShipDisplay>();
+
+        public void Start()
         {
-            ActiveFleetCount.text = "Active Fleet: " + ActiveRunData.Ships.Count.ToString() + "/" + ActiveRunData.FleetLimit.ToString();
-            Credits.text = "Credits: " + ActiveRunData.Credits.ToString();
+            ActiveRunData = (RunData)FindObjectOfType(typeof(RunData));
 
-            for (int i = 0; i < 6; i++)
+            SetupShipDisplays();
+        }
+
+        private void SetupShipDisplays()
+        {
+            if (ActiveRunData == null) return;
+            
+            ActiveFleetCount.text = $"Active Fleet: {ActiveRunData.Ships.Count}/{ActiveRunData.FleetLimit}";
+            Credits.text = $"Credits: {ActiveRunData.Credits}";
+
+            for (var i = 0; i < 6; i++)
             {
-                ShipDisplay sd = GameObject.Find("ShipDisplay" + i.ToString()).GetComponent<ShipDisplay>();
                 if (i >= ActiveRunData.FleetLimit)
                 {
-                    sd.SDP.SetActive(false);
+                    ShipDisplays[i].SDP.SetActive(false);
                 }
                 else
                 {
-                    if (i < ActiveRunData.Ships.Count)
-                    {
-                        sd.Setup(ActiveRunData.Ships[i]);
-                    }
-                    else
-                    {
-                        sd.Setup(null);
-                    }
+                    ShipDisplays[i].Setup(i < ActiveRunData.Ships.Count ? ActiveRunData.Ships[i] : null);
                 }
             }
         }
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+        private void GenerateOffer()
+        {
+            
+        }
 
-    public void BackToMainMenu()
-    {
-        SceneManager.LoadScene("MainMenu", LoadSceneMode.Single);
-    }
+        public void BackToMainMenu()
+        {
+            SceneManager.LoadScene("MainMenu", LoadSceneMode.Single);
+        }
 
-    public void StartGame()
-    {
-        SceneManager.LoadScene("Game", LoadSceneMode.Single);
+        public void StartGame()
+        {
+            SceneManager.LoadScene("Game", LoadSceneMode.Single);
+        }
     }
 }
