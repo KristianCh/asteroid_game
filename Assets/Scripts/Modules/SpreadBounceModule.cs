@@ -1,12 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class SpreadBounceModule : HitEventEffectModule
+namespace Modules
 {
-
-    public override void Apply()
+    public class SpreadBounceModule : HitEventEffectModule
     {
 
+        public override void Apply()
+        {
+
+        }
     }
 }

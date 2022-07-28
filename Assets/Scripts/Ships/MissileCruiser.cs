@@ -1,38 +1,27 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using Ships.Projectiles;
 
-public class MissileCruiser : BaseShip
+namespace Ships
 {
-    // Start is called before the first frame update
-    public override void Start()
+    public class MissileCruiser : BaseShip
     {
-        base.Start();
-    }
+        protected override void OnSubCooldown()
+        {
+            base.OnSubCooldown();
 
-    // Update is called once per frame
-    public override void Update()
-    {
-        base.Update();
-    }
+            var target = GetClosestAsteroid(transform.position);
+            if (target == null) return;
 
-    protected override void OnSubCooldown()
-    {
-        base.OnSubCooldown();
+            var intercept = GetAsteroidInterceptVector(transform.position, target, ShipData.ProjectileSpeed);
 
-        BaseAsteroid target = GetClosestAsteroid(transform.position);
-        if (target == null) return;
-
-        Vector3 intercept = GetAsteroidInterceptVector(transform.position, target, ShipData.ProjectileSpeed);
-
-        BaseProjectile newProjectile = ShipPrefabManager.InstantiateProjectileByType(
-            ProjectileType.Missile,
-            ShipData.Damage[Level],
-            ShipData.ProjectileSpeed,
-            ShipData.ProjectileTracking,
-            intercept,
-            target,
-            transform.position
-        );
+            var newProjectile = ShipPrefabManager.InstantiateProjectileByType(
+                ProjectileType.Missile,
+                ShipData.Damage[Level],
+                ShipData.ProjectileSpeed,
+                ShipData.ProjectileTracking,
+                intercept,
+                target,
+                transform.position
+            );
+        }
     }
 }

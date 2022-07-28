@@ -1,33 +1,23 @@
-using System.Collections;
-using System.Collections.Generic;
+using Asteroid;
 using UnityEngine;
 
-public class Explosion : BaseAoe
+namespace Ships.Aoes
 {
-    public float Damage = 20;
-    public float Force = 50;
-
-    // Start is called before the first frame update
-    public override void Start()
+    public class Explosion : BaseAoe
     {
-        base.Start();
-    }
+        public float Damage = 20;
+        public float Force = 50;
 
-    // Update is called once per frame
-    public override void Update()
-    {
-        base.Update();
-    }
-
-    public virtual void OnTriggerEnter(Collider collider)
-    {
-        BaseAsteroid asteroid = collider.gameObject.GetComponent(typeof(BaseAsteroid)) as BaseAsteroid;
-        if (asteroid != null)
+        public virtual void OnTriggerEnter(Collider collider)
         {
-            asteroid.Damage(Damage, DamageType.Explosive, asteroid.transform.position);
+            var asteroid = collider.gameObject.GetComponent(typeof(BaseAsteroid)) as BaseAsteroid;
+            if (asteroid != null)
+            {
+                asteroid.Damage(Damage, DamageType.Explosive, asteroid.transform.position);
+            }
+
+            collider.attachedRigidbody.AddForceAtPosition((asteroid.transform.position - transform.position).normalized * Force, asteroid.transform.position);
+
         }
-
-        collider.attachedRigidbody.AddForceAtPosition((asteroid.transform.position - transform.position).normalized * Force, asteroid.transform.position);
-
     }
 }

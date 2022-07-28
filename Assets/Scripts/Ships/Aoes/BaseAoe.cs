@@ -1,63 +1,63 @@
-using System.Collections;
-using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 
-public enum AoeShape
+namespace Ships.Aoes
 {
-    Circle,
-    Square
-}
-
-public enum AoeType
-{
-    Explosion
-}
-
-public class BaseAoe : ShipSpawnableObject
-{
-    public AoeShape Shape;
-    public AoeType Type;
-    public float Lifetime = 1;
-    public float Scale = 1;
-    private Vector3 TargetScale = new Vector3(1, 1, 1);
-
-    private float Angle = 0;
-
-    // Start is called before the first frame update
-    public virtual void Start()
+    public enum AoeShape
     {
-        transform.localScale = Vector3.zero;
-        SetScale(Scale);
+        Circle,
+        Square
     }
 
-    // Update is called once per frame
-    public virtual void Update()
+    public enum AoeType
     {
-        Lifetime -= Time.deltaTime;
-        Angle += Time.deltaTime * 360 * 2;
-        transform.rotation = Quaternion.Euler(0, 0, Angle);
+        Explosion
+    }
 
-        transform.localScale = Vector3.Lerp(transform.localScale, TargetScale, Time.deltaTime * 10);
+    public class BaseAoe : ShipSpawnableObject
+    {
+        public AoeShape Shape;
+        public AoeType Type;
+        public float Lifetime = 1;
+        public float Scale = 1;
 
-        if (Lifetime <= 1)
+        private float Angle = 0;
+    
+        private const float DEATH_TIME = 1f;
+        private const float START_TIME = 0.2f;
+    
+        public virtual void Start()
         {
-            TargetScale = new Vector3(Scale, Scale, Scale) * Lifetime;
+            transform.localScale = Vector3.zero;
+            transform.DOScale(Scale, START_TIME);
+        
+            if (Lifetime > DEATH_TIME)
+            {
+                Utilities.Utility.InvokeAfter(this, StartDeath, Lifetime - DEATH_TIME);  
+            }
+            else
+            {
+                StartDeath();
+            }
+        
+        }
+    
+        public virtual void Update()
+        {
+            Lifetime -= Time.deltaTime;
+            Angle += Time.deltaTime * 360 * 2;
+            transform.rotation = Quaternion.Euler(0, 0, Angle);
         }
 
-        if (Lifetime <= 0)
+        private void StartDeath()
         {
-            Death();
+            transform.DOScale(Vector3.zero, Mathf.Min(DEATH_TIME - START_TIME, Lifetime)).SetDelay(START_TIME);
+            Utilities.Utility.InvokeAfter(this, Death, Mathf.Min(DEATH_TIME, Lifetime));
         }
-    }
 
-    public virtual void Death()
-    {
-        Destroy(gameObject);
-    }
-
-    public void SetScale(float scale)
-    {
-        Scale = scale;
-        TargetScale = new Vector3(Scale, Scale, Scale);
+        protected virtual void Death()
+        {
+            Destroy(gameObject);
+        }
     }
 }

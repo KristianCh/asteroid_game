@@ -1,11 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class TestHitEventEffect : HitEventEffect
+namespace Ships.Projectiles.HitEventEffects
 {
-    public override void Execute(BaseProjectile projectile, Collision collision)
+    public class TestHitEventEffect : HitEventEffect
     {
-        Debug.Log("on bounce effect");
+        public override void Execute(BaseProjectile projectile, Collision collision)
+        {
+            
+        }
     }
 }

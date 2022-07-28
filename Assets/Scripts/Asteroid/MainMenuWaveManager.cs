@@ -1,18 +1,17 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class MainMenuWaveManager : GameManager
+namespace Asteroid
 {
-    // Start is called before the first frame update
-    public override void Start()
+    public class MainMenuWaveManager : GameManager
     {
-        Instance = this;
-    }
+        // Start is called before the first frame update
+        public override void Start()
+        {
+            Instance = this;
+        }
 
-    // Update is called once per frame
-    public override void Update()
-    {
+        // Update is called once per frame
+        public override void Update()
+        {
         
+        }
     }
 }

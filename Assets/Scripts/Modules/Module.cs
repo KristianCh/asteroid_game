@@ -1,17 +1,17 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class Module : MonoBehaviour
+namespace Modules
 {
-    // Start is called before the first frame update
-    void Start()
+    public class Module : MonoBehaviour
     {
-        Apply();
-    }
+        protected void Start()
+        {
+            Apply();
+        }
 
-    public virtual void Apply()
-    {
+        public virtual void Apply()
+        {
 
+        }
     }
 }

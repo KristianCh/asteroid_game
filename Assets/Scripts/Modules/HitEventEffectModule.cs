@@ -1,11 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using Ships.Projectiles.HitEventEffects;
 
-public class HitEventEffectModule : Module
+namespace Modules
 {
-    public string Name;
-    public string Description;
+    public class HitEventEffectModule : Module
+    {
+        public string Name;
+        public string Description;
 
-    public HitEventEffect Effect;
+        public HitEventEffect Effect;
+    }
 }

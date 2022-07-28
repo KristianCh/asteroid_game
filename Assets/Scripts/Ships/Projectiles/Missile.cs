@@ -1,30 +1,32 @@
-using System.Collections;
-using System.Collections.Generic;
+using Asteroid;
 using UnityEngine;
 
-public class Missile : BaseProjectile
+namespace Ships.Projectiles
 {
-    public override void OnCollisionEnter(Collision collision)
+    public class Missile : BaseProjectile
     {
-        BaseAsteroid asteroid = collision.gameObject.GetComponent(typeof(BaseAsteroid)) as BaseAsteroid;
+        public override void OnCollisionEnter(Collision collision)
+        {
+            var asteroid = collision.gameObject.GetComponent(typeof(BaseAsteroid)) as BaseAsteroid;
 
-        if (asteroid != null)
-        {
-            ShipPrefabManager.InstantiateExplosion(0.5f, 1, Damage, 100, transform.position);
-        }
+            if (asteroid != null)
+            {
+                ShipPrefabManager.InstantiateExplosion(0.5f, 1, Damage, 100, transform.position);
+            }
 
-        ExecuteHitEventEffects(HitEffects, collision);
-        if (BouncesLeft > 0)
-        {
-            Bounce(collision);
-        }
-        else if (PiercesLeft > 0)
-        {
-            Pierce(collision);
-        }
-        else
-        {
-            Death();
+            ExecuteHitEventEffects(HitEffects, collision);
+            if (BouncesLeft > 0)
+            {
+                Bounce(collision);
+            }
+            else if (PiercesLeft > 0)
+            {
+                Pierce(collision);
+            }
+            else
+            {
+                Death();
+            }
         }
     }
 }

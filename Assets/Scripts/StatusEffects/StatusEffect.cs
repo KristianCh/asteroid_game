@@ -1,8 +1,7 @@
 using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using Ships;
 
-public class StatusEffect
+public abstract class StatusEffect
 {
     public bool OneTime = true;
     public bool Timed = false;

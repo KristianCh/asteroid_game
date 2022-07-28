@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Ships;
 using UnityEngine;
 
 [CreateAssetMenu(fileName="Ship", menuName="Ship")]

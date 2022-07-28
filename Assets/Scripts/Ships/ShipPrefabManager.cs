@@ -1,64 +1,68 @@
-using System.Collections;
-using System.Collections.Generic;
+using Asteroid;
+using Ships.Aoes;
+using Ships.Projectiles;
 using UnityEngine;
 
-public class ShipPrefabManager : MonoBehaviour
+namespace Ships
 {
-    public BaseProjectile CannonRoundPrefab;
-    public BaseProjectile MissilePrefab;
-
-    public Explosion ExplosionPrefab;
-
-    public static ShipPrefabManager Instance;
-
-    // Start is called before the first frame update
-    void Start()
+    public class ShipPrefabManager : MonoBehaviour
     {
-        Instance = this;
-    }
+        public BaseProjectile CannonRoundPrefab;
+        public BaseProjectile MissilePrefab;
 
-    public static BaseProjectile InstantiateProjectileByType(ProjectileType type, float damage, float speed, float tracking, Vector3 heading, BaseAsteroid targetAsteroid, Vector3 position)
-    {
-        BaseProjectile NewProjectile = null;
-        switch (type)
+        public Explosion ExplosionPrefab;
+
+        public static ShipPrefabManager Instance;
+
+        // Start is called before the first frame update
+        void Start()
         {
-            case ProjectileType.CannonRound:
-                NewProjectile = InstantiateProjectile(damage, speed, tracking, heading, targetAsteroid, position, Instance.CannonRoundPrefab);
-                break;
-            case ProjectileType.Missile:
-                NewProjectile = InstantiateProjectile(damage, speed, tracking, heading, targetAsteroid, position, Instance.MissilePrefab);
-                break;
-            default:
-                NewProjectile = InstantiateProjectile(damage, speed, tracking, heading, targetAsteroid, position, Instance.CannonRoundPrefab);
-                break;
+            Instance = this;
         }
-        return NewProjectile;
-    }
 
-    public static BaseProjectile InstantiateProjectile(float damage, float speed, float tracking, Vector3 heading, BaseAsteroid targetAsteroid, Vector3 position, BaseProjectile prefab)
-    {
-        BaseProjectile NewProjectile = Instantiate(prefab, position, Quaternion.identity);
-        NewProjectile.Heading = heading;
-        NewProjectile.TargetAsteroid = targetAsteroid;
-        NewProjectile.Damage = damage;
-        NewProjectile.Speed = speed;
-        NewProjectile.Tracking = tracking;
+        public static BaseProjectile InstantiateProjectileByType(ProjectileType type, float damage, float speed, float tracking, Vector3 heading, BaseAsteroid targetAsteroid, Vector3 position)
+        {
+            BaseProjectile NewProjectile = null;
+            switch (type)
+            {
+                case ProjectileType.CannonRound:
+                    NewProjectile = InstantiateProjectile(damage, speed, tracking, heading, targetAsteroid, position, Instance.CannonRoundPrefab);
+                    break;
+                case ProjectileType.Missile:
+                    NewProjectile = InstantiateProjectile(damage, speed, tracking, heading, targetAsteroid, position, Instance.MissilePrefab);
+                    break;
+                default:
+                    NewProjectile = InstantiateProjectile(damage, speed, tracking, heading, targetAsteroid, position, Instance.CannonRoundPrefab);
+                    break;
+            }
+            return NewProjectile;
+        }
 
-        return NewProjectile;
-    }
+        public static BaseProjectile InstantiateProjectile(float damage, float speed, float tracking, Vector3 heading, BaseAsteroid targetAsteroid, Vector3 position, BaseProjectile prefab)
+        {
+            var NewProjectile = Instantiate(prefab, position, Quaternion.identity);
+            NewProjectile.Heading = heading;
+            NewProjectile.TargetAsteroid = targetAsteroid;
+            NewProjectile.Damage = damage;
+            NewProjectile.Speed = speed;
+            NewProjectile.Tracking = tracking;
 
-    public static Explosion InstantiateExplosion(float scale, float lifetime, float damage, float force, Vector3 position)
-    {
-        Explosion NewExplosion = Instantiate(Instance.ExplosionPrefab, position, Quaternion.identity);
-        NewExplosion.SetScale(scale);
+            return NewProjectile;
+        }
 
-        NewExplosion.Force = force;
-        NewExplosion.Lifetime = lifetime;
-        NewExplosion.Damage = damage;
+        public static Explosion InstantiateExplosion(float scale, float lifetime, float damage, float force, Vector3 position)
+        {
+            var NewExplosion = Instantiate(Instance.ExplosionPrefab, position, Quaternion.identity);
+        
+            NewExplosion.Scale = scale;
+            NewExplosion.Force = force;
+            NewExplosion.Lifetime = lifetime;
+            NewExplosion.Damage = damage;
 
-        NewExplosion.Shape = AoeShape.Circle;
-        NewExplosion.Type = AoeType.Explosion;
+            NewExplosion.Shape = AoeShape.Circle;
+            NewExplosion.Type = AoeType.Explosion;
 
-        return NewExplosion;
+            return NewExplosion;
+        }
     }
 }

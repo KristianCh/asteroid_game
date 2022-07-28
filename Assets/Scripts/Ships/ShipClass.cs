@@ -1,11 +1,14 @@
-public enum ShipClass
+namespace Ships
 {
-    Physical,
-    Energy,
-    Guided,
-    Support,
-    Graviton,
-    Nuker,
-    Carrier,
-    Any
+    public enum ShipClass
+    {
+        Physical,
+        Energy,
+        Guided,
+        Support,
+        Graviton,
+        Nuker,
+        Carrier,
+        Any
+    }
 }
