@@ -907,8 +907,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Asterogue
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 831a36a6c27413d4caf691dd86c6065d, type: 2}
-  m_sharedMaterial: {fileID: 576544485143962867, guid: 831a36a6c27413d4caf691dd86c6065d, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 29189c8da6bde214fba042071cc4891b, type: 2}
+  m_sharedMaterial: {fileID: 4033391057084135522, guid: 29189c8da6bde214fba042071cc4891b, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
