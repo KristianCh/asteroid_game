@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MainMenuWaveManager : WaveManager
+public class MainMenuWaveManager : GameManager
 {
     // Start is called before the first frame update
     public override void Start()

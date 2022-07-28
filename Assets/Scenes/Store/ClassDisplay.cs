@@ -20,13 +20,16 @@ public class ClassDisplay : MonoBehaviour, IPointerEnterHandler
 
     public void Setup(ShipClass shipClass)
     {
-        Debug.Log(shipClass.ToString());
         Image i = GetComponent<Image>();
         
         Sprite s = (Sprite)Resources.Load<Sprite>("Images/ClassIcons/" + shipClass.ToString());
         i.sprite = s;
 
         ClassStoreEntryValues = (ClassStoreEntryScriptableObject)Resources.Load<ClassStoreEntryScriptableObject>("ScriptableObjects/ClassStoreEntries/" + shipClass.ToString());
+        if (ClassStoreEntryValues != null)
+        {
+            i.sprite = ClassStoreEntryValues.m_Sprite;
+        }
     }
 
     public void OnPointerEnter(PointerEventData eventData)

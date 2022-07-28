@@ -397,33 +397,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72d555f338677bd4594b981bcac18df5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShipData: {fileID: 11400000, guid: e21023d95729f3a47a70618d077937ac, type: 2}
   HealthBar: {fileID: 7015108254396005595}
   CooldownBar: {fileID: 1742996170703171013}
-  IsFlagship: 0
-  Health: 120
-  MaxHealth: 120
-  Armor: 10
-  Speed: 4
-  TurnSpeed: 3
-  VisibilityRange: 1
-  TargetingRange: 100
-  Level: 1
-  SubLevel: 1
-  AttackCooldown: 3
-  SubAttackCooldown: 0.2
-  AttackCooldownTimer: 5
-  SubAttackCooldownTimer: 0.2
-  BaseDamage: 10
-  DamageMultiplier: 1
-  DamageModifier: 0
-  ProjectileSpeed: 10
-  ProjectileTracking: 0
-  MainCooldownTriggered: 0
-  SubAttackCountBase: 4
-  SubAttackCount: 4
-  LayerMask: 256
-  Heading: {x: 0, y: 1, z: 0}
-  Classes: []
 --- !u!1 &8888091658754638868
 GameObject:
   m_ObjectHideFlags: 0

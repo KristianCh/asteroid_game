@@ -15,3 +15,4 @@ MonoBehaviour:
   Name: Physical
   Description: All <color=#40805a40>Physical</color> ships get <color=#40805a40>+1</color>
     armor
+  m_Sprite: {fileID: 21300000, guid: 9c5cd3b4b1fe2794bbdfe58dfb15df1a, type: 3}

@@ -16,15 +16,23 @@ public class MissileCruiser : BaseShip
         base.Update();
     }
 
-    public override void OnSubCooldown()
+    protected override void OnSubCooldown()
     {
         base.OnSubCooldown();
 
         BaseAsteroid target = GetClosestAsteroid(transform.position);
         if (target == null) return;
 
-        Vector3 intercept = GetAsteroidInterceptVector(transform.position, target, ProjectileSpeed);
+        Vector3 intercept = GetAsteroidInterceptVector(transform.position, target, ShipData.ProjectileSpeed);
 
-        ShipPrefabManager.InstantiateMissile(Damage, ProjectileSpeed, ProjectileTracking, intercept, target, transform.position);
+        BaseProjectile newProjectile = ShipPrefabManager.InstantiateProjectileByType(
+            ProjectileType.Missile,
+            ShipData.Damage[Level],
+            ShipData.ProjectileSpeed,
+            ShipData.ProjectileTracking,
+            intercept,
+            target,
+            transform.position
+        );
     }
 }

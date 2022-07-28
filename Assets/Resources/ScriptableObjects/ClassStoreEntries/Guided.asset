@@ -15,3 +15,4 @@ MonoBehaviour:
   Name: Guided
   Description: All <color=#40805a40>Guided</color> ships get <color=#40805a40>10%</color>
     firing cooldown reduction
+  m_Sprite: {fileID: 21300000, guid: 61889ff2a456dcf4fbaaad4cbfd56d3a, type: 3}

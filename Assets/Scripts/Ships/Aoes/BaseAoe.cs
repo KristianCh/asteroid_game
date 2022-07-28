@@ -13,7 +13,7 @@ public enum AoeType
     Explosion
 }
 
-public class BaseAoe : MonoBehaviour
+public class BaseAoe : ShipSpawnableObject
 {
     public AoeShape Shape;
     public AoeType Type;

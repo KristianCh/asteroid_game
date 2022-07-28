@@ -5,67 +5,39 @@ using UnityEngine.UI;
 
 public class BaseShip : MonoBehaviour
 {
+    public ShipDataScriptableObject ShipData;
     public Image HealthBar;
     public Image CooldownBar;
     private float HealthBarFillAmount = 1;
     private float CooldownBarFillAmount = 1;
 
-    public bool IsFlagship = false;
+    private bool IsFlagship = false;
 
-    public float Health = 100;
-    public float MaxHealth = 100;
-    public float Armor = 0;
-    public float Speed = 5;
-    public float TurnSpeed = 3;
-    public float VisibilityRange = 1;
-    public float TargetingRange = 100;
-    public float Level = 1;
-    public float SubLevel = 1;
-    public float AttackCooldown = 5;
-    public float SubAttackCooldown = 0.2f;
-    public float AttackCooldownTimer = 5;
-    public float SubAttackCooldownTimer = 0.2f;
-    public float Damage = 10;
-    public float ProjectileSpeed = 10;
-    public float ProjectileTracking = 0;
+    protected float Health = 100;
+    protected int Level = 1;
+    protected float AttackCooldownTimer = 5;
+    protected float SubAttackCooldownTimer = 0.2f;
 
-    public float BaseHealthPerLevel => MaxHealth + Level * 20;
-    public float ArmorPerLevel => Armor;
-    public float SpeedPerLevel => Speed;
-    public float TurnSpeedPerLevel => TurnSpeed;
-    public float AttackCooldownPerLevel => AttackCooldown - Level * 0.5f;
-    public float DamagePerLevel => Damage + Level * 10;
+    protected bool MainCooldownTriggered = false;
+    protected int SubAttackCount = 1;
+    protected int LayerMask = 1 << 8;
 
-    public bool MainCooldownTriggered = false;
-    public int SubAttackCountBase = 1;
-    public int SubAttackCount = 1;
-    public int LayerMask = 1 << 8;
+    protected Vector3 Heading = new Vector3(0, 1, 0);
 
-    public Vector3 Heading = new Vector3(0, 1, 0);
-
-    public List<ShipClass> Classes = new List<ShipClass>();
-    public List<StatusEffect> AppliedStatusEffects = new List<StatusEffect>();
-
-    private bool SetFleet = false;
+    protected List<StatusEffect> AppliedStatusEffects = new List<StatusEffect>();
 
     // Start is called before the first frame update
     public virtual void Start()
     {
-        AttackCooldownTimer = AttackCooldown;
-        SubAttackCooldownTimer = SubAttackCooldown;
-
-        SubAttackCount = SubAttackCountBase;
+        Fleet.Instance.AddToFleet(this);
+        Health = ShipData.MaxHealth[Level];
+        AttackCooldownTimer = ShipData.AttackCooldown[Level];
+        SubAttackCount = ShipData.SubAttackCount[Level];
     }
 
     // Update is called once per frame
     public virtual void Update()
     {
-        if (!SetFleet && Fleet.Instance != null)
-        {
-            SetFleet = true;
-            Fleet.Instance.ShipList.Add(this);
-        }
-
         HealthBar.fillAmount = Mathf.Lerp(HealthBar.fillAmount, HealthBarFillAmount, Time.deltaTime * 10);
         CooldownBar.fillAmount = Mathf.Lerp(CooldownBar.fillAmount, CooldownBarFillAmount, Time.deltaTime * 10);
 
@@ -73,11 +45,11 @@ public class BaseShip : MonoBehaviour
         ProcessAttack();
     }
 
-    public virtual void CalculateMovement()
+    protected virtual void CalculateMovement()
     {
         // Save old heading, slerp to target
         Vector3 oldHeading = Heading;
-        Heading = Vector3.Slerp(Heading, (Fleet.Instance.TargetPosition - transform.position).normalized, TurnSpeed * Time.deltaTime).normalized;
+        Heading = Vector3.Slerp(Heading, (Fleet.Instance.GetTargetPosition() - transform.position).normalized, ShipData.TurnSpeed * Time.deltaTime).normalized;
 
         // Perform collision avoidance raycasts
         for (int i = -2; i <= 1; i++)
@@ -91,25 +63,19 @@ public class BaseShip : MonoBehaviour
             Vector3 raycastDirection = Quaternion.AngleAxis(angle, new Vector3(0, 0, 1)) * Heading;
             RaycastHit hit;
             // Resolve raycast hit
-            if (Physics.Raycast(transform.position, raycastDirection, out hit, VisibilityRange, LayerMask))
+            if (Physics.Raycast(transform.position, raycastDirection, out hit, ShipData.VisibilityRange, LayerMask))
             {
                 // Weight of distance on steering
-                float distFactor = (VisibilityRange - hit.distance) / VisibilityRange;
+                float distFactor = (ShipData.VisibilityRange - hit.distance) / ShipData.VisibilityRange;
                 // Weight of angle on steering
                 float angleFactor = 1.0f - Mathf.Floor(Mathf.Abs(iVal)) * 0.25f;
                 // Steering away from hit weighted by distance and angle 
-                Heading = Vector3.Slerp(Heading, (transform.position - hit.point).normalized, TurnSpeed * Time.deltaTime * distFactor * angleFactor).normalized;
-
-                Debug.DrawRay(transform.position, raycastDirection * hit.distance, new Color(1, 1 - distFactor * angleFactor, 1 - distFactor * angleFactor, 1));
-            }
-            else
-            {
-                Debug.DrawRay(transform.position, raycastDirection * VisibilityRange, Color.white);
+                Heading = Vector3.Slerp(Heading, (transform.position - hit.point).normalized, ShipData.TurnSpeed * Time.deltaTime * distFactor * angleFactor).normalized;
             }
         }
 
         // Calculate new position
-        Vector3 NewPos = transform.position + Heading * Speed * Time.deltaTime;
+        Vector3 NewPos = transform.position + Heading * ShipData.Speed * Time.deltaTime;
         NewPos.z = 0;
         transform.position = NewPos;
         
@@ -119,27 +85,27 @@ public class BaseShip : MonoBehaviour
         transform.rotation = Quaternion.AngleAxis(Angle, new Vector3(0, 0, 1)) * Quaternion.AngleAxis(ChangeInAngle, Vector3.up);
     }
 
-    public virtual void OnCooldown()
+    protected virtual void OnCooldown()
     {
-        AttackCooldownTimer = AttackCooldown;
+        AttackCooldownTimer = ShipData.AttackCooldown[Level];
         MainCooldownTriggered = true;
     }
 
-    public virtual void OnSubCooldown()
+    protected virtual void OnSubCooldown()
     {
-        SubAttackCooldownTimer = SubAttackCooldown;
+        SubAttackCooldownTimer = ShipData.SubAttackCooldown;
         if (SubAttackCount > 0)
         {
             SubAttackCount--;
         }
         if (SubAttackCount == 0)
         {
-            SubAttackCount = SubAttackCountBase;
+            SubAttackCount = ShipData.SubAttackCount[Level];
             MainCooldownTriggered = false;
         }
     }
 
-    public virtual void ProcessAttack()
+    protected virtual void ProcessAttack()
     {
         if (MainCooldownTriggered)
         {
@@ -152,7 +118,7 @@ public class BaseShip : MonoBehaviour
         else
         {
             AttackCooldownTimer -= Mathf.Max(0, Time.deltaTime);
-            CooldownBarFillAmount = 1 - AttackCooldownTimer / AttackCooldown;
+            CooldownBarFillAmount = 1 - AttackCooldownTimer / ShipData.AttackCooldown[Level];
             if (AttackCooldownTimer <= 0)
             {
                 OnCooldown();
@@ -162,9 +128,9 @@ public class BaseShip : MonoBehaviour
 
     public virtual void ProcessDamage(float damage)
     {
-        damage = Mathf.Max(damage - Armor);
+        damage = Mathf.Max(damage - ShipData.Armor[Level]);
         Health -= Mathf.Max(0, damage);
-        HealthBarFillAmount = Health / MaxHealth;
+        HealthBarFillAmount = Health / ShipData.MaxHealth[Level];
 
         if (Health <= 0)
         {
@@ -175,7 +141,7 @@ public class BaseShip : MonoBehaviour
     public static BaseAsteroid GetClosestAsteroid(Vector3 position)
     {
         BaseAsteroid closest = null;
-        foreach (BaseAsteroid asteroid in WaveManager.Instance.ActiveAsteroids)
+        foreach (BaseAsteroid asteroid in GameManager.Instance.ActiveAsteroids)
         {
             if (closest == null)
             {
@@ -192,7 +158,7 @@ public class BaseShip : MonoBehaviour
         return closest;
     }
 
-    public static Vector3 GetAsteroidInterceptVector(Vector3 position, BaseAsteroid asteroid, float projectileSpeed)
+    protected static Vector3 GetAsteroidInterceptVector(Vector3 position, BaseAsteroid asteroid, float projectileSpeed)
     {
         Vector3 asteroidPos = asteroid.transform.position;
         Vector3 asteroidVel = asteroid.asteroidRigidbody.velocity;

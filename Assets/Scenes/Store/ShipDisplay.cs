@@ -9,7 +9,7 @@ public class ShipDisplay : MonoBehaviour, IPointerEnterHandler
 {
     public GameObject ShipModel;
 
-    public ShipStoreEntryScriptableObject ShipStoreEntryValues;
+    public ShipDataScriptableObject ShipDataValues;
     public TMP_Text Title;
     public ClassDisplay ClassDisplayPrefab;
     public List<ClassDisplay> ClassDisplays = new List<ClassDisplay>();
@@ -46,7 +46,7 @@ public class ShipDisplay : MonoBehaviour, IPointerEnterHandler
         if (shipEntry == null)
         {
             mf.sharedMesh = null;
-            ShipStoreEntryValues = null;
+            ShipDataValues = null;
 
             ShipDescription = "You can purchase another ship to fill this slot.";
             ShipName = "Empty";
@@ -54,16 +54,14 @@ public class ShipDisplay : MonoBehaviour, IPointerEnterHandler
         }
         else
         {
-            Mesh m = (Mesh)Resources.Load<Mesh>("Models/" + shipEntry.Type);
-            mf.sharedMesh = m;
-
-            ShipStoreEntryValues = (ShipStoreEntryScriptableObject)Resources.Load<ShipStoreEntryScriptableObject>("ScriptableObjects/ShipStoreEntries/" + shipEntry.Type);
-            if (ShipStoreEntryValues != null)
+            ShipDataValues = (ShipDataScriptableObject)Resources.Load<ShipDataScriptableObject>("ScriptableObjects/Ships/" + shipEntry.Type);
+            if (ShipDataValues != null) 
             {
-                Title.text = ShipStoreEntryValues.Name;
+                mf.sharedMesh = ShipDataValues.m_Mesh;
+                Title.text = ShipDataValues.Name;
 
                 int i = 0;
-                foreach (ShipClass sc in ShipStoreEntryValues.Classes)
+                foreach (ShipClass sc in ShipDataValues.Classes)
                 {
                     Vector2 offset = new Vector2(-100, -100 + 70 * i);
                     ClassDisplay go = Instantiate(ClassDisplayPrefab, Vector3.zero, Quaternion.identity);
@@ -84,10 +82,10 @@ public class ShipDisplay : MonoBehaviour, IPointerEnterHandler
     {
         if (m_InfoTab != null)
         {
-            if (ShipStoreEntryValues != null)
+            if (ShipDataValues != null)
             {
-                m_InfoTab.SetTitle(ShipStoreEntryValues.Name);
-                m_InfoTab.SetDescription(ShipStoreEntryValues.Description);
+                m_InfoTab.SetTitle(ShipDataValues.Name);
+                m_InfoTab.SetDescription(ShipDataValues.Description);
             }
             else
             {

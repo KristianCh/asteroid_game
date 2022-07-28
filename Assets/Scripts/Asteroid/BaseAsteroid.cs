@@ -3,6 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+public enum AsteroidType
+{
+    Normal,
+    Magnetic
+}
+
 public class BaseAsteroid : MonoBehaviour
 {
     // base stats
@@ -35,14 +41,14 @@ public class BaseAsteroid : MonoBehaviour
     // Start is called before the first frame update
     public virtual void Start()
     {
-        // Add to wave manager list of asteroids
-        if (WaveManager.Instance != null)
+        // Add to game manager list of asteroids
+        if (GameManager.Instance != null)
         {
-            WaveManager.Instance.ActiveAsteroids.Add(this);
+            GameManager.Instance.ActiveAsteroids.Add(this);
         }
 
         // set max health according to asteroid size
-        BaseMaxHealth = BaseMaxHealth * (Size / 3.0f);
+        BaseMaxHealth = BaseMaxHealth * Size;
         Health = BaseMaxHealth;
 
         // Get components
@@ -96,7 +102,7 @@ public class BaseAsteroid : MonoBehaviour
          * TODO : on death effects
          */
 
-        WaveManager.Instance.ActiveAsteroids.Remove(this);
+        GameManager.Instance.ActiveAsteroids.Remove(this);
         OutOfVisionMarker.enabled = false;
 
         IsDead = true;

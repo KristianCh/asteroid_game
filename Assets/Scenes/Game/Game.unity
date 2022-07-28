@@ -403,8 +403,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3b52d2d27562d94d8cc1ac47f15df5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TargetPosition: {x: 0, y: 0, z: 0}
-  ShipList: []
 --- !u!4 &516475166
 Transform:
   m_ObjectHideFlags: 0
@@ -694,6 +692,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7276734304260486821, guid: 4e1fd9647bd366d498856df3fa2706b5, type: 3}
+      propertyPath: m_IsKinematic
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7511246177498909680, guid: 4e1fd9647bd366d498856df3fa2706b5, type: 3}
       propertyPath: m_Name
       value: Battleship
@@ -757,7 +759,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7662893661321833160, guid: 2b2a2bc6382b5c644b9f94534dc1e0ae, type: 3}
       propertyPath: m_Name
-      value: AsteroidPrefabManager (1)
+      value: AsteroidPrefabManager
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2b2a2bc6382b5c644b9f94534dc1e0ae, type: 3}
@@ -1354,6 +1356,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 474735088870935647, guid: 524d36949e4c37f4a8adfc1f3b5e56e3, type: 3}
       propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 745329098194022666, guid: 524d36949e4c37f4a8adfc1f3b5e56e3, type: 3}
+      propertyPath: m_IsKinematic
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 999035647448618725, guid: 524d36949e4c37f4a8adfc1f3b5e56e3, type: 3}

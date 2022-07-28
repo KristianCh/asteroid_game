@@ -8,4 +8,5 @@ public class ClassStoreEntryScriptableObject : ScriptableObject
     public string Name;
     [TextArea(15, 15)]
     public string Description;
+    public Sprite m_Sprite;
 }

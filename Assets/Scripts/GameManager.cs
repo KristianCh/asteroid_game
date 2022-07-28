@@ -1,9 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using TMPro;
 
-public class WaveManager : MonoBehaviour
+public class GameManager : MonoBehaviour
 {
     public int Stage = 1;
     public int Wave = 1;
@@ -18,7 +19,7 @@ public class WaveManager : MonoBehaviour
     public bool IsWaveOn = false;
 
     public List<BaseAsteroid> ActiveAsteroids = new List<BaseAsteroid>();
-    public static WaveManager Instance;
+    public static GameManager Instance;
     public TMP_Text WaveText;
     public Animator WaveTextAnimator;
 
@@ -67,6 +68,10 @@ public class WaveManager : MonoBehaviour
                 {
                     SetWaveText();
                     WaveTextAnimator.Play("ShowWaveCounter", 0, 0);
+                }
+                else
+                {
+                    SceneManager.LoadScene("Store", LoadSceneMode.Single);
                 }
             }
         }

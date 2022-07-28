@@ -8,7 +8,7 @@ public enum ProjectileType
     Missile
 }
 
-public class BaseProjectile : MonoBehaviour
+public class BaseProjectile : ShipSpawnableObject
 {
     public ProjectileType Type;
 

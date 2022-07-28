@@ -23,33 +23,21 @@ public class ShipPrefabManager : MonoBehaviour
         switch (type)
         {
             case ProjectileType.CannonRound:
-                NewProjectile = InstantiateCannonRound(damage, speed, tracking, heading, targetAsteroid, position);
+                NewProjectile = InstantiateProjectile(damage, speed, tracking, heading, targetAsteroid, position, Instance.CannonRoundPrefab);
                 break;
             case ProjectileType.Missile:
-                NewProjectile = InstantiateMissile(damage, speed, tracking, heading, targetAsteroid, position);
+                NewProjectile = InstantiateProjectile(damage, speed, tracking, heading, targetAsteroid, position, Instance.MissilePrefab);
                 break;
             default:
-                NewProjectile = InstantiateCannonRound(damage, speed, tracking, heading, targetAsteroid, position);
+                NewProjectile = InstantiateProjectile(damage, speed, tracking, heading, targetAsteroid, position, Instance.CannonRoundPrefab);
                 break;
         }
         return NewProjectile;
     }
 
-    public static BaseProjectile InstantiateCannonRound(float damage, float speed, float tracking, Vector3 heading, BaseAsteroid targetAsteroid, Vector3 position)
+    public static BaseProjectile InstantiateProjectile(float damage, float speed, float tracking, Vector3 heading, BaseAsteroid targetAsteroid, Vector3 position, BaseProjectile prefab)
     {
-        BaseProjectile NewProjectile = Instantiate(Instance.CannonRoundPrefab, position, Quaternion.identity);
-        NewProjectile.Heading = heading;
-        NewProjectile.TargetAsteroid = targetAsteroid;
-        NewProjectile.Damage = damage;
-        NewProjectile.Speed = speed;
-        NewProjectile.Tracking = tracking;
-
-        return NewProjectile;
-    }
-
-    public static BaseProjectile InstantiateMissile(float damage, float speed, float tracking, Vector3 heading, BaseAsteroid targetAsteroid, Vector3 position)
-    {
-        BaseProjectile NewProjectile = Instantiate(Instance.MissilePrefab, position, Quaternion.identity);
+        BaseProjectile NewProjectile = Instantiate(prefab, position, Quaternion.identity);
         NewProjectile.Heading = heading;
         NewProjectile.TargetAsteroid = targetAsteroid;
         NewProjectile.Damage = damage;

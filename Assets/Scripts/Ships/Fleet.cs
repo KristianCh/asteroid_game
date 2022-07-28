@@ -5,9 +5,10 @@ using UnityEngine;
 public class Fleet : MonoBehaviour
 {
     public static Fleet Instance;
-    public Vector3 TargetPosition = Vector3.zero;
+    protected RunData ActiveRunData;
+    protected Vector3 TargetPosition = Vector3.zero;
 
-    public List<BaseShip> ShipList = new List<BaseShip>();
+    protected List<BaseShip> ShipList = new List<BaseShip>();
 
     protected Vector3 CameraOffset = Vector3.zero;
 
@@ -15,6 +16,8 @@ public class Fleet : MonoBehaviour
     void Start()
     {
         Instance = this;
+
+        ActiveRunData = (RunData)FindObjectOfType(typeof(RunData));
     }
 
     // Update is called once per frame
@@ -57,5 +60,15 @@ public class Fleet : MonoBehaviour
             }
         }
         return closest;
+    }
+
+    public void AddToFleet(BaseShip ship)
+    {
+        ShipList.Add(ship);
+    }
+
+    public Vector3 GetTargetPosition()
+    {
+        return TargetPosition;
     }
 }
