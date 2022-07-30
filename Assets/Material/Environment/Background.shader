@@ -5,6 +5,7 @@ Shader "Environment/Background"
 		[MainTexture] _MainTex("Texture", 2D) = "white" {}
 		[MainColor] _Color("Colour", Color) = (1, 1, 1, 1)
 		_Time("Time", Float) = 0
+		_Saturation("Saturation", Float) = 1
 	}
 
 	SubShader
@@ -31,6 +32,7 @@ Shader "Environment/Background"
 			};
 
 			sampler2D _MainTex;
+			float _Saturation;
 			fixed4 _Color;
 
 			v2f vert(appdata IN) 
@@ -48,7 +50,10 @@ Shader "Environment/Background"
 				float time_div = 0.05;
 				float var = 30;
 				float2 offset = float2(cos(_Time.x / time_div + IN.uv.x * var), sin(_Time.x / time_div + IN.uv.y * var)) / float2(1920, 1080) * 25;
-				fixed4 fragColor = pow(tex2D(_MainTex, IN.uv + offset) * 1.2, 4) * 0.5;
+				float4 color = pow(tex2D(_MainTex, IN.uv + offset) * 1.2, 4) * 0.5;
+				
+				float4 grayscale_color = dot(color, float4(0.299f, 0.587f, 0.114f, 0.0f));
+				fixed4 fragColor = lerp(grayscale_color, color, _Saturation);
 
 				return fragColor;
 			}

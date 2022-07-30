@@ -6,21 +6,13 @@ using UnityEngine.UI;
 
 namespace Scenes.Store
 {
-    public class ClassDisplay : MonoBehaviour, IPointerEnterHandler
+    public class ClassDisplay : AInfoDisplay
     {
-        [SerializeField]
-        public InfoTab m_InfoTab;
         [SerializeField]
         public ClassStoreEntryData ClassStoreEntryValues;
 
         private string ClassName = "ClassName";
         private string ClassDescription = "ClassDescription";
-
-        // Start is called before the first frame update
-        void Start()
-        {
-            m_InfoTab = GameObject.Find("InfoTab").GetComponent(typeof(InfoTab)) as InfoTab;
-        }
 
         public void Setup(ShipClass shipClass)
         {
@@ -36,19 +28,20 @@ namespace Scenes.Store
             }
         }
 
-        public void OnPointerEnter(PointerEventData eventData)
+        public override void OnPointerEnter(PointerEventData eventData)
         {
-            if (m_InfoTab != null)
+            base.OnPointerEnter(eventData);
+            if (InfoTab.Instance != null)
             {
                 if (ClassStoreEntryValues != null)
                 {
-                    m_InfoTab.SetTitle("Class: " + ClassStoreEntryValues.Name);
-                    m_InfoTab.SetDescription(ClassStoreEntryValues.Description);
+                    InfoTab.Instance.SetTitle($"Class: {ClassStoreEntryValues.Name}");
+                    InfoTab.Instance.SetDescription(ClassStoreEntryValues.Description);
                 }
                 else
                 {
-                    m_InfoTab.SetTitle("Class: " + ClassName);
-                    m_InfoTab.SetDescription(ClassDescription);
+                    InfoTab.Instance.SetTitle($"Class: {ClassName}");
+                    InfoTab.Instance.SetDescription(ClassDescription);
                 }
             }
         }

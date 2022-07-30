@@ -287,7 +287,7 @@ GameObject:
   - component: {fileID: 61279280}
   - component: {fileID: 61279282}
   - component: {fileID: 61279281}
-  m_Layer: 8
+  m_Layer: 5
   m_Name: Fleet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1658,7 +1658,6 @@ MonoBehaviour:
   Title: {fileID: 1670045883}
   ClassDisplayPrefab: {fileID: 1561246376507017604, guid: 745aecd9e0c28654fbc8eb184a4cbbb5, type: 3}
   ClassDisplays: []
-  m_InfoTab: {fileID: 1684115876}
   SDP: {fileID: 432704281}
 --- !u!222 &427340346
 CanvasRenderer:
@@ -1971,7 +1970,6 @@ MonoBehaviour:
   Title: {fileID: 734054145}
   ClassDisplayPrefab: {fileID: 1561246376507017604, guid: 745aecd9e0c28654fbc8eb184a4cbbb5, type: 3}
   ClassDisplays: []
-  m_InfoTab: {fileID: 1684115876}
   SDP: {fileID: 234269259}
 --- !u!114 &496053570
 MonoBehaviour:
@@ -2329,7 +2327,7 @@ RectTransform:
   - {fileID: 128188775}
   - {fileID: 432704282}
   m_Father: {fileID: 1220639348}
-  m_RootOrder: 9
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -2760,7 +2758,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 4a3758e598e402b4cb215ab84861af42, type: 2}
     - target: {fileID: 919132149155446097, guid: 1406d37af5f0722439ee2a8ead1f5d91, type: 3}
       propertyPath: m_Name
-      value: MissileCruiser
+      value: Mesh
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 1406d37af5f0722439ee2a8ead1f5d91, type: 3}
       propertyPath: m_Layer
@@ -3066,7 +3064,6 @@ MonoBehaviour:
   Title: {fileID: 98112573}
   ClassDisplayPrefab: {fileID: 1561246376507017604, guid: 745aecd9e0c28654fbc8eb184a4cbbb5, type: 3}
   ClassDisplays: []
-  m_InfoTab: {fileID: 1684115876}
   SDP: {fileID: 101373191}
 --- !u!222 &874557555
 CanvasRenderer:
@@ -3359,7 +3356,6 @@ MonoBehaviour:
   Title: {fileID: 1998024041}
   ClassDisplayPrefab: {fileID: 1561246376507017604, guid: 745aecd9e0c28654fbc8eb184a4cbbb5, type: 3}
   ClassDisplays: []
-  m_InfoTab: {fileID: 1684115876}
   SDP: {fileID: 522890044}
 --- !u!222 &959798922
 CanvasRenderer:
@@ -3818,12 +3814,12 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 30
+  m_fontSize: 40
   m_fontSizeBase: 30
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_fontSizeMax: 40
   m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 256
@@ -3879,7 +3875,7 @@ GameObject:
   - component: {fileID: 1079558434}
   - component: {fileID: 1079558436}
   - component: {fileID: 1079558435}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4036,7 +4032,7 @@ RectTransform:
   - {fileID: 1010802763}
   - {fileID: 234269260}
   m_Father: {fileID: 1220639348}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -4064,7 +4060,7 @@ GameObject:
   - component: {fileID: 1143870180}
   - component: {fileID: 1143870182}
   - component: {fileID: 1143870181}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4337,7 +4333,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 4a3758e598e402b4cb215ab84861af42, type: 2}
     - target: {fileID: 919132149155446097, guid: 1406d37af5f0722439ee2a8ead1f5d91, type: 3}
       propertyPath: m_Name
-      value: MissileCruiser
+      value: Mesh
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 1406d37af5f0722439ee2a8ead1f5d91, type: 3}
       propertyPath: m_Layer
@@ -4576,7 +4572,6 @@ RectTransform:
   - {fileID: 1697600562}
   - {fileID: 2031839109}
   - {fileID: 935402773}
-  - {fileID: 1684115871}
   - {fileID: 1899189770}
   - {fileID: 1131068816}
   - {fileID: 531295102}
@@ -4657,7 +4652,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 4a3758e598e402b4cb215ab84861af42, type: 2}
     - target: {fileID: 919132149155446097, guid: 1406d37af5f0722439ee2a8ead1f5d91, type: 3}
       propertyPath: m_Name
-      value: MissileCruiser
+      value: Mesh
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 1406d37af5f0722439ee2a8ead1f5d91, type: 3}
       propertyPath: m_Layer
@@ -4752,7 +4747,6 @@ MonoBehaviour:
   Title: {fileID: 580324591}
   ClassDisplayPrefab: {fileID: 1561246376507017604, guid: 745aecd9e0c28654fbc8eb184a4cbbb5, type: 3}
   ClassDisplays: []
-  m_InfoTab: {fileID: 1684115876}
   SDP: {fileID: 128188774}
 --- !u!222 &1266736863
 CanvasRenderer:
@@ -4819,7 +4813,6 @@ MonoBehaviour:
   Title: {fileID: 1418243112}
   ClassDisplayPrefab: {fileID: 1561246376507017604, guid: 745aecd9e0c28654fbc8eb184a4cbbb5, type: 3}
   ClassDisplays: []
-  m_InfoTab: {fileID: 1684115876}
   SDP: {fileID: 5343441}
 --- !u!114 &1280883550
 MonoBehaviour:
@@ -5102,7 +5095,7 @@ GameObject:
   - component: {fileID: 1348249839}
   - component: {fileID: 1348249841}
   - component: {fileID: 1348249840}
-  m_Layer: 8
+  m_Layer: 5
   m_Name: Credits
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5656,7 +5649,6 @@ MonoBehaviour:
   Title: {fileID: 410286012}
   ClassDisplayPrefab: {fileID: 1561246376507017604, guid: 745aecd9e0c28654fbc8eb184a4cbbb5, type: 3}
   ClassDisplays: []
-  m_InfoTab: {fileID: 1684115876}
   SDP: {fileID: 1364467472}
 --- !u!114 &1666230740
 MonoBehaviour:
@@ -5859,17 +5851,17 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1684115870}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.0000799, y: 1.0000799, z: 1.0000799}
+  m_LocalPosition: {x: 0, y: 0, z: -1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1073924693}
   - {fileID: 1075152405}
-  m_Father: {fileID: 1220639348}
-  m_RootOrder: 6
+  m_Father: {fileID: 1978273494}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 900, y: -480}
+  m_AnchoredPosition: {x: 900, y: -700}
   m_SizeDelta: {x: 700, y: 400}
   m_Pivot: {x: 1, y: 0}
 --- !u!95 &1684115872
@@ -5960,7 +5952,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.60400003, g: 0.41154906, b: 0.50333333, a: 0.101960786}
+  m_Color: {r: 0.3, g: 0.20454545, b: 0.24935068, a: 0.8}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -5999,6 +5991,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Title: {fileID: 1073924694}
   Description: {fileID: 1075152406}
+  _Visibility: 0
 --- !u!1 &1697600561
 GameObject:
   m_ObjectHideFlags: 0
@@ -6012,7 +6005,7 @@ GameObject:
   - component: {fileID: 1697600565}
   - component: {fileID: 1697600564}
   - component: {fileID: 1697600563}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: Start
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6357,7 +6350,7 @@ GameObject:
   - component: {fileID: 1822898082}
   - component: {fileID: 1822898084}
   - component: {fileID: 1822898083}
-  m_Layer: 8
+  m_Layer: 5
   m_Name: Store
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6510,7 +6503,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1220639348}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -6621,6 +6614,88 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1978273490
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1978273494}
+  - component: {fileID: 1978273493}
+  - component: {fileID: 1978273492}
+  m_Layer: 3
+  m_Name: Canvas
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1978273492
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1978273490}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_UiScaleMode: 0
+  m_ReferencePixelsPerUnit: 100
+  m_ScaleFactor: 1
+  m_ReferenceResolution: {x: 800, y: 600}
+  m_ScreenMatchMode: 0
+  m_MatchWidthOrHeight: 0
+  m_PhysicalUnit: 3
+  m_FallbackScreenDPI: 96
+  m_DefaultSpriteDPI: 96
+  m_DynamicPixelsPerUnit: 1
+  m_PresetInfoIsWorld: 1
+--- !u!223 &1978273493
+Canvas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1978273490}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_RenderMode: 2
+  m_Camera: {fileID: 999478662}
+  m_PlaneDistance: 9
+  m_PixelPerfect: 0
+  m_ReceivesEvents: 1
+  m_OverrideSorting: 0
+  m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
+  m_AdditionalShaderChannelsFlag: 25
+  m_SortingLayerID: 0
+  m_SortingOrder: 1
+  m_TargetDisplay: 0
+--- !u!224 &1978273494
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1978273490}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -1}
+  m_LocalScale: {x: 0.009622504, y: 0.009622504, z: 0.009622504}
+  m_Children:
+  - {fileID: 1684115871}
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 1920.0001, y: 1080}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1997811367
 GameObject:
   m_ObjectHideFlags: 0
@@ -6678,7 +6753,6 @@ MonoBehaviour:
   Title: {fileID: 526050343}
   ClassDisplayPrefab: {fileID: 1561246376507017604, guid: 745aecd9e0c28654fbc8eb184a4cbbb5, type: 3}
   ClassDisplays: []
-  m_InfoTab: {fileID: 1684115876}
   SDP: {fileID: 186635579}
 --- !u!114 &1997811370
 MonoBehaviour:
@@ -6909,7 +6983,6 @@ MonoBehaviour:
   Title: {fileID: 1196361557}
   ClassDisplayPrefab: {fileID: 1561246376507017604, guid: 745aecd9e0c28654fbc8eb184a4cbbb5, type: 3}
   ClassDisplays: []
-  m_InfoTab: {fileID: 1684115876}
   SDP: {fileID: 1010802762}
 --- !u!114 &2026094429
 MonoBehaviour:
@@ -6962,7 +7035,7 @@ GameObject:
   - component: {fileID: 2031839112}
   - component: {fileID: 2031839111}
   - component: {fileID: 2031839110}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: MainMenu
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using Data;
+using DG.Tweening;
 using Run;
 using TMPro;
 using UnityEngine;
@@ -7,7 +9,7 @@ using UnityEngine.EventSystems;
 
 namespace Scenes.Store
 {
-    public class ShipDisplay : MonoBehaviour, IPointerEnterHandler
+    public class ShipDisplay : AInfoDisplay
     {
         [SerializeField]
         public GameObject ShipModel;
@@ -20,8 +22,6 @@ namespace Scenes.Store
         [SerializeField]
         public List<ClassDisplay> ClassDisplays = new List<ClassDisplay>();
         [SerializeField]
-        public InfoTab m_InfoTab;
-        [SerializeField]
         public GameObject SDP;
 
         private string ShipName = "ShipName";
@@ -30,7 +30,7 @@ namespace Scenes.Store
         private float RotationTime = 6;
 
         // Update is called once per frame
-        void Update()
+        public void Update()
         {
             ShipModel.transform.rotation = Quaternion.Euler(110, ShipModelAngle, 0);
             ShipModelAngle += Time.deltaTime * (360 / RotationTime);
@@ -66,7 +66,7 @@ namespace Scenes.Store
                 var i = 0;
                 foreach (var sc in ShipDataValues.Classes)
                 {
-                    var offset = new Vector2(-100, -100 + 70 * i);
+                    var offset = new Vector2(-100, -100 + 60 * i);
                     var go = Instantiate(ClassDisplayPrefab, Vector3.zero, Quaternion.identity);
 
                     go.transform.SetParent(SDP.transform, false);
@@ -80,18 +80,19 @@ namespace Scenes.Store
             }
         }
 
-        public void OnPointerEnter(PointerEventData eventData)
+        public override void OnPointerEnter(PointerEventData eventData)
         {
-            if (m_InfoTab == null) return;
+            base.OnPointerEnter(eventData);
+            if (InfoTab.Instance == null) return;
             if (ShipDataValues != null)
             {
-                m_InfoTab.SetTitle(ShipDataValues.Name);
-                m_InfoTab.SetDescription(ShipDataValues.Description);
+                InfoTab.Instance.SetTitle(ShipDataValues.Name);
+                InfoTab.Instance.SetDescription(ShipDataValues.Description);
             }
             else
             {
-                m_InfoTab.SetTitle(ShipName);
-                m_InfoTab.SetDescription(ShipDescription);
+                InfoTab.Instance.SetTitle(ShipName);
+                InfoTab.Instance.SetDescription(ShipDescription);
             }
         }
     }

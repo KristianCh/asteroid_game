@@ -4,6 +4,8 @@ Shader "Environment/ScreenEffects"
 	{
 		[MainTexture] _MainTex("Texture", 2D) = "white" {}
 		_PixelSize("Pixel Size", Float) = 2
+		_Saturation("Saturation", Float) = 1
+		_VignetteRoundnessFactor("Vignette Roundness Factor", Float) = 1
 	}
 
 	SubShader
@@ -30,6 +32,8 @@ Shader "Environment/ScreenEffects"
 
 			fixed4 _Color;
 			float _PixelSize;
+			float _Saturation;
+			float _VignetteRoundnessFactor;
 			sampler2D _MainTex;
 
 			float2 curveRemapUV(float2 curvature, float2 uv)
@@ -61,7 +65,7 @@ Shader "Environment/ScreenEffects"
 			float4 getCrtColor(float2 coords, float4 color) {
 				float2 scanLineOpacity = float2(0.1, 0.1);
 				float2 screenResolution = float2(320, 240);
-				color *= vignetteIntensity(coords, screenResolution, 0.5, length(screenResolution) / 200);
+				color *= vignetteIntensity(coords, screenResolution, 0.5, length(screenResolution) / 500);
 				color *= scanLineIntensity(coords.x, screenResolution.y, scanLineOpacity.x);
 				color *= scanLineIntensity(coords.y, screenResolution.x, scanLineOpacity.y);
 				color *= float4(1.8, 1.8, 1.8, 1.0);
@@ -89,12 +93,13 @@ Shader "Environment/ScreenEffects"
 
 			fixed4 frag(v2f IN) : SV_Target
 			{
-				float2 curvature = float2(4, 4);
+				const float2 curvature = float2(4, 4);
 				float2 coords = curveRemapUV(curvature, IN.uv);
 				float4 color = tex2D(_MainTex, coords);
 
 				color = getCrtColor(coords, color);
-				fixed4 fragColor = color;
+				float4 grayscale_color = dot(color, float4(0.299f, 0.587f, 0.114f, 0.0f));
+				fixed4 fragColor = lerp(grayscale_color, color, _Saturation);
 
 				return fragColor;
 			}
