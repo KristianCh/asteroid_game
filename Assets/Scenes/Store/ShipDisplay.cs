@@ -14,7 +14,7 @@ namespace Scenes.Store
         [SerializeField]
         private GameObject ShipModel;
         [SerializeField]
-        private ShipData ShipDataValues;
+        private BaseShipData ShipDataValues;
         [SerializeField]
         private TMP_Text Title;
         [SerializeField]
@@ -57,7 +57,7 @@ namespace Scenes.Store
             }
             else
             {
-                ShipDataValues = (ShipData)Resources.Load<ShipData>(
+                ShipDataValues = (BaseShipData)Resources.Load<BaseShipData>(
                     $"Data/Ships/{shipEntry.Type}");
                 if (ShipDataValues == null) return;
             

@@ -5,7 +5,7 @@ using UnityEngine;
 namespace Data
 {
     [CreateAssetMenu(fileName="Ship", menuName="Ship")]
-    public class ShipData : ScriptableObject
+    public class BaseShipData : ScriptableObject
     {
         /* Store data */
         public string Type;

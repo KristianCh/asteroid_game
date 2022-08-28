@@ -142,7 +142,7 @@ namespace Combat.Asteroid
             }
 
             // Add force to knock asteroid away from coliding object
-            asteroidRigidbody.AddForceAtPosition(collision.impulse * Mathf.Max(20, Mathf.Min(collision.relativeVelocity.magnitude * 100, 50)) * MassMult, 
+            asteroidRigidbody.AddForceAtPosition(collision.impulse * Mathf.Max(20, Mathf.Min(collision.relativeVelocity.magnitude * 80, 50)) * MassMult, 
                 contact.point);
 
             // Calculate and apply damage dealt to asteroid
@@ -186,26 +186,26 @@ namespace Combat.Asteroid
             {
                 Death();
             }
-            if (damageInfo.ShowDamageIndicator) AsteroidPrefabManager.CreateDamageIndicator(Mathf.Ceil(damage), damageInfo.Position);
+            if (damageInfo.ShowDamageIndicator) AsteroidPrefabManager.CreateDamageIndicator(Mathf.Ceil(damage), damageInfo);
             HealthBar.fillAmount = Health / BaseMaxHealth;
         }
 
         // Calculates and sets the position of the arrow indicating the location of the asteroid if it's out of cameras vision
-        public void UpdateOutOfVisionMarker()
+        private void UpdateOutOfVisionMarker()
         {
             // Calculate bounds of vision
-            float lowerXBound = -Camera.main.orthographicSize * Camera.main.aspect + Camera.main.transform.position.x;
-            float upperXBound = Camera.main.orthographicSize * Camera.main.aspect + Camera.main.transform.position.x;
+            var lowerXBound = -Camera.main.orthographicSize * Camera.main.aspect + Camera.main.transform.position.x;
+            var upperXBound = Camera.main.orthographicSize * Camera.main.aspect + Camera.main.transform.position.x;
 
-            float lowerYBound = -Camera.main.orthographicSize + Camera.main.transform.position.y;
-            float upperYBound = Camera.main.orthographicSize + Camera.main.transform.position.y;
+            var lowerYBound = -Camera.main.orthographicSize + Camera.main.transform.position.y;
+            var upperYBound = Camera.main.orthographicSize + Camera.main.transform.position.y;
 
             // Check what bounds are OK
-            bool isInNegXRange = transform.position.x >= lowerXBound;
-            bool isInPosXRange = transform.position.x <= upperXBound;
+            var isInNegXRange = transform.position.x >= lowerXBound;
+            var isInPosXRange = transform.position.x <= upperXBound;
 
-            bool isInNegYRange = transform.position.y >= lowerYBound;
-            bool isInPosYRange = transform.position.y <= upperYBound;
+            var isInNegYRange = transform.position.y >= lowerYBound;
+            var isInPosYRange = transform.position.y <= upperYBound;
 
             // End if asteroid is in cameras vision and set the markers color appropriately
             if (isInNegXRange && isInPosXRange && isInNegYRange && isInPosYRange)
@@ -219,8 +219,8 @@ namespace Combat.Asteroid
             }
 
             // Initialize marker position and calculate screen space coords of asteroid
-            Vector2 markerPosition = new Vector2(0, 0);
-            Vector2 ScreenSpacePos = new Vector2(
+            var markerPosition = new Vector2(0, 0);
+            var ScreenSpacePos = new Vector2(
                 (transform.position.x - Camera.main.transform.position.x) / (Camera.main.orthographicSize * Camera.main.aspect) * (Screen.width / 2),
                 (transform.position.y - Camera.main.transform.position.y) / Camera.main.orthographicSize * (Screen.height / 2)
             );

@@ -8,10 +8,8 @@ using UnityEngine.UI;
 
 namespace Combat.Ships
 {
-    public class BaseShip : MonoBehaviour, IDamagable
+    public abstract class BaseShip : MonoBehaviour, IDamagable
     {
-        [SerializeField]
-        public ShipData ShipData;
         [SerializeField]
         public Image HealthBar;
         [SerializeField]
@@ -23,19 +21,45 @@ namespace Combat.Ships
         protected int Level = 0;
         protected List<StatusEffect> AppliedStatusEffects = new List<StatusEffect>();
         
-        private float AttackCooldownTimer = 5;
-        private float _HealthBarFillAmount = 1;
-        private float _CooldownBarFillAmount = 1;
-        private int _raycastMask = 1 << 8;
+        protected float AttackCooldownTimer = 5;
+        protected float _HealthBarFillAmount = 1;
+        protected float _CooldownBarFillAmount = 1;
+        protected int _raycastMask = 1 << 8;
         public int RaycastMask
         {
             get => _raycastMask;
             set => _raycastMask = value;
         }
 
-        private bool MainCooldownTriggered = false;
+        protected bool MainCooldownTriggered = false;
 
-        private Vector3 Heading = new Vector3(0, 1, 0);
+        protected Vector3 Heading = new Vector3(0, 1, 0);
+        
+        public abstract void Damage(DamageInfo damageInfo);
+        protected abstract void CalculateMovement();
+        protected abstract void OnSubCooldown();
+        protected abstract void OnCooldown();
+        protected abstract IEnumerator SubCooldownRoutine();
+        protected abstract IEnumerator CooldownRoutine();
+        
+        protected static Vector3 GetAsteroidInterceptVector(Vector3 position, BaseAsteroid asteroid, float projectileSpeed)
+        {
+            var asteroidPos = asteroid.transform.position;
+            var asteroidVel = asteroid.asteroidRigidbody.velocity;
+
+            var InterceptVector = ( 
+                asteroidPos - position + 
+                asteroidVel * ( (asteroidPos - position).magnitude / projectileSpeed )
+            ).normalized;
+
+            return InterceptVector;
+        }
+    }
+    
+    public abstract class BaseShip<TData> : BaseShip where TData : BaseShipData
+    {
+        [SerializeField]
+        public TData ShipData;
         
         // Start is called before the first frame update
         public virtual void Start()
@@ -57,7 +81,7 @@ namespace Combat.Ships
             CalculateMovement();
         }
 
-        protected virtual void CalculateMovement()
+        protected override void CalculateMovement()
         {
             // Save old heading, slerp to target
             var oldHeading = Heading;
@@ -95,27 +119,24 @@ namespace Combat.Ships
             transform.rotation = Quaternion.AngleAxis(angle, new Vector3(0, 0, 1)) * Quaternion.AngleAxis(changeInAngle, Vector3.up);
         }
 
-        protected virtual void OnCooldown()
+        protected override void OnCooldown()
         {
             AttackCooldownTimer = ShipData.AttackCooldown[Level];
             MainCooldownTriggered = true;
             _CooldownBarFillAmount = 0;       
             StartCoroutine(SubCooldownRoutine());
         }
+
+        protected override void OnSubCooldown() { }
         
-        private IEnumerator CooldownRoutine()
+        protected override IEnumerator CooldownRoutine()
         {
             DOTween.To(()=> _CooldownBarFillAmount, x=> _CooldownBarFillAmount = x, 1, ShipData.AttackCooldown[Level]);
             yield return new WaitForSeconds(ShipData.AttackCooldown[Level]);
             OnCooldown();
         }
 
-        protected virtual void OnSubCooldown()
-        {
-        
-        }
-
-        private IEnumerator SubCooldownRoutine()
+        protected override IEnumerator SubCooldownRoutine()
         {
             for (var i = 0; i < ShipData.SubAttackCount[Level]; i++)
             {
@@ -126,7 +147,7 @@ namespace Combat.Ships
             MainCooldownTriggered = false;
         }
 
-        public virtual void Damage(DamageInfo damageInfo)
+        public override void Damage(DamageInfo damageInfo)
         {
             var damage = damageInfo.Damage;
             damage = Mathf.Max(damage - ShipData.Armor[Level]);
@@ -137,21 +158,6 @@ namespace Combat.Ships
             {
                 Destroy(gameObject);
             }
-        }
-
-        
-
-        protected static Vector3 GetAsteroidInterceptVector(Vector3 position, BaseAsteroid asteroid, float projectileSpeed)
-        {
-            var asteroidPos = asteroid.transform.position;
-            var asteroidVel = asteroid.asteroidRigidbody.velocity;
-
-            var InterceptVector = ( 
-                asteroidPos - position + 
-                asteroidVel * ( (asteroidPos - position).magnitude / projectileSpeed )
-            ).normalized;
-
-            return InterceptVector;
         }
     }
 }

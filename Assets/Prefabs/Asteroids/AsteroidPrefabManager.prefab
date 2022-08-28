@@ -43,6 +43,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49a2c8e519930804d90398a9f652b0a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DamageIndicatorPrefab: {fileID: -3119733230635649484, guid: 41d9be0875a8f81439e4d5d4054410f0, type: 3}
+  _DamageIndicatorPrefab: {fileID: -3119733230635649484, guid: 41d9be0875a8f81439e4d5d4054410f0, type: 3}
   BaseAsteroidPrefab: {fileID: 7195261169091040612, guid: c216c8dc82813254994bd22651dd512e, type: 3}
   MagneticAsteroidPrefab: {fileID: 5234159386348176730, guid: 98dc1010403dbb44a81a07d007338895, type: 3}

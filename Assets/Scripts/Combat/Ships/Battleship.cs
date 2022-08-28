@@ -1,8 +1,9 @@
 using Combat.Ships.Projectiles;
+using Data;
 
 namespace Combat.Ships
 {
-    public class Battleship : BaseShip
+    public abstract class Battleship<TData> : BaseShip<TData> where TData : BaseShipData
     {
         protected override void OnSubCooldown()
         {
@@ -24,4 +25,6 @@ namespace Combat.Ships
             );
         }
     }
+    
+    public class Battleship : Battleship<BaseShipData> { }
 }

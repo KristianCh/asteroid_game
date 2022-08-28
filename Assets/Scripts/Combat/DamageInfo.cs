@@ -9,6 +9,19 @@ namespace Combat
         public Vector3 Position = Vector3.zero;
         public bool ShowDamageIndicator = false;
 
+        public Color DamageColor
+        {
+            get
+            {
+                return Type switch
+                {
+                    DamageType.Energy => Color.cyan,
+                    DamageType.Explosive => Color.yellow,
+                    _ => Color.white
+                };
+            }
+        }
+
         public DamageInfo
         (
             float damage,
