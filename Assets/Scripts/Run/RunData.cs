@@ -1,43 +1,49 @@
 using System.Collections;
 using System.Collections.Generic;
+using Data;
 using Modules;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace Run
 {
-    [System.Serializable]
-    public class ShipEntry
+    [CreateAssetMenu(fileName="RunDataDefinition", menuName="Run Data Definition")]
+    public class RunData : ScriptableObject
     {
-        public string Type = "";
-        public string Name = "";
-        public float HealthPercentage = 100;
-        public int Level = 1;
-        public int SubLevel = 0;
-        public bool IsFlagShip = false;
+        [SerializeField]
+        private List<ShipEntry> _Ships = new List<ShipEntry>();
+        public  List<ShipEntry> Ships => _Ships;
+        
+        [SerializeField]
+        private List<Module> _Modules = new List<Module>();
+        public  List<Module> Modules => _Modules;
 
-        public ShipEntry(string type, float healthPercentage, int level, int subLevel, bool isFlagship)
+        [SerializeField]
+        private int _Stage = 1;
+        public int Stage
         {
-            Type = type;
-            HealthPercentage = healthPercentage;
-            Level = level;
-            SubLevel = subLevel;
-            IsFlagShip = isFlagship;
+            get => _Stage;
+            set => _Stage = value;
         }
-    }
 
-    public class RunData : MonoBehaviour
-    {
-        public List<ShipEntry> Ships = new List<ShipEntry>();
-        public List<Module> Modules = new List<Module>();
-        public int Stage = 1;
-        public int Credits = 0;
-        public int FleetLimit => 3 + Stage / 3;
-        public GameDifficulty Difficulty = GameDifficulty.Normal;
-
-        private void Awake()
+        [SerializeField]
+        private int _Credits = 0;
+        public  int Credits
         {
-            DontDestroyOnLoad(gameObject);
+            get => _Credits;
+            set => _Credits = value;
+        }
+
+        [SerializeField]
+        private int _FleetLimit => 3 + _Stage / 3;
+        public  int FleetLimit => _FleetLimit;
+
+        [SerializeField]
+        private DifficultySettingsData _Difficulty;
+        public  DifficultySettingsData Difficulty
+        {
+            get => _Difficulty;
+            set => _Difficulty = value;
         }
     }
 }

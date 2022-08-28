@@ -34,10 +34,15 @@ namespace Combat.Asteroid
         public Canvas ScreenCanvas;
 
         // Timers to use for offset of gravity center and time between "death" and actually destroying go
-        private float CenterOffset = 0;
-        private float DeathTime = 1;
+        private float _centerOffset = 0;
+        private float _deathTime = 1;
         // Velocity magnitude to go to when out of screen
-        private float OutOfScreenSpeedMax = 5;
+        private readonly float OutOfScreenSpeedMax = 5;
+        
+        // Set X position of marker
+        private const int ScreenX = 960; //(Screen.width / 2);
+        private const int ScreenY = 540; //(Screen.height / 2);
+        private const int BorderW = 20; //Screen.height / 1080 * 20;
 
         // Start is called before the first frame update
         public virtual void Start()
@@ -45,7 +50,7 @@ namespace Combat.Asteroid
             // Add to game manager list of asteroids
             if (GameManager.Instance != null)
             {
-                GameManager.Instance.ActiveAsteroids.Add(this);
+                GameManager.AddAsteroid(this);
             }
 
             // set max health according to asteroid size
@@ -53,7 +58,7 @@ namespace Combat.Asteroid
             Health = BaseMaxHealth;
 
             // Get components
-            CenterOffset = Random.Range(0, 6);
+            _centerOffset = Random.Range(0, 6);
             asteroidRigidbody = GetComponent<Rigidbody>();
             m_MeshGenerator = GetComponent<MeshGenerator>();
             m_Collider = GetComponent<SphereCollider>();
@@ -85,10 +90,10 @@ namespace Combat.Asteroid
             // Reduce timer and scale
             if (IsDead)
             {
-                DeathTime -= Time.deltaTime;
-                transform.localScale = new Vector3(DeathTime, DeathTime, DeathTime);
+                _deathTime -= Time.deltaTime;
+                transform.localScale = new Vector3(_deathTime, _deathTime, _deathTime);
 
-                if (DeathTime <= 0)
+                if (_deathTime <= 0)
                 {
                     Destroy(gameObject);
                 }
@@ -105,7 +110,7 @@ namespace Combat.Asteroid
          * TODO : on death effects
          */
 
-            GameManager.Instance.ActiveAsteroids.Remove(this);
+            GameManager.RemoveAsteroid(this);
             OutOfVisionMarker.enabled = false;
 
             IsDead = true;
@@ -129,8 +134,8 @@ namespace Combat.Asteroid
             ContactPoint contact = collision.contacts[0];
         
             // Get rigidbody of colliding object and its mass
-            float MassMult = 1;
-            Rigidbody OtherRigidbody = collision.body as Rigidbody;
+            var MassMult = 1f;
+            var OtherRigidbody = collision.body as Rigidbody;
             if (OtherRigidbody)
             {
                 MassMult = OtherRigidbody.mass;
@@ -141,7 +146,7 @@ namespace Combat.Asteroid
                 contact.point);
 
             // Calculate and apply damage dealt to asteroid
-            float damage = Mathf.Pow(1 + collision.relativeVelocity.magnitude, 2) * MassMult;
+            var damage = Mathf.Pow(1 + collision.relativeVelocity.magnitude, 2) * MassMult;
             Damage(
                 new DamageInfo(damage, DamageType.Kinetic, contact.point, collision.gameObject.layer != LayerMask.NameToLayer("ShipProjectile"))
             );
@@ -151,8 +156,8 @@ namespace Combat.Asteroid
         public virtual void CalculateMovement()
         {
             // Calculate position of gravity
-            CenterOffset += Time.deltaTime;
-            Vector3 GravityPosition = new Vector3(Mathf.Cos(CenterOffset), Mathf.Sin(CenterOffset), 0) * 0.2f;
+            _centerOffset += Time.deltaTime;
+            Vector3 GravityPosition = new Vector3(Mathf.Cos(_centerOffset), Mathf.Sin(_centerOffset), 0) * 0.2f;
             // Apply force to move asteroid towards the offset center of the world
             asteroidRigidbody.AddForce(GravityPosition - transform.position * Time.deltaTime * GravityPull);
 
@@ -220,55 +225,52 @@ namespace Combat.Asteroid
                 (transform.position.y - Camera.main.transform.position.y) / Camera.main.orthographicSize * (Screen.height / 2)
             );
 
-            // Set X position of marker
-            float screenX = 960; //(Screen.width / 2);
-            float screenY = 540; //(Screen.height / 2);
-            float borderW = 20; //Screen.height / 1080 * 20;
+            
             if (!isInNegXRange)
             {
-                markerPosition.x = -Camera.main.orthographicSize * Camera.main.aspect / (Camera.main.orthographicSize * Camera.main.aspect) * screenX + borderW;
+                markerPosition.x = -Camera.main.orthographicSize * Camera.main.aspect / (Camera.main.orthographicSize * Camera.main.aspect) * ScreenX + BorderW;
             }
             if (!isInPosXRange)
             {
-                markerPosition.x = Camera.main.orthographicSize * Camera.main.aspect / (Camera.main.orthographicSize * Camera.main.aspect) * screenX - borderW;
+                markerPosition.x = Camera.main.orthographicSize * Camera.main.aspect / (Camera.main.orthographicSize * Camera.main.aspect) * ScreenX - BorderW;
             }
             if (isInNegXRange && isInPosXRange)
             {
                 markerPosition.x = ScreenSpacePos.x;
-                markerPosition.x = Mathf.Max(-(screenX - borderW), markerPosition.x);
-                markerPosition.x = Mathf.Min(screenX - borderW, markerPosition.x);
+                markerPosition.x = Mathf.Max(-(ScreenX - BorderW), markerPosition.x);
+                markerPosition.x = Mathf.Min(ScreenX - BorderW, markerPosition.x);
             }
 
             // Set Y position of marker
             if (!isInNegYRange)
             {
-                markerPosition.y = -Camera.main.orthographicSize / Camera.main.orthographicSize * screenY + borderW;
+                markerPosition.y = -Camera.main.orthographicSize / Camera.main.orthographicSize * ScreenY + BorderW;
             }
             if (!isInPosYRange)
             {
-                markerPosition.y = Camera.main.orthographicSize / Camera.main.orthographicSize * screenY - borderW;
+                markerPosition.y = Camera.main.orthographicSize / Camera.main.orthographicSize * ScreenY - BorderW;
             }
             if (isInNegYRange && isInPosYRange)
             {
                 markerPosition.y = ScreenSpacePos.y;
-                markerPosition.y = Mathf.Max(-(screenY - borderW), markerPosition.y);
-                markerPosition.y = Mathf.Min(screenY - borderW, markerPosition.y);
+                markerPosition.y = Mathf.Max(-(ScreenY - BorderW), markerPosition.y);
+                markerPosition.y = Mathf.Min(ScreenY - BorderW, markerPosition.y);
             }
 
             // Apply marker position
-            RectTransform markerTransform = OutOfVisionMarker.GetComponent<RectTransform>();
+            var markerTransform = OutOfVisionMarker.GetComponent<RectTransform>();
             markerTransform.anchoredPosition = markerPosition;
 
             // Calculcate and set angle and scale of marker
-            float angle = Mathf.Atan2(markerPosition.y, markerPosition.x) * Mathf.Rad2Deg - 90;
-            float scaleFactor = Mathf.Min(2.0f, (ScreenSpacePos - markerPosition).magnitude / 500.0f);
+            var angle = Mathf.Atan2(markerPosition.y, markerPosition.x) * Mathf.Rad2Deg - 90;
+            var scaleFactor = Mathf.Min(2.0f, (ScreenSpacePos - markerPosition).magnitude / 500.0f);
 
             markerTransform.eulerAngles = new Vector3(0, 0, angle);
             markerTransform.localScale = new Vector3(scaleFactor, scaleFactor, scaleFactor);
         }
 
         // Generate an asteroid with this asteroid as it's "parent" (Not parent game object, use this asteroid to base its position and stats off of)
-        public virtual BaseAsteroid GenerateChild()
+        protected virtual BaseAsteroid GenerateChild()
         {
             return AsteroidPrefabManager.InstantiateBaseAsteroid(this);
         }

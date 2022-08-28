@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5619df0225e3c4b4084e856cd6615ae7, type: 3}
+  m_Name: VeryHard
+  m_EditorClassIdentifier: 
+  Title: Hard++
+  Description: 'Ships do not repair at end of stage, destroyed ships do not respawn
+
+
+    Further
+    increased credit gain and asteroid spawn rate and toughness
+
+
+    All types of
+    asteroids spawn from Stage 1'
+  Difficulty: 2
+  RepairPercentage: 0
+  AsteroidSpawnRate: 1.5
+  AsteroidToughnessModifier: 1
+  AsteroidToughnessMultiplier: 1.5
+  CreditGainMultiplier: 1.5
+  BossStages: 0300000006000000090000000c000000
+  DoDestroyShips: 1
+  SpawnAllAtFirstStage: 1

@@ -15,6 +15,7 @@ MonoBehaviour:
   Title: Normal
   Description: Ships repair fully at end of stage  Normal asteroid spawn rate and
     toughness
+  Difficulty: 1
   RepairPercentage: 100
   AsteroidSpawnRate: 1
   AsteroidToughnessModifier: 0

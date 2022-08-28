@@ -12,14 +12,13 @@ namespace Combat.Ships
         protected List<BaseShip> ShipList = new List<BaseShip>();
 
         protected Vector3 CameraOffset = Vector3.zero;
-        private RunData ActiveRunData;
+        
+        private RunData _activeRunData => RunManager.Instance.RunData;
 
         // Start is called before the first frame update
         public void Start()
         {
             Instance = this;
-
-            ActiveRunData = (RunData)FindObjectOfType(typeof(RunData));
         }
 
         // Update is called once per frame

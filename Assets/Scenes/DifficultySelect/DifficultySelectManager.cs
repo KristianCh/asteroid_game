@@ -1,3 +1,4 @@
+using Data;
 using Run;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -7,11 +8,19 @@ namespace Scenes.DifficultySelect
 {
     public class DifficultySelectManager : MonoBehaviour
     {
-        public GameDifficulty SelectedDifficulty = GameDifficulty.Normal;
-        public RunData RunDataPrefab;
+        [SerializeField]
+        private DifficultySettingsData _SelectedDifficulty;
+        public DifficultySettingsData SelectedDifficulty
+        {
+            get => _SelectedDifficulty;
+            set => _SelectedDifficulty = value;
+        }
+
+        public static DifficultySelectManager Instance;
 
         void Start()
         {
+            Instance = this;
             Button normalButton = GameObject.Find("Normal").GetComponent<Button>();
             normalButton.Select();
         }
@@ -23,24 +32,8 @@ namespace Scenes.DifficultySelect
 
         public void StartGame()
         {
-            RunData rd = Instantiate(RunDataPrefab, new Vector3(0, 0, 0), Quaternion.identity).GetComponent<RunData>();
-            rd.Difficulty = SelectedDifficulty;
+            RunManager.Instance.RunData.Difficulty = _SelectedDifficulty;
             SceneManager.LoadScene("Store", LoadSceneMode.Single);
-        }
-
-        public void SelectDifficultyNormal()
-        {
-            SelectedDifficulty = GameDifficulty.Normal;
-        }
-
-        public void SelectDifficultyHard()
-        {
-            SelectedDifficulty = GameDifficulty.Hard;
-        }
-
-        public void SelectDifficultyVeryHard()
-        {
-            SelectedDifficulty = GameDifficulty.VeryHard;
         }
     }
 }

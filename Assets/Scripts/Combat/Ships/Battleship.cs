@@ -8,7 +8,7 @@ namespace Combat.Ships
         {
             base.OnSubCooldown();
 
-            var target = GetClosestAsteroid(transform.position);
+            var target = GameManager.GetClosestAsteroid(transform.position);
             if (target == null) return;
 
             var intercept = GetAsteroidInterceptVector(transform.position, target, ShipData.ProjectileSpeed);

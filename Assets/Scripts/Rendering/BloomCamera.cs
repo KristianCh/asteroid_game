@@ -13,7 +13,7 @@ namespace Rendering
         public Material BloomPingPongMat;
         public Material UnlitMat;
 
-        void Update()
+        public void FixedUpdate()
         {
             ClearOutRenderTexture(BloomRT);
             ClearOutRenderTexture(BloomHalfRT);

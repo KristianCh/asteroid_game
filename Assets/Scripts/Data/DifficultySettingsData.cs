@@ -9,6 +9,8 @@ namespace Data
         [TextArea(15, 15)]
         public string Description;
 
+        public GameDifficulty Difficulty;
+        
         public float RepairPercentage;
         public float AsteroidSpawnRate;
         public float AsteroidToughnessModifier;

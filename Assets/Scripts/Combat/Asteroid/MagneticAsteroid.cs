@@ -49,7 +49,7 @@ namespace Combat.Asteroid
         }
 
         // Generate magnetic asteroid instead
-        public override BaseAsteroid GenerateChild()
+        protected override BaseAsteroid GenerateChild()
         {
             return AsteroidPrefabManager.InstantiateMagneticAsteroid(this);
         }

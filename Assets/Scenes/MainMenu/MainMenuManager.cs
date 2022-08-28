@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Combat.Asteroid;
 using Run;
 using UnityEngine;
@@ -7,13 +8,16 @@ namespace Scenes.MainMenu
 {
     public class MainMenuManager : MonoBehaviour
     {
+        [SerializeField]
+        private List<GameObject> _MenuAsteroids;
+        
         private bool AppliedInitialImpulse = false;
 
         // Start is called before the first frame update
         public void Start()
         {
             // Destroy active run data
-            var rd = (RunData)FindObjectOfType(typeof(RunData));
+            var rd = (RunManager)FindObjectOfType(typeof(RunManager));
             if (rd != null)
             {
                 Destroy(rd.gameObject);
@@ -36,6 +40,13 @@ namespace Scenes.MainMenu
                     }
                 }
                 AppliedInitialImpulse = true;
+            }
+
+            foreach (var asteroid in _MenuAsteroids)
+            {
+                var rotation = asteroid.transform.rotation;
+                rotation *= Quaternion.Euler(2 * Time.deltaTime, 30 * Time.deltaTime, 1 * Time.deltaTime);
+                asteroid.transform.rotation = rotation;
             }
         }
 

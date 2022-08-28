@@ -11,9 +11,9 @@ namespace Scenes.Store
         public static InfoTab Instance;
 
         [SerializeField]
-        public TMP_Text Title;
+        private TMP_Text Title;
         [SerializeField]
-        public TMP_Text Description;
+        private TMP_Text Description;
 
         private Vector3 _TargetPosition = Vector3.zero;
         private Vector2 _TargetPivot = Vector2.zero;

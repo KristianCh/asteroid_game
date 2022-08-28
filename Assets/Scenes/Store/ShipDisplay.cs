@@ -12,17 +12,18 @@ namespace Scenes.Store
     public class ShipDisplay : AInfoDisplay
     {
         [SerializeField]
-        public GameObject ShipModel;
+        private GameObject ShipModel;
         [SerializeField]
-        public ShipData ShipDataValues;
+        private ShipData ShipDataValues;
         [SerializeField]
-        public TMP_Text Title;
+        private TMP_Text Title;
         [SerializeField]
-        public ClassDisplay ClassDisplayPrefab;
+        private ClassDisplay ClassDisplayPrefab;
         [SerializeField]
-        public List<ClassDisplay> ClassDisplays = new List<ClassDisplay>();
+        private List<ClassDisplay> ClassDisplays = new List<ClassDisplay>();
         [SerializeField]
-        public GameObject SDP;
+        private GameObject _SDP;
+        public GameObject SDP => _SDP;
 
         private string ShipName = "ShipName";
         private string ShipDescription = "ShipDescription";

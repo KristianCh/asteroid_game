@@ -9,8 +9,6 @@ namespace Scenes.Store
     public class StoreManager : MonoBehaviour
     {
         [SerializeField]
-        public RunData ActiveRunData;
-        [SerializeField]
         public TMP_Text ActiveFleetCount;
         [SerializeField]
         public TMP_Text Credits;
@@ -20,29 +18,29 @@ namespace Scenes.Store
         [SerializeField] 
         public List<ShipDisplay> StoreDisplays = new List<ShipDisplay>();
 
+        private RunData _activeRunData => RunManager.Instance.RunData;
+
         public void Start()
         {
-            ActiveRunData = (RunData)FindObjectOfType(typeof(RunData));
-
             SetupShipDisplays();
         }
 
         private void SetupShipDisplays()
         {
-            if (ActiveRunData == null) return;
+            if (_activeRunData == null) return;
             
-            ActiveFleetCount.text = $"Active Fleet: {ActiveRunData.Ships.Count}/{ActiveRunData.FleetLimit}";
-            Credits.text = $"Credits: {ActiveRunData.Credits}";
+            ActiveFleetCount.text = $"Active Fleet: {_activeRunData.Ships.Count}/{_activeRunData.FleetLimit}";
+            Credits.text = $"Credits: {_activeRunData.Credits}";
 
             for (var i = 0; i < 6; i++)
             {
-                if (i >= ActiveRunData.FleetLimit)
+                if (i >= _activeRunData.FleetLimit)
                 {
                     ShipDisplays[i].SDP.SetActive(false);
                 }
                 else
                 {
-                    ShipDisplays[i].Setup(i < ActiveRunData.Ships.Count ? ActiveRunData.Ships[i] : null);
+                    ShipDisplays[i].Setup(i < _activeRunData.Ships.Count ? _activeRunData.Ships[i] : null);
                 }
             }
         }

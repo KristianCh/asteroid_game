@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5619df0225e3c4b4084e856cd6615ae7, type: 3}
+  m_Name: Hard
+  m_EditorClassIdentifier: 
+  Title: Hard
+  Description: 'Ships repair <color=#ffb48020>50%</color> of max health at end of
+    stage
+
+
+    Increased credit gain and asteroid spawn rate and toughness'
+  RepairPercentage: 50
+  AsteroidSpawnRate: 1.25
+  AsteroidToughnessModifier: 0
+  AsteroidToughnessMultiplier: 1.25
+  CreditGainMultiplier: 1.25
+  BossStages: 0300000006000000090000000c000000
+  DoDestroyShips: 0
+  SpawnAllAtFirstStage: 0

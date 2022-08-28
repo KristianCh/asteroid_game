@@ -139,25 +139,7 @@ namespace Combat.Ships
             }
         }
 
-        public static BaseAsteroid GetClosestAsteroid(Vector3 position)
-        {
-            BaseAsteroid closest = null;
-            foreach (BaseAsteroid asteroid in GameManager.Instance.ActiveAsteroids)
-            {
-                if (closest == null)
-                {
-                    if (!asteroid.IsDead)
-                    {
-                        closest = asteroid;
-                    }
-                }
-                else if ((closest.transform.position - position).sqrMagnitude > (asteroid.transform.position - position).sqrMagnitude && !asteroid.IsDead)
-                {
-                    closest = asteroid;
-                }
-            }
-            return closest;
-        }
+        
 
         protected static Vector3 GetAsteroidInterceptVector(Vector3 position, BaseAsteroid asteroid, float projectileSpeed)
         {
@@ -170,16 +152,6 @@ namespace Combat.Ships
             ).normalized;
 
             return InterceptVector;
-        }
-
-        public virtual string GetStoreTitle()
-        {
-            return "";
-        }
-
-        public virtual string GetStoreDescription()
-        {
-            return "";
         }
     }
 }

@@ -59,7 +59,7 @@ namespace Combat.Ships.Projectiles
             var oldHeading = Heading;
             if ((TargetAsteroid == null || TargetAsteroid.IsDead) && Retarget)
             {
-                TargetAsteroid = BaseShip.GetClosestAsteroid(transform.position);
+                TargetAsteroid = GameManager.GetClosestAsteroid(transform.position);
             }
 
             if (TargetAsteroid != null && Tracking > 0)
