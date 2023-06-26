@@ -5,6 +5,7 @@ namespace Combat.Asteroid
 {
     public class MagneticAsteroid : BaseAsteroid
     {
+        // TODO: Use scriptable object for this
         // Strength of magnetic force
         public float Magnetism = 500;
         // Colors to use

@@ -1,5 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using System.Numerics;
 using Combat.Asteroid;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -7,34 +10,53 @@ using TMPro;
 
 public class GameManager : MonoBehaviour
 {
-    public int Stage = 1;
-    public int Wave = 1;
-    public int MaxWave = 2;
-    public int SpawnsPerWave = 10;
-    public int Spawns = 0;
-
-    private const float _waveCooldown = 4;
+    public static GameManager Instance;
+    
+    [SerializeField]
+    private int _Stage = 1;
+    
+    [SerializeField]
+    private int _Wave = 1;
+    
+    [SerializeField]
+    private int _MaxWave = 2;
+    
+    [SerializeField]
+    private int _SpawnsPerWave = 10;
+    
+    [SerializeField]
+    private int _Spawns = 0;
+    
+    [SerializeField]
+    private TMP_Text _WaveText;
+    
+    [SerializeField]
+    private Animator _WaveTextAnimator;
+    
+    [SerializeField]
+    private float _waveCooldown = 4;
+    
+    [SerializeField]
+    private float _spawnCooldown = 5;
+    
     private float _waveCooldownTimer = 4;
-    private const float _spawnCooldown = 5;
     private float _spawnCooldownTimer = 0;
     private bool _isWaveOn = false;
 
     private List<BaseAsteroid> ActiveAsteroids = new List<BaseAsteroid>();
-    public static GameManager Instance;
-    public TMP_Text WaveText;
-    public Animator WaveTextAnimator;
 
     // Start is called before the first frame update
     public virtual void Start()
     {
         Instance = this;
-        MaxWave = 2 + Stage / 5;
-        SpawnsPerWave = 5 + Stage / 2;
+        _MaxWave = 2 + _Stage / 5;
+        _SpawnsPerWave = 5 + _Stage / 2;
 
-        WaveText.text = "Wave " + Wave.ToString() + "/" + MaxWave.ToString();
+        _WaveText.text = "Wave " + _Wave.ToString() + "/" + _MaxWave.ToString();
     }
 
     // Update is called once per frame
+    // TODO: Refactor with coroutines
     public virtual void Update()
     {
         if (!_isWaveOn)
@@ -53,22 +75,22 @@ public class GameManager : MonoBehaviour
         {
             _spawnCooldownTimer -= Time.deltaTime;
 
-            if (_spawnCooldownTimer <= 0 && Spawns < SpawnsPerWave)
+            if (_spawnCooldownTimer <= 0 && _Spawns < _SpawnsPerWave)
             {
-                Spawns++;
+                _Spawns++;
                 SpawnAsteroid();
                 _spawnCooldownTimer = _spawnCooldown;
             }
 
-            if (ActiveAsteroids.Count == 0 && Spawns == SpawnsPerWave)
+            if (ActiveAsteroids.Count == 0 && _Spawns == _SpawnsPerWave)
             {
                 _isWaveOn = false;
-                Spawns = 0;
-                Wave++;
-                if (Wave <= MaxWave)
+                _Spawns = 0;
+                _Wave++;
+                if (_Wave <= _MaxWave)
                 {
                     SetWaveText();
-                    WaveTextAnimator.Play("ShowWaveCounter", 0, 0);
+                    _WaveTextAnimator.Play("ShowWaveCounter", 0, 0);
                 }
                 else
                 {
@@ -81,10 +103,11 @@ public class GameManager : MonoBehaviour
     // Pretty obvious
     private void SetWaveText()
     {
-        WaveText.text = "Wave " + Wave.ToString() + "/" + MaxWave.ToString();
+        _WaveText.text = "Wave " + _Wave.ToString() + "/" + _MaxWave.ToString();
     }
 
     // Spawns an asteroid beyond the max range of the camera and applies a random force to it
+    // TODO: Pooling
     private void SpawnAsteroid()
     {
         Vector3 position = GenerateAsteroidPosition();
@@ -123,16 +146,9 @@ public class GameManager : MonoBehaviour
     public static BaseAsteroid GetClosestAsteroid(Vector3 position)
     {
         BaseAsteroid closest = null;
-        foreach (var asteroid in Instance.ActiveAsteroids)
+        foreach (var asteroid in Instance.ActiveAsteroids.Where(a => !a.IsDead))
         {
-            if (closest == null)
-            {
-                if (!asteroid.IsDead)
-                {
-                    closest = asteroid;
-                }
-            }
-            else if ((closest.transform.position - position).sqrMagnitude > (asteroid.transform.position - position).sqrMagnitude && !asteroid.IsDead)
+            if ((closest.transform.position - position).sqrMagnitude > (asteroid.transform.position - position).sqrMagnitude)
             {
                 closest = asteroid;
             }

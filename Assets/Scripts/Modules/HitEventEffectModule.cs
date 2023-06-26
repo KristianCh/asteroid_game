@@ -7,6 +7,6 @@ namespace Modules
         public string Name;
         public string Description;
 
-        public HitEventEffect Effect;
+        public AHitEventEffect Effect;
     }
 }

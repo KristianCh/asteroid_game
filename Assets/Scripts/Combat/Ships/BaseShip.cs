@@ -35,6 +35,7 @@ namespace Combat.Ships
 
         protected Vector3 Heading = new Vector3(0, 1, 0);
         
+        //TODO: Implement cooldowns using coroutines
         public abstract void Damage(DamageInfo damageInfo);
         protected abstract void CalculateMovement();
         protected abstract void OnSubCooldown();

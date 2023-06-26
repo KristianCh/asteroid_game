@@ -1,17 +1,22 @@
+using System;
+using System.Numerics;
 using UnityEngine;
 
 namespace Combat.Asteroid
 {
     public class AsteroidPrefabManager : MonoBehaviour
     {
+        public static AsteroidPrefabManager Instance;
+        
         [SerializeField]
         private DamageIndicator _DamageIndicatorPrefab;
         // Asteroid prefabs
-        public BaseAsteroid BaseAsteroidPrefab;
-        public MagneticAsteroid MagneticAsteroidPrefab;
-
-        // Instance of prefab manager
-        public static AsteroidPrefabManager Instance;
+        
+        [SerializeField]
+        private BaseAsteroid BaseAsteroidPrefab;
+        
+        [SerializeField]
+        private MagneticAsteroid MagneticAsteroidPrefab;
 
         // Start is called before the first frame update
         void Start()
@@ -19,6 +24,8 @@ namespace Combat.Asteroid
             Instance = this;
         }
 
+        // TODO: pooling, implement initial setup in classes themselves
+        
         public static void CreateDamageIndicator(float damage, DamageInfo damageInfo)
         {
             var dmg = Instantiate(Instance._DamageIndicatorPrefab, damageInfo.Position, Quaternion.identity);

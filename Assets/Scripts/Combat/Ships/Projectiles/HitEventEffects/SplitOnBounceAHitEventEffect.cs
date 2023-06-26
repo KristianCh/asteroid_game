@@ -1,8 +1,9 @@
+using System.Numerics;
 using UnityEngine;
 
 namespace Combat.Ships.Projectiles.HitEventEffects
 {
-    public class SplitOnBounceHitEventEffect : HitEventEffect
+    public class SplitOnBounceAHitEventEffect : AHitEventEffect
     {
         public override void Execute(BaseProjectile projectile, Collision collision)
         {

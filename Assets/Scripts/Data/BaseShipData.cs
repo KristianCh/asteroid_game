@@ -7,6 +7,7 @@ namespace Data
     [CreateAssetMenu(fileName="Ship", menuName="Ship")]
     public class BaseShipData : ScriptableObject
     {
+        // TODO: use serializefields
         /* Store data */
         public string Type;
         public string Name;

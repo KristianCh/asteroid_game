@@ -13,6 +13,7 @@ namespace Combat.Ships.Projectiles
 
     public class BaseProjectile : ShipSpawnableObject
     {
+        // TODO: Use scriptable object for this
         public ProjectileType Type;
 
         public float Speed = 10;
@@ -23,10 +24,10 @@ namespace Combat.Ships.Projectiles
         public int BouncesLeft = 0;
         public int PiercesLeft = 0;
 
-        public List<HitEventEffect> BounceEffects = new List<HitEventEffect>();
-        public List<HitEventEffect> PierceEffects = new List<HitEventEffect>();
-        public List<HitEventEffect> HitEffects = new List<HitEventEffect>();
-        public List<HitEventEffect> DeathEffects = new List<HitEventEffect>();
+        public List<AHitEventEffect> BounceEffects = new List<AHitEventEffect>();
+        public List<AHitEventEffect> PierceEffects = new List<AHitEventEffect>();
+        public List<AHitEventEffect> HitEffects = new List<AHitEventEffect>();
+        public List<AHitEventEffect> DeathEffects = new List<AHitEventEffect>();
 
         public Vector3 Heading = new Vector3(0, 1, 0);
         public BaseAsteroid TargetAsteroid = null;
@@ -36,7 +37,7 @@ namespace Combat.Ships.Projectiles
         // Start is called before the first frame update
         public virtual void Start()
         {
-            BounceEffects.Add(new SplitOnBounceHitEventEffect());
+            BounceEffects.Add(new SplitOnBounceAHitEventEffect());
         }
 
         // Update is called once per frame
@@ -131,9 +132,9 @@ namespace Combat.Ships.Projectiles
             Destroy(gameObject);
         }
 
-        protected void ExecuteHitEventEffects(List<HitEventEffect> hitEventEffects, Collision collision)
+        protected void ExecuteHitEventEffects(List<AHitEventEffect> hitEventEffects, Collision collision)
         {
-            foreach (HitEventEffect effect in hitEventEffects)
+            foreach (AHitEventEffect effect in hitEventEffects)
             {
                 effect.Execute(this, collision);
             }

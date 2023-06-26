@@ -4,18 +4,15 @@ using UnityEngine;
 
 public class Background : MonoBehaviour
 {
-    public Material BackgroundMat;
+    [SerializeField]
+    private Material _BackgroundMat;
+    
     private float time = 0;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
     // Update is called once per frame
     void Update()
     {
         time += Time.deltaTime * 0.5f;
-        BackgroundMat.SetFloat("Time", time);
+        _BackgroundMat.SetFloat("Time", time);
     }
 }

@@ -5,6 +5,7 @@ namespace Combat.Ships.Aoes
 {
     public class Explosion : BaseAoe
     {
+        // TODO: Use scriptable object for this
         public float Damage = 20;
         public float Force = 50;
 

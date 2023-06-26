@@ -1,3 +1,4 @@
+using System.Numerics;
 using DG.Tweening;
 using UnityEngine;
 
@@ -16,6 +17,7 @@ namespace Combat.Ships.Aoes
 
     public class BaseAoe : ShipSpawnableObject
     {
+        // TODO: Use scriptable object for this
         public AoeShape Shape;
         public AoeType Type;
         public float Lifetime = 1;

@@ -12,6 +12,7 @@ namespace Combat.Asteroid
 
     public class BaseAsteroid : MonoBehaviour, IDamagable
     {
+        // TODO: Use scriptable object for this
         // base stats
         public float GravityPull = 10;
         public float Health = 100;
